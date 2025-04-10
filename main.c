@@ -1,4 +1,9 @@
 #include <stdio.h>
+#include <main.h>
+
+
+
+
 
 int main(void) {
     char buf[1024]={0};
@@ -16,9 +21,6 @@ int main(void) {
 
     printf("%s\n",buf);
     return 0;
-
-
-
 
 
 
