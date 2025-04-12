@@ -36,6 +36,7 @@ typedef struct Card {
     struct Card *next;
 } Card;
 
+Card * generateCards();
 
 
 #endif //MAIN_H
