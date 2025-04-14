@@ -1,7 +1,3 @@
-//
-// Created by bjoer on 10/04/2025.
-//
-
 #ifndef MAIN_H
 #define MAIN_H
 
@@ -28,15 +24,20 @@ typedef enum Rank {
     KING
   } Rank;
 
+typedef enum Hidden {
+    HIDDEN,
+      SHOWN
+  } Hidden;
+
 
 typedef struct Card {
+    Rank rank;
     Suit suit;
-    Rank rank;;
     int hidden;
     struct Card *next;
 } Card;
 
 Card * generateCards();
-
+void fillBoard(Card * deckHeader, Card * columnHeader[]);
 
 #endif //MAIN_H

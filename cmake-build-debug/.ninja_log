@@ -1,0 +1,9 @@
+# ninja log v6
+12	202	7663185085038912	CMakeFiles/YukonBackend.dir/main.c.obj	70a42c02fefc134a
+205	412	7663185086958161	YukonBackend.exe	3097bd4aa106df21
+4	754	7663187487561095	build.ninja	ce9e953bb0e4e51d
+4	374	7663187487561095	build.ninja	ce9e953bb0e4e51d
+8	190	7663187488284282	CMakeFiles/YukonBackend.dir/main.c.obj	70a42c02fefc134a
+191	380	7663187490110334	YukonBackend.exe	3097bd4aa106df21
+11	181	7663187993160380	CMakeFiles/YukonBackend.dir/main.c.obj	70a42c02fefc134a
+183	368	7663187994869246	YukonBackend.exe	3097bd4aa106df21
