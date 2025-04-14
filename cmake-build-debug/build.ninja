@@ -55,6 +55,18 @@ build CMakeFiles/YukonBackend.dir/main.c.obj: C_COMPILER__YukonBackend_unscanned
   OBJECT_DIR = CMakeFiles\YukonBackend.dir
   OBJECT_FILE_DIR = CMakeFiles\YukonBackend.dir
 
+build CMakeFiles/YukonBackend.dir/generateCards.c.obj: C_COMPILER__YukonBackend_unscanned_Debug C$:/Users/bjoer/OneDrive/Skrivebord/DTU/02322$ Machine$ oriented$ programming/Project$ 2/YukonBackend/generateCards.c || cmake_object_order_depends_target_YukonBackend
+  DEP_FILE = CMakeFiles\YukonBackend.dir\generateCards.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\YukonBackend.dir
+  OBJECT_FILE_DIR = CMakeFiles\YukonBackend.dir
+
+build CMakeFiles/YukonBackend.dir/fillBoard.c.obj: C_COMPILER__YukonBackend_unscanned_Debug C$:/Users/bjoer/OneDrive/Skrivebord/DTU/02322$ Machine$ oriented$ programming/Project$ 2/YukonBackend/fillBoard.c || cmake_object_order_depends_target_YukonBackend
+  DEP_FILE = CMakeFiles\YukonBackend.dir\fillBoard.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\YukonBackend.dir
+  OBJECT_FILE_DIR = CMakeFiles\YukonBackend.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target YukonBackend
@@ -63,7 +75,7 @@ build CMakeFiles/YukonBackend.dir/main.c.obj: C_COMPILER__YukonBackend_unscanned
 #############################################
 # Link the executable YukonBackend.exe
 
-build YukonBackend.exe: C_EXECUTABLE_LINKER__YukonBackend_Debug CMakeFiles/YukonBackend.dir/main.c.obj
+build YukonBackend.exe: C_EXECUTABLE_LINKER__YukonBackend_Debug CMakeFiles/YukonBackend.dir/main.c.obj CMakeFiles/YukonBackend.dir/generateCards.c.obj CMakeFiles/YukonBackend.dir/fillBoard.c.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\YukonBackend.dir

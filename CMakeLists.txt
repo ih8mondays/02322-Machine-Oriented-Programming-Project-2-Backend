@@ -6,4 +6,8 @@ set(CMAKE_C_STANDARD 11)
 add_executable(YukonBackend
         main.c
         main.h
+        generateCards.c
+        generateCards.h
+        fillBoard.c
+        fillBoard.h
 )

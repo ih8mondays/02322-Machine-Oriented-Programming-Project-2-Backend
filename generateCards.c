@@ -1,0 +1,48 @@
+#include "generateCards.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+const Rank rank[] = {ACE,TWO,THREE,FOUR,FIVE,SIX,SEVEN,EIGHT,NINE,TEN,JACK,QUEEN,KING};
+const Suit suit[] = {CLUBS,DIAMONDS,HEARTS,SPADES};
+const Hidden hidden[] = {HIDDEN,SHOWN};
+
+Card * generateCards() {
+    const int suitSize = sizeof(suit)/sizeof(suit[0]);
+    const int rankSize = sizeof(rank)/sizeof(rank[0]);
+
+    Card *head = (Card*)malloc(sizeof(Card));
+    Card *current = head;
+
+    if (head == NULL) {
+        printf("Memory couldn't be allocated while generating cards");
+        return NULL;
+    }
+
+    for (int i = 0 ; i < suitSize ; i++) {
+        for (int j = 0 ; j < rankSize; j++) {
+
+            if (current == NULL) {
+                printf("Memory couldn't be allocated while generating cards");
+                free(head);
+                return NULL;
+            }
+
+            // Assign current card values
+            current->suit = suit[i];
+            current->rank = rank[j];
+            current->hidden = HIDDEN;
+
+            // Last card won't allocate more memory
+
+            if (i == suitSize - 1 && j == rankSize - 1) {
+                current->next = NULL;
+                return head;
+            }
+            // Set up next card
+            current->next = malloc(sizeof(Card));
+            current = current->next;
+        }
+    }
+
+    return head;
+}

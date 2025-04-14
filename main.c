@@ -1,10 +1,7 @@
 #include "main.h"
+#include "generateCards.h"
 #include <stdio.h>
 #include <stdlib.h>
-
-const Rank rank[] = {ACE,TWO,THREE,FOUR,FIVE,SIX,SEVEN,EIGHT,NINE,TEN,JACK,QUEEN,KING};
-const Suit suit[] = {CLUBS,DIAMONDS,HEARTS,SPADES};
-const Hidden hidden[] = {HIDDEN,SHOWN};
 
 const char * rankName[] = {"A","2","3","4","5","6","7","8","9","T","J","Q","K"};
 const char * suitName[] = {"C","D","H","S"};
@@ -46,7 +43,6 @@ int main(void) {
 
     fillBoard(deckHeader, columnHeader);
 
-
     // TEST - display content of columns
     printf("\n");
     for (int i = 0; i < 7; i++) {
@@ -68,84 +64,7 @@ int main(void) {
     return 0;
 }
 
-Card * generateCards() {
-    const int suitSize = sizeof(suit)/sizeof(suit[0]);
-    const int rankSize = sizeof(rank)/sizeof(rank[0]);
-
-    Card *head = (Card*)malloc(sizeof(Card));
-    Card *current = head;
-
-    if (head == NULL) {
-        printf("Memory couldn't be allocated");
-        return NULL;
-    }
-
-    for (int i = 0 ; i < suitSize ; i++) {
-        for (int j = 0 ; j < rankSize; j++) {
-
-            if (current == NULL) {
-                printf("Memory couldn't be allocated");
-                free(head);
-                return NULL;
-            }
-
-            // Assign current card values
-            current->suit = suit[i];
-            current->rank = rank[j];
-            current->hidden = HIDDEN;
-
-            // Last card won't allocate more memory
-
-            if (i == suitSize - 1 && j == rankSize - 1) {
-                current->next = NULL;
-                return head;
-            }
-            // Set up next card
-            current->next = malloc(sizeof(Card));
-            current = current->next;
-        }
-    }
-
-    return head;
-}
 
 
 
-void fillBoard(Card * deckHeader, Card * columnHeader[]) {
-
-    // First column gets 1 card
-    Card * currentFill = deckHeader;
-    Card * columnEnd = NULL;
-
-    columnHeader[0] = currentFill;
-    Card * previousFill = currentFill;
-    currentFill = currentFill->next;
-    previousFill->next = NULL;
-
-    int offset = 0;
-
-    for (int i = 0; i < 11; i++) {     // i = row
-        if (i > 5) { offset++; }
-
-        for (int j = 1 + offset; j < 7; j++) {  // j = column
-
-            if (i == 0) {
-                columnHeader[j] = currentFill;
-            } else {
-                columnEnd = columnHeader[j];
-                while (columnEnd->next != NULL) { columnEnd = columnEnd->next; }
-                columnEnd->next = currentFill;
-            }
-
-            previousFill = currentFill;
-            if (currentFill->next == NULL) {
-                printf("NullPointerError in row %d column %d during fillBoard()\n",i+1,j+1);
-            }
-            currentFill = currentFill->next;
-            previousFill->next = NULL;
-
-        }
-    }
-
-}
 
