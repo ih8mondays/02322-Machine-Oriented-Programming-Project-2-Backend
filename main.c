@@ -111,8 +111,6 @@ Card * generateCards() {
 
 
 
-
-// FillS deck into board
 void fillBoard(Card * deckHeader, Card * columnHeader[]) {
 
     // First column gets 1 card
@@ -124,10 +122,12 @@ void fillBoard(Card * deckHeader, Card * columnHeader[]) {
     currentFill = currentFill->next;
     previousFill->next = NULL;
 
-    for (int i = 0; i < 11; i++) {     // row
-        for (int j = 1; j < 7; j++) {  // column
+    int offset = 0;
 
-            if (i > 5) { j = i - 4; }
+    for (int i = 0; i < 11; i++) {     // i = row
+        if (i > 5) { offset++; }
+
+        for (int j = 1 + offset; j < 7; j++) {  // j = column
 
             if (i == 0) {
                 columnHeader[j] = currentFill;
@@ -139,7 +139,7 @@ void fillBoard(Card * deckHeader, Card * columnHeader[]) {
 
             previousFill = currentFill;
             if (currentFill->next == NULL) {
-                printf("NullPointerError in row %d column %d during fillBoard()\n",i,j);
+                printf("NullPointerError in row %d column %d during fillBoard()\n",i+1,j+1);
             }
             currentFill = currentFill->next;
             previousFill->next = NULL;
