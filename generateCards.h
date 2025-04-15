@@ -26,7 +26,7 @@ typedef enum Rank {
 
 typedef enum Hidden {
     HIDDEN,
-      SHOWN
+    SHOWN
   } Hidden;
 
 

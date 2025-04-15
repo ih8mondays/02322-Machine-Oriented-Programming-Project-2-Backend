@@ -1,5 +1,5 @@
-#include "main.h"
 #include "generateCards.h"
+#include "fillBoard.h"
 #include <stdio.h>
 #include <stdlib.h>
 
