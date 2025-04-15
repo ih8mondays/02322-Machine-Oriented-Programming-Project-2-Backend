@@ -6,6 +6,9 @@ const Rank rank[] = {ACE,TWO,THREE,FOUR,FIVE,SIX,SEVEN,EIGHT,NINE,TEN,JACK,QUEEN
 const Suit suit[] = {CLUBS,DIAMONDS,HEARTS,SPADES};
 const Hidden hidden[] = {HIDDEN,SHOWN};
 
+/**
+ * @return Returns a linked list containing a standard unshuffled deck.
+ */
 Card * generateCards() {
     const int suitSize = sizeof(suit)/sizeof(suit[0]);
     const int rankSize = sizeof(rank)/sizeof(rank[0]);

@@ -2,6 +2,14 @@
 #include "generateCards.h"
 #include <stdio.h>
 
+
+/**
+ * Fills the deck into the columns and toggles hidden.
+ * Afterwards the game should be ready to start.
+ *
+ * @param deckHeader Input deck pointers
+ * @param columnHeader Input board columns pointer array.
+ */
 void fillBoard(Card * deckHeader, Card * columnHeader[]) {
 
     // First column gets 1 card
