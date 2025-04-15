@@ -12,10 +12,10 @@
  */
 void fillBoard(Card * deckHeader, Card * columnHeader[]) {
 
-    // First column gets 1 card
     Card * currentFill = deckHeader;
     Card * columnEnd = NULL;
 
+    // First column gets 1 card
     columnHeader[0] = currentFill;
     Card * previousFill = currentFill;
     currentFill = currentFill->next;
@@ -28,6 +28,12 @@ void fillBoard(Card * deckHeader, Card * columnHeader[]) {
 
         for (int j = 1 + offset; j < 7; j++) {  // j = column
 
+            // Reveals cards as outlined by the rules
+            if (i >= j) {
+                currentFill->hidden = SHOWN;
+            }
+
+            // Put current card in the next spot
             if (i == 0) {
                 columnHeader[j] = currentFill;
             } else {
@@ -36,6 +42,7 @@ void fillBoard(Card * deckHeader, Card * columnHeader[]) {
                 columnEnd->next = currentFill;
             }
 
+            // Increment to next card
             previousFill = currentFill;
             if (currentFill->next == NULL) {
                 printf("NullPointerError in row %d column %d during fillBoard()\n",i+1,j+1);
