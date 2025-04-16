@@ -2,7 +2,13 @@
 #include "main.h"
 #include "generateCards.h"
 
-
+/**
+ * Saves deck order to external file
+ * @param head pointer to top card in deck
+ * @param filename should end in .txt but can be of different types. Defaults to 'cards.txt' if parameter is NULL
+ * TODO determine whether the above is a good idea.
+ * @return 1 if successful, otherwise -1
+ */
 int saveCards(Card* head, char filename[]) {
 
     // default file name
