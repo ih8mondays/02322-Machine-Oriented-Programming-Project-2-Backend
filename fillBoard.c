@@ -2,9 +2,8 @@
 #include "generateCards.h"
 #include <stdio.h>
 
-
 /**
- * Fills the deck into the columns and toggles hidden.
+ * Fills the deck into the columns and toggles hidden/shown.
  * Afterwards the game should be ready to start.
  *
  * @param deckHeader Input deck pointers
@@ -27,10 +26,15 @@ void fillBoard(Card * deckHeader, Card * columnHeader[]) {
         if (i > 5) { offset++; }
 
         for (int j = 1 + offset; j < 7; j++) {  // j = column
+            if (currentFill == NULL) {
+                printf("\nNullPointerError in row %d column %d during fillBoard()\n",i+1,j+1);
+            }
 
             // Reveals cards as outlined by the rules
             if (i >= j) {
                 currentFill->hidden = SHOWN;
+            } else {
+                currentFill->hidden = HIDDEN;
             }
 
             // Put current card in the next spot
@@ -44,9 +48,6 @@ void fillBoard(Card * deckHeader, Card * columnHeader[]) {
 
             // Increment to next card
             previousFill = currentFill;
-            if (currentFill->next == NULL) {
-                printf("NullPointerError in row %d column %d during fillBoard()\n",i+1,j+1);
-            }
             currentFill = currentFill->next;
             previousFill->next = NULL;
 
