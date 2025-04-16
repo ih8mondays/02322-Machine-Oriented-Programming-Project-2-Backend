@@ -28,7 +28,8 @@ int main(void) {
     }
 
     // TEST - save function
-    saveCards(deckHeader);
+    saveCards(deckHeader, "test.txt");
+    saveCards(deckHeader,NULL);
 
 
     // Shuffle
