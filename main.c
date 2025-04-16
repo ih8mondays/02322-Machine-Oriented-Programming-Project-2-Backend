@@ -1,13 +1,8 @@
-#include "main.h"
 #include "generateCards.h"
 #include "fillBoard.h"
 #include "saveCards.h"
 #include <stdio.h>
 #include <stdlib.h>
-
-const char * rankName[] = {"A","2","3","4","5","6","7","8","9","T","J","Q","K"};
-const char * suitName[] = {"C","D","H","S"};
-const char * hiddenName[] = {"Hidden","Shown"};
 
 int main(void) {
 
@@ -34,6 +29,8 @@ int main(void) {
 
     // TEST - save function
     saveCards(deckHeader);
+
+
     // Shuffle
     //
     //
