@@ -9,8 +9,8 @@ add_executable(YukonBackend
         generateCards.h
         fillBoard.c
         fillBoard.h
-        searchColumn.c
-        searchColumn.h
+        moveCard.c
+        moveCard.h
         saveCards.c
         saveCards.h
 )

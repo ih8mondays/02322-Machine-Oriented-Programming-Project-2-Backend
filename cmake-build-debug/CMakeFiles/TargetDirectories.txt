@@ -1,3 +1,0 @@
-C:/Users/chris/CLionProjects/02322-Machine-Oriented-Programming-Project-2-Backend/cmake-build-debug/CMakeFiles/YukonBackend.dir
-C:/Users/chris/CLionProjects/02322-Machine-Oriented-Programming-Project-2-Backend/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/chris/CLionProjects/02322-Machine-Oriented-Programming-Project-2-Backend/cmake-build-debug/CMakeFiles/rebuild_cache.dir

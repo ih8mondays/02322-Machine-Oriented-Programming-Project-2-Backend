@@ -1,16 +1,7 @@
 # ninja log v6
-8	218	7664888831146936	CMakeFiles/YukonBackend.dir/main.c.obj	70a42c02fefc134a
-11	165	7664890120195050	CMakeFiles/YukonBackend.dir/saveCards.c.obj	1f9d223f2b74334a
-167	373	7664890121747339	YukonBackend.exe	c0e176514788e00d
-3	346	7664890663373854	build.ninja	ce9e953bb0e4e51d
-16	225	7664888831240345	CMakeFiles/YukonBackend.dir/generateCards.c.obj	5c54cc7decd78a88
-23	214	7664888831305029	CMakeFiles/YukonBackend.dir/fillBoard.c.obj	f356f520995c8b1a
-32	193	7664888831386945	CMakeFiles/YukonBackend.dir/searchColumn.c.obj	41d407f1583e8a47
-34	214	7664897148240749	CMakeFiles/YukonBackend.dir/searchColumn.c.obj	41d407f1583e8a47
 8	232	7664897147980942	CMakeFiles/YukonBackend.dir/main.c.obj	70a42c02fefc134a
-17	251	7664897148066889	CMakeFiles/YukonBackend.dir/generateCards.c.obj	5c54cc7decd78a88
-26	255	7664897148149338	CMakeFiles/YukonBackend.dir/fillBoard.c.obj	f356f520995c8b1a
 44	263	7664897148330769	CMakeFiles/YukonBackend.dir/saveCards.c.obj	1f9d223f2b74334a
-263	446	7664897150524567	YukonBackend.exe	c0e176514788e00d
+156	352	7664923123244761	YukonBackend.exe	c0e176514788e00d
+3	346	7667115229918196	build.ninja	ce9e953bb0e4e51d
+17	251	7664897148066889	CMakeFiles/YukonBackend.dir/generateCards.c.obj	5c54cc7decd78a88
 8	145	7664897942041632	CMakeFiles/YukonBackend.dir/fillBoard.c.obj	f356f520995c8b1a
-146	345	7664897943420583	YukonBackend.exe	c0e176514788e00d
