@@ -38,8 +38,14 @@ typedef struct Card {
 } Card;
 
 
-
 Card * generateCards();
+
+/** ACE,TWO,THREE,FOUR,FIVE,SIX,SEVEN,EIGHT,NINE,TEN,JACK,QUEEN,KING */
+extern const Rank rank[];
+/** CLUBS,DIAMONDS,HEARTS,SPADES */
+extern const Suit suit[];
+/** HIDDEN,SHOWN */
+extern const Hidden hidden[];
 
 /** C,D,H,"S */
 extern const char * rankName[];
@@ -47,5 +53,6 @@ extern const char * rankName[];
 extern const char * suitName[];
 /** Hidden, Shown */
 extern const char * hiddenName[];
+
 
 #endif //GENERATECARDS_H

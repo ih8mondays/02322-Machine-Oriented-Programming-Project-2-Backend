@@ -1,62 +1,81 @@
 #include "moveCard.h"
 #include "generateCards.h"
+#include "main.h"
 #include <inttypes.h>
 #include <stdbool.h>
 
+
 bool isEqual(Card * card, Suit suit, Rank rank);
-Card * searchColumn(Card * columnHeader, Card cardRequest);
-int moveCardFromColumnToColumn(char * Command);
-int moveCardToFoundation(char * Command);
-int moveCardFromFoundation(char * Command);
+Card * searchColumn(Card * searchHeader, Suit searchSuit, Rank searchRank);
+int columnToColumn(char * input);
+int toFoundation(char * input);
+int fromFoundation(char * input);
 
-// CX:XS->CX
-// CX:XS->FX
-// CX->CX
-// CX->FX
-// FX->CX
+// Possible valid inputs ... C1-C7 & F1-F4
+//   CX:RS->CX
+//   CX:RS->FX
+//   CX->CX
+//   CX->FX
+//   FX->CX
 
-int moveCard(char * Command) {
-    if (Command[0] == 'C') {
-        return moveCardFromColumnToColumn(Command);
-    } else if (Command[0] == 'F') {
-        return moveCardToFoundation(Command);
+int moveCard(char * input) {
+    if (input[0] == 'C' && input[2] == ':' && input[7] == 'C'
+        || input[0] == 'C' && input[2] == '-' && input[4] == 'C') {
+        return columnToColumn(input);
+    } else if ( input[0] == 'C' && input[2] == ':' && input[7] == 'F'
+        || input[0] == 'C' && input[2] == '-' && input[4] == 'F') {
+        return toFoundation(input);
+    } else if (input[0] == 'F') {
+        return fromFoundation(input);
     }
-    moveCardFromFoundation(Command);
-
     return -1;
 }
 
 
-int moveCardFromColumnToColumn(char * Command) {
-    if (Command[2] == ':') {
+int columnToColumn(char * input) {
+    Card * searchHeader = columnHeader[input[1]-'0'-1];
 
-    } else if (Command[2] == '-') {
-
+    // find the card we want to move
+    if (input[2] == ':') {
+        Rank searchRank = rank[input[3]-'0'-1];
+        Suit searchSuit = suit[input[4]-'0'-1];
+        Card * target = searchColumn(searchHeader,searchRank, searchSuit);
+        if (target == NULL) { return -1; }
+    } else if (input[2] == '-') {
+        Card * columnEnd = searchHeader;
+        while (columnEnd->next != NULL) { columnEnd = columnEnd->next; }
+        Card * target = columnEnd;
     }
 
-    int x = Command[1] - '0';
-
-    return 1;
-}
 
 
-int moveCardToFoundation(char * Command) {
-
-    return 1;
-}
-
-int moveCardFromFoundation(char * Command) {
 
 
     return 1;
 }
 
 
+//
+//  if (searchHeader == NULL) {
+//  columnHeader[j] = currentFill;
+//  } else {
+//            columnEnd = columnHeader[j];
+//            while (columnEnd->next != NULL) { columnEnd = columnEnd->next; }
+//            columnEnd->next = currentFill;
+//  }
 
 
+int toFoundation(char *input) {
+    return 1;
+}
 
-Card * searchColumn(Card * columnHeader, Suit searchSuit, Rank searchRank) {
-    Card * current = columnHeader;
+int fromFoundation(char *input) {
+    return 1;
+}
+
+
+Card *searchColumn(Card * searchHeader, Suit searchSuit, Rank searchRank) {
+    Card *current = searchHeader;
 
     while (current != NULL) {
         if (isEqual(current, searchSuit, searchRank)) {
@@ -68,10 +87,7 @@ Card * searchColumn(Card * columnHeader, Suit searchSuit, Rank searchRank) {
 }
 
 bool isEqual(Card * card, Suit suit, Rank rank) {
-    if (card->suit == suit && card->rank == rank) {
-        return true;
-    }
-    return false;
+    return card->suit == suit && card->rank == rank;
 }
 
 

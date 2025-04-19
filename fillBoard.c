@@ -41,8 +41,10 @@ void fillBoard(Card * deckHeader, Card * columnHeader[]) {
             if (i == 0) {
                 columnHeader[j] = currentFill;
             } else {
-                columnEnd = columnHeader[j];
-                while (columnEnd->next != NULL) { columnEnd = columnEnd->next; }
+                //columnEnd = columnHeader[j];
+                //while (columnEnd->next != NULL) { columnEnd = columnEnd->next; }
+                //columnEnd->next = currentFill;
+                columnEnd = returnColumnEnd(columnHeader[j]);
                 columnEnd->next = currentFill;
             }
 
@@ -54,4 +56,11 @@ void fillBoard(Card * deckHeader, Card * columnHeader[]) {
         }
     }
 
+}
+
+Card * returnColumnEnd(Card * columnHeader) {
+    while (columnHeader->next != NULL) {
+        columnHeader = columnHeader->next;
+    }
+    return columnHeader;
 }

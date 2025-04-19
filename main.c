@@ -1,14 +1,16 @@
+#include "main.h"
 #include "generateCards.h"
 #include "fillBoard.h"
 #include "saveCards.h"
 #include <stdio.h>
 #include <stdlib.h>
 
+Card * columnHeader[] = {NULL,NULL,NULL,NULL,NULL,NULL,NULL};
+Card * foundationHeader[] = {NULL,NULL,NULL,NULL};
+
 int main(void) {
 
     // Initialize empty board
-    Card * columnHeader[7] = {NULL,NULL,NULL,NULL,NULL,NULL,NULL};
-    Card * foundationHeader[4] = {NULL,NULL,NULL,NULL};
 
     // Set up 52 cards in a linked list
     Card *deckHeader = generateCards();

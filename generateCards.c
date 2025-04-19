@@ -5,9 +5,9 @@
 const Rank rank[] = {ACE,TWO,THREE,FOUR,FIVE,SIX,SEVEN,EIGHT,NINE,TEN,JACK,QUEEN,KING};
 const Suit suit[] = {CLUBS,DIAMONDS,HEARTS,SPADES};
 const Hidden hidden[] = {HIDDEN,SHOWN};
-extern const char * rankName[] = {"A","2","3","4","5","6","7","8","9","T","J","Q","K"};
-extern const char * suitName[] = {"C","D","H","S"};
-extern const char * hiddenName[] = {"Hidden","Shown"};
+const char * rankName[] = {"A","2","3","4","5","6","7","8","9","T","J","Q","K"};
+const char * suitName[] = {"C","D","H","S"};
+const char * hiddenName[] = {"Hidden","Shown"};
 
 
 /**
