@@ -18,7 +18,7 @@ int saveCards(Card* head, char filename[]) {
 
     FILE * file = fopen(filename, "w");
     if (file == NULL) {
-        printf("Error opening file\n");
+        perror("Error opening file\n");
         return -1;
     }
 

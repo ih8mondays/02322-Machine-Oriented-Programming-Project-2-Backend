@@ -13,4 +13,6 @@ add_executable(YukonBackend
         searchColumn.h
         saveCards.c
         saveCards.h
+        loadCards.c
+        loadCards.h
 )
