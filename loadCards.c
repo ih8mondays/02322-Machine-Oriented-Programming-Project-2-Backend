@@ -54,7 +54,7 @@ int loadCards(char filename[]) {
         }
     }
 
-    printf("%s/n", "File valid, loading...");
+    printf("%s\n", "File valid, loading...");
 
 
 
