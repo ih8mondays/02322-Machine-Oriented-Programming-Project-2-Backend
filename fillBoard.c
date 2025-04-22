@@ -59,8 +59,9 @@ void fillBoard(Card * deckHeader, Card * columnHeader[]) {
 }
 
 Card * returnColumnEnd(Card * columnHeader) {
-    while (columnHeader->next != NULL) {
-        columnHeader = columnHeader->next;
+    Card * temp = columnHeader;
+    while (temp->next != NULL) {
+        temp = temp->next;
     }
-    return columnHeader;
+    return temp;
 }

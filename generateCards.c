@@ -17,8 +17,8 @@ Card * generateCards() {
     const int suitSize = sizeof(suit)/sizeof(suit[0]);
     const int rankSize = sizeof(rank)/sizeof(rank[0]);
 
-    Card *head = (Card*)malloc(sizeof(Card));
-    Card *current = head;
+    Card * head = (Card*)malloc(sizeof(Card));
+    Card * current = head;
 
     if (head == NULL) {
         printf("Memory couldn't be allocated while generating cards");

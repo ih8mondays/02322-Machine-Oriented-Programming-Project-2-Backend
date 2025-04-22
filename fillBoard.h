@@ -3,7 +3,7 @@
 
 #include "generateCards.h"
 void fillBoard(Card * deckHeader, Card * columnHeader[]);
-Card * returnColumnEnd(Card * columnHeader);
+extern Card * returnColumnEnd(Card * columnHeader);
 
 
 #endif //FILLBOARD_H
