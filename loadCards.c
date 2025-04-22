@@ -30,7 +30,7 @@ int loadCards(char filename[]) {
     fscanf(file, "%s", &currentStr);
 
     //Loop until file ends
-    while (!feof(file)) {
+    while (!feof(file) && lineCount < rankSize*suitSize) {
 
         for (int i = 0; i < rankSize; ++i) {
             for (int j = 0; j < suitSize; ++j) {
@@ -41,13 +41,6 @@ int loadCards(char filename[]) {
         }
         ++lineCount;
         fscanf(file, "%s", &currentStr);
-    }
-
-    //Checks if file had the correct amount of cards
-    if (lineCount != rankSize*suitSize) {
-        perror("Invalid file format\n");
-        fclose(file);
-        return -1;
     }
 
     //Checks if the matrix contains only ones
