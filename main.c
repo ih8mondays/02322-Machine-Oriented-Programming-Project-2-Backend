@@ -2,6 +2,7 @@
 #include "generateCards.h"
 #include "fillBoard.h"
 #include "saveCards.h"
+#include "loadCards.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -29,9 +30,10 @@ int main(void) {
         test = test->next;
     }
 
-    // TEST - save function
+    // TEST - save/load function
     saveCards(deckHeader, "test.txt");
     saveCards(deckHeader,NULL);
+    loadCards("test.txt");
 
 
     // Shuffle

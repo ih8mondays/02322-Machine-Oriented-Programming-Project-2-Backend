@@ -9,13 +9,14 @@ const char * rankName[] = {"A","2","3","4","5","6","7","8","9","T","J","Q","K"};
 const char * suitName[] = {"C","D","H","S"};
 const char * hiddenName[] = {"Hidden","Shown"};
 
+extern const int suitSize = sizeof(suit)/sizeof(suit[0]);
+extern const int rankSize = sizeof(rank)/sizeof(rank[0]);
+
 
 /**
  * @return Returns a linked list containing a standard unshuffled deck.
  */
 Card * generateCards() {
-    const int suitSize = sizeof(suit)/sizeof(suit[0]);
-    const int rankSize = sizeof(rank)/sizeof(rank[0]);
 
     Card * head = (Card*)malloc(sizeof(Card));
     Card * current = head;

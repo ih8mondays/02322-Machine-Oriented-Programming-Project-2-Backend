@@ -13,4 +13,6 @@ add_executable(YukonBackend
         moveCard.h
         saveCards.c
         saveCards.h
+        loadCards.c
+        loadCards.h
 )
