@@ -26,7 +26,7 @@ int main(void) {
         return -1;
     }
 
-    // TEST - display content of linked list
+    // TEST - display content of linked-list
     Card *test = deckHeader;
     for (int i = 0; i < 52 && test != NULL ; i++) {
         printf("%s",rankName[test->rank]);
@@ -39,7 +39,7 @@ int main(void) {
     saveCards(deckHeader, "test.txt");
     saveCards(deckHeader,NULL);
     loadCards("test.txt");
-    //loadCards("notreal.txt");
+    //loadCards("notReal.txt");
 
 
     // Shuffle

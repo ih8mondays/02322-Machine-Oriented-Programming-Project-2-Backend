@@ -1,6 +1,7 @@
 #include "fillBoard.h"
 #include "generateCards.h"
 #include <stdio.h>
+#include "moveCard.h"
 
 /**
  * Fills the deck into the columns and toggles hidden/shown.
@@ -10,6 +11,8 @@
  * @param columnHeader Input board columns pointer array.
  */
 void fillBoard(Card * deckHeader, Card * columnHeader[]) {
+
+    //TODO change return value to int
 
     Card * currentFill = deckHeader;
     Card * columnEnd = NULL;
@@ -28,6 +31,7 @@ void fillBoard(Card * deckHeader, Card * columnHeader[]) {
         for (int j = 1 + offset; j < 7; j++) {  // j = column
             if (currentFill == NULL) {
                 printf("\nNullPointerError in row %d column %d during fillBoard()\n",i+1,j+1);
+                return;
             }
 
             // Reveals cards as outlined by the rules
@@ -37,14 +41,14 @@ void fillBoard(Card * deckHeader, Card * columnHeader[]) {
                 currentFill->visibility = HIDDEN;
             }
 
-            // Put current card in the next spot
+            // Put current card in next spot
             if (i == 0) {
                 columnHeader[j] = currentFill;
             } else {
                 //columnEnd = columnHeader[j];
                 //while (columnEnd->next != NULL) { columnEnd = columnEnd->next; }
                 //columnEnd->next = currentFill;
-                columnEnd = returnColumnEnd(columnHeader[j]);
+                columnEnd = returnColumnEnd(columnHeader[j]).current;
                 columnEnd->next = currentFill;
             }
 
@@ -56,12 +60,4 @@ void fillBoard(Card * deckHeader, Card * columnHeader[]) {
         }
     }
 
-}
-
-Card * returnColumnEnd(Card * columnHeader) {
-    Card * temp = columnHeader;
-    while (temp->next != NULL) {
-        temp = temp->next;
-    }
-    return temp;
 }
