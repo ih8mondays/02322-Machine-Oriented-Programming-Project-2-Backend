@@ -34,6 +34,7 @@ int main(void) {
     saveCards(deckHeader, "test.txt");
     saveCards(deckHeader,NULL);
     loadCards("test.txt");
+    loadCards("notreal.txt");
 
 
     // Shuffle

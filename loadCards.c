@@ -17,6 +17,7 @@ int loadCards(char filename[]) {
     }
 
     //Validation procedure using matrix of zeroes
+    printf("Validating file contents... \n");
     int validationMatrix[rankSize][suitSize];
     for (int i = 0; i < rankSize; ++i) {
         for (int j = 0; j < suitSize; ++j) {
