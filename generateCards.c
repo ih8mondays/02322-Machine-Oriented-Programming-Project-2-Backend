@@ -4,13 +4,13 @@
 
 const Rank rank[] = {ACE,TWO,THREE,FOUR,FIVE,SIX,SEVEN,EIGHT,NINE,TEN,JACK,QUEEN,KING};
 const Suit suit[] = {CLUBS,DIAMONDS,HEARTS,SPADES};
-const Hidden hidden[] = {HIDDEN,SHOWN};
+const Visibility hidden[] = {HIDDEN,SHOWN};
 const char * rankName[] = {"A","2","3","4","5","6","7","8","9","T","J","Q","K"};
 const char * suitName[] = {"C","D","H","S"};
 const char * hiddenName[] = {"Hidden","Shown"};
 
-extern const int suitSize = sizeof(suit)/sizeof(suit[0]);
-extern const int rankSize = sizeof(rank)/sizeof(rank[0]);
+const int suitSize = sizeof(suit)/sizeof(suit[0]);
+const int rankSize = sizeof(rank)/sizeof(rank[0]);
 
 
 /**
@@ -38,7 +38,7 @@ Card * generateCards() {
             // Assign current card values
             current->suit = suit[i];
             current->rank = rank[j];
-            current->hidden = HIDDEN;
+            current->visibility = HIDDEN;
 
             // Last card won't allocate more memory
 

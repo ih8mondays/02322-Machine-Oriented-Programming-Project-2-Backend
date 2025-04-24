@@ -24,16 +24,16 @@ typedef enum Rank {
     KING
   } Rank;
 
-typedef enum Hidden {
+typedef enum Visibility {
     HIDDEN,
     SHOWN
-  } Hidden;
+  } Visibility;
 
 
 typedef struct Card {
     Rank rank;
     Suit suit;
-    int hidden;
+    Visibility visibility;
     struct Card *next;
 } Card;
 
@@ -45,7 +45,7 @@ extern const Rank rank[];
 /** CLUBS,DIAMONDS,HEARTS,SPADES */
 extern const Suit suit[];
 /** HIDDEN,SHOWN */
-extern const Hidden hidden[];
+extern const Visibility hidden[];
 
 /** C,D,H,S */
 extern const char * rankName[];

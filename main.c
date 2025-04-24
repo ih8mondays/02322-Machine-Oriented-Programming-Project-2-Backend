@@ -9,6 +9,11 @@
 Card * columnHeader[] = {NULL,NULL,NULL,NULL,NULL,NULL,NULL};
 Card * foundationHeader[] = {NULL,NULL,NULL,NULL};
 
+
+    // __FILE__
+    // __LINE__
+
+
 int main(void) {
 
     // Initialize empty board
@@ -16,8 +21,8 @@ int main(void) {
     // Set up 52 cards in a linked list
     Card *deckHeader = generateCards();
     if (deckHeader == NULL) {
+        perror("Error in generateCards\n");
         free(deckHeader);
-        printf("Error in generateCards\n");
         return -1;
     }
 
@@ -26,7 +31,7 @@ int main(void) {
     for (int i = 0; i < 52 && test != NULL ; i++) {
         printf("%s",rankName[test->rank]);
         printf("%s",suitName[test->suit]);
-        printf("  %s\n",hiddenName[test->hidden]);
+        printf("  %s\n",hiddenName[test->visibility]);
         test = test->next;
     }
 
@@ -34,7 +39,7 @@ int main(void) {
     saveCards(deckHeader, "test.txt");
     saveCards(deckHeader,NULL);
     loadCards("test.txt");
-    loadCards("notreal.txt");
+    //loadCards("notreal.txt");
 
 
     // Shuffle
@@ -60,7 +65,7 @@ int main(void) {
             printf("%s","  ");
             printf("%s",rankName[currentTestHeader->rank]);
             printf("%s",suitName[currentTestHeader->suit]);
-            printf(" %s\n",hiddenName[currentTestHeader->hidden]);
+            printf(" %s\n",hiddenName[currentTestHeader->visibility]);
 
             currentTestHeader = currentTestHeader->next;
             k++;

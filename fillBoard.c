@@ -32,9 +32,9 @@ void fillBoard(Card * deckHeader, Card * columnHeader[]) {
 
             // Reveals cards as outlined by the rules
             if (i >= j) {
-                currentFill->hidden = SHOWN;
+                currentFill->visibility = SHOWN;
             } else {
-                currentFill->hidden = HIDDEN;
+                currentFill->visibility = HIDDEN;
             }
 
             // Put current card in the next spot
