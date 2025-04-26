@@ -12,7 +12,7 @@ Card * foundationHeader[] = {NULL,NULL,NULL,NULL};
 
     // __FILE__
     // __LINE__
-
+    // sprintf();
 
 int main(void) {
 

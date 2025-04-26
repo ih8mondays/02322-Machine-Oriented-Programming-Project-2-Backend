@@ -48,7 +48,7 @@ void fillBoard(Card * deckHeader, Card * columnHeader[]) {
                 //columnEnd = columnHeader[j];
                 //while (columnEnd->next != NULL) { columnEnd = columnEnd->next; }
                 //columnEnd->next = currentFill;
-                columnEnd = returnColumnEnd(columnHeader[j]).current;
+                columnEnd = retColEnd(columnHeader[j]).current;
                 columnEnd->next = currentFill;
             }
 
