@@ -10,5 +10,6 @@ typedef struct DualPointer{
 
 int moveCard(char * input);
 extern DualPointer retColEnd(Card * columnHeader);
+DualPointer searchColumn(Card * searchHeader, Rank searchRank, Suit searchSuit);
 
 #endif //SEARCHCOLUMN_H

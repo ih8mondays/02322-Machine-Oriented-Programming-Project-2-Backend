@@ -15,6 +15,7 @@ void fillBoard(Card * deckHeader, Card * columnHeader[]) {
     //TODO change return value to int
 
     Card * currentFill = deckHeader;
+    currentFill->visibility = SHOWN;
     Card * columnEnd = NULL;
 
     // First column gets 1 card
@@ -45,9 +46,6 @@ void fillBoard(Card * deckHeader, Card * columnHeader[]) {
             if (i == 0) {
                 columnHeader[j] = currentFill;
             } else {
-                //columnEnd = columnHeader[j];
-                //while (columnEnd->next != NULL) { columnEnd = columnEnd->next; }
-                //columnEnd->next = currentFill;
                 columnEnd = retColEnd(columnHeader[j]).current;
                 columnEnd->next = currentFill;
             }
