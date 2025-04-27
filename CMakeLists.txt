@@ -15,4 +15,6 @@ add_executable(YukonBackend
         saveCards.h
         loadCards.c
         loadCards.h
+        validateInput.c
+        validateInput.h
 )

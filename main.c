@@ -4,6 +4,7 @@
 #include "saveCards.h"
 #include "loadCards.h"
 #include "moveCard.h"
+#include "validateInput.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -52,13 +53,17 @@ int main(void) {
     // char testArray2[] = "C2:2C->F1";  // this should fail and return -2
     char * testCommand = &testArray1[0];
 
-    printf("\n\nmoveCard = %d\n",moveCard(testCommand));
+    if (validateInput(testArray1)) {
+        printf("\n\nmoveCard = %d\n",moveCard(testCommand));
+    } else {
+        !debug? : printf("\n\nInputvalidation failed\n");
+    }
+
     testPrintBoard();
 
     // testCommand = &testArray2[0];
     // printf("\n\nmoveCard = %d\n",moveCard(testCommand));
     // testPrintBoard();
-
 
     return 0;
 }
@@ -78,7 +83,7 @@ void testPrintDeck(Card * deckHeader) {
 void testPrintBoard() {
     for (int i = 0; i < 7; i++) {
         Card * currentCard = columnHeader[i];
-        printf("\n%s%d","Column ",i+1);
+        printf("\n%s%d","Column: ",i+1);
 
         while (currentCard != NULL) {
             printf("  ");
@@ -94,7 +99,7 @@ void testPrintBoard() {
 
     for (int i = 0; i < 4; i++) {
         Card * currentCard = foundationHeader[i];
-        printf("\n%s%d","Foundation ",i+1);
+        printf("\n%s%d","Foundation: ",i+1);
         while (currentCard != NULL) {
             printf("  ");
             printf("%s",rankName[currentCard->rank]);

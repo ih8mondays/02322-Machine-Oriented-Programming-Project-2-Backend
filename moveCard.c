@@ -9,7 +9,7 @@
 // C = Column, F = Foundation, R = Rank, S = Suit
 //-----------------------------------------------
 //   CX:RS->CX
-//   CX:RS->FX
+//   CX:RS->FX      command doesn't make sense
 //   CX->CX
 //   CX->FX
 //   FX->CX
