@@ -16,13 +16,13 @@ int isSuit(char input);
 //   FX->CX
 //-----------------------------------------------
 
-// TODO set chars to UPPERCASE so C or c is accepted
+// TODO set chars to UPPERCASE so C and c is accepted
 
 /** Returns 1 , 0 or -1 */
 int validateInput(char * input) {
 
     if (input == NULL) {
-        !debug? :printf("\n\nError at line %d in moveCard.c\n",__LINE__);
+        !debug? : printf("\n\nError at line %d in moveCard.c\n",__LINE__);
         return -1;
     }
 

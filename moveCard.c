@@ -15,10 +15,10 @@
 //   FX->CX
 //-----------------------------------------------
 
-/** Returns 0 on success, -1 on error and -2 on invalid move */
+/** Returns 1 on success, 0 on invalid move and -1 on error */
 int moveCard(char * input) {
     if (input == NULL) {
-        !debug? :printf("\n\nError at line %d in moveCard.c\n",__LINE__);
+        !debug? : printf("\n\nError at line %d in moveCard.c\n",__LINE__);
         return -1;
     }
 
@@ -33,7 +33,7 @@ int moveCard(char * input) {
         columnHeader[startPos] == NULL ||
         startType == 'F'&&
         foundationHeader[startPos] == NULL) {
-        return -2;
+        return 0;
     }
 
     // find startPoint
@@ -126,12 +126,12 @@ int moveCard(char * input) {
         endType == 'C' &&
         startPoint->rank != endPoint->rank - 1 &&
         startPoint->suit == endPoint->suit) {
-            return -2;
+            return 0;
     } else if (!emptyEndPointFlag &&
         endType == 'F' &&
         startPoint->rank != endPoint->rank + 1 &&
         startPoint->suit != endPoint->suit) {
-            return -2;
+            return 0;
     }
 
     // detach from start column
@@ -157,7 +157,7 @@ int moveCard(char * input) {
         foundationHeader[endPos] = startPoint;
     }
 
-    return 0;
+    return 1;
 }
 
 /** Can return a DualPointer containing NULLs */

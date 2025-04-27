@@ -1,7 +1,8 @@
 #include "fillBoard.h"
 #include "generateCards.h"
-#include <stdio.h>
+#include "main.h"
 #include "moveCard.h"
+#include <stdio.h>
 
 /**
  * Fills the deck into the columns and toggles hidden/shown.
@@ -31,7 +32,7 @@ void fillBoard(Card * deckHeader, Card * columnHeader[]) {
 
         for (int j = 1 + offset; j < 7; j++) {  // j = column
             if (currentFill == NULL) {
-                printf("\nNullPointerError in row %d column %d during fillBoard()\n",i+1,j+1);
+                !debug? : printf("\nNullPointerError in row %d column %d during fillBoard()\n",i+1,j+1);
                 return;
             }
 

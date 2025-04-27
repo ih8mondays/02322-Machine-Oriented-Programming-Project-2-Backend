@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "main.h"
+
 const Rank rank[] = {ACE,TWO,THREE,FOUR,FIVE,SIX,SEVEN,EIGHT,NINE,TEN,JACK,QUEEN,KING};
 const Suit suit[] = {CLUBS,DIAMONDS,HEARTS,SPADES};
 const Visibility hidden[] = {HIDDEN,SHOWN};
@@ -22,7 +24,7 @@ Card * generateCards() {
     Card * current = head;
 
     if (head == NULL) {
-        printf("Memory couldn't be allocated while generating cards");
+        !debug? : printf("Memory couldn't be allocated while generating cards");
         return NULL;
     }
 
@@ -30,7 +32,7 @@ Card * generateCards() {
         for (int j = 0 ; j < rankSize; j++) {
 
             if (current == NULL) {
-                printf("Memory couldn't be allocated while generating cards");
+                !debug? : printf("Memory couldn't be allocated while generating cards");
                 free(head);
                 return NULL;
             }
