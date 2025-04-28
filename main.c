@@ -18,6 +18,7 @@ Card * foundationHeader[] = {NULL,NULL,NULL,NULL};
 int debug = 1;
 void testPrintDeck(Card * deckHeader);
 void testPrintBoard();
+void countCards();
 
     // __FILE__
     // __LINE__
@@ -48,9 +49,15 @@ int main(void) {
 
     // Shuffle
     // TEST - display content of shuffled linked-list
-    Card *newDeck = generateCards();
-    newDeck = shuffleDeck(newDeck);
-    testPrintDeck(newDeck);
+    /*Card *splitDeck = generateCards();
+    Card *randomDeck = generateCards();
+    splitDeck = splitShuffle(splitDeck, 26);
+    randomDeck = randomShuffle(randomDeck);
+    printf("Split shuffle deck: \n");
+    testPrintDeck(splitDeck);
+    printf("Random shuffle deck: \n");
+    testPrintDeck(randomDeck);*/
+
 
     fillBoard(deckHeader, columnHeader);
 
@@ -87,13 +94,13 @@ void testPrintDeck(Card * deck) {
     }
 }
 
-int countCards(Card *deck) {
+void countCards(Card *deck) {
     int count = 0;
     while (deck != NULL) {
         count++;
         deck = deck->next;
     }
-    return count;
+    printf("amount of cards in deck: %d\n",count);
 }
 
 void testPrintBoard() {
