@@ -1,5 +1,6 @@
 #include "main.h"
 #include "generateCards.h"
+#include "shuffleDeck.h"
 #include "fillBoard.h"
 #include "saveCards.h"
 #include "loadCards.h"
@@ -7,6 +8,8 @@
 #include "validateInput.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+
 
 // Initialize empty board
 Card * columnHeader[] = {NULL,NULL,NULL,NULL,NULL,NULL,NULL};
@@ -21,6 +24,7 @@ void testPrintBoard();
     // sprintf();
 
 int main(void) {
+    srand(time(NULL));
 
     // Set up 52 cards in a linked list
     Card * deckHeader = generateCards();
@@ -33,6 +37,8 @@ int main(void) {
     // TEST - display content of linked-list
     testPrintDeck(deckHeader);
 
+
+
     // TEST - save/load function
     saveCards(deckHeader, "test.txt");
     saveCards(deckHeader,NULL);
@@ -41,8 +47,10 @@ int main(void) {
 
 
     // Shuffle
-    //
-    //
+    // TEST - display content of shuffled linked-list
+    Card *newDeck = generateCards();
+    newDeck = shuffleDeck(newDeck);
+    testPrintDeck(newDeck);
 
     fillBoard(deckHeader, columnHeader);
 
@@ -69,8 +77,8 @@ int main(void) {
 }
 
 
-void testPrintDeck(Card * deckHeader) {
-    Card *test = deckHeader;
+void testPrintDeck(Card * deck) {
+    Card *test = deck;
     for (int i = 0; i < 52 && test != NULL ; i++) {
         printf("%s",rankName[test->rank]);
         printf("%s",suitName[test->suit]);
@@ -79,6 +87,14 @@ void testPrintDeck(Card * deckHeader) {
     }
 }
 
+int countCards(Card *deck) {
+    int count = 0;
+    while (deck != NULL) {
+        count++;
+        deck = deck->next;
+    }
+    return count;
+}
 
 void testPrintBoard() {
     for (int i = 0; i < 7; i++) {

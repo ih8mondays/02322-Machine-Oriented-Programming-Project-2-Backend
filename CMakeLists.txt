@@ -17,4 +17,6 @@ add_executable(YukonBackend
         loadCards.h
         validateInput.c
         validateInput.h
+        shuffleDeck.c
+        shuffleDeck.h
 )
