@@ -19,4 +19,6 @@ add_executable(YukonBackend
         validateInput.h
         shuffleDeck.c
         shuffleDeck.h
+        printBoard.c
+        printBoard.h
 )

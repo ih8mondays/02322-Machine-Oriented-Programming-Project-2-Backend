@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include "printBoard.h"
 
 
 // Initialize empty board
@@ -74,11 +75,15 @@ int main(void) {
         !debug? : printf("\n\nInputvalidation failed\n");
     }
 
-    testPrintBoard();
+    // testPrintBoard();
 
     // testCommand = &testArray2[0];
     // printf("\n\nmoveCard = %d\n",moveCard(testCommand));
     // testPrintBoard();
+
+    // TEST PRINT BOARD
+    printf("BOARD START HERE\n");
+    print_empty_board();
 
     return 0;
 }
