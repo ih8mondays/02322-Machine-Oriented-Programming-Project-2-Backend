@@ -29,7 +29,7 @@ int main(void) {
     srand(time(NULL));
 
     // Set up 52 cards in a linked list
-    Card * deckHeader = generateCards();
+    Card * deckHeader = loadCards("test.txt");
     if (deckHeader == NULL) {
         perror("Error in generateCards\n");
         free(deckHeader);
@@ -44,7 +44,7 @@ int main(void) {
     // TEST - save/load function
     saveCards(deckHeader, "test.txt");
     saveCards(deckHeader,NULL);
-    loadCards("test.txt");
+
     //loadCards("notReal.txt");
 
 
