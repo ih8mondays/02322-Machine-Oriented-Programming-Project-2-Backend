@@ -2,19 +2,19 @@
 #define INPUTVALIDATION_H
 
 typedef enum Command {
-    LD,             // Load deck
-    LD_FILENAME,
-    SW,             // Show
-    SI,             // Shuffle Split
-    SI_SPLIT,
-    SR,             // Shuffle Random
-    SD,             // Save Deck
-    QQ,             // Quit program
-    Q,              // Go to Initilization
-    P,              // Go to PlayPhase
-    MOVE,
-    INVALID,
-    BREAKS_RULES
+    CMD_LD,             // Load deck
+    CMD_LD_FILENAME,    // ^ with input
+    CMD_SW,             // Show
+    CMD_SI,             // Shuffle Split
+    CMD_SI_SPLIT,       // ^ with input
+    CMD_SR,             // Shuffle Random
+    CMD_SD,             // Save Deck
+    CMD_QQ,             // Quit program
+    CMD_Q,              // Go to Initilization
+    CMD_P,              // Go to PlayPhase
+    CMD_MOVE,
+    CMD_INVALID,
+    CMD_BREAKS_RULES
   } Command;
 
 Command validateInput(char * input);
