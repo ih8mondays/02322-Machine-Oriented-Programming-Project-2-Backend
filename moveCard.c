@@ -112,6 +112,12 @@ int moveCard(char * input) {
         return -1;
     }
 
+    // can't start and end in same column/foundation
+    if (startType == endType &&
+            startPos == endPos) {
+        return 0;
+    }
+
     // faulty input guard clause
     if (!emptyEndPointFlag &&
         (startPoint == NULL ||
