@@ -18,11 +18,11 @@ int saveCards(Card* head, char filename[]) {
 
     FILE * file = fopen(filename, "w");
     if (file == NULL) {
-        perror("Error opening file\n");
+        !debug? : perror("Error opening file\n");
         return -1;
     }
 
-    Card *current = head;
+    Card * current = head;
     for (int i = 0; i < 52 && current != NULL ; i++) {
         fprintf(file,"%s%s\n",
             rankName[current->rank],
