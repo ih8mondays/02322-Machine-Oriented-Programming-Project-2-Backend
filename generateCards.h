@@ -39,6 +39,7 @@ typedef struct Card {
 
 
 Card * generateCards();
+void chainDelete(Card * deckHeader);
 
 /** ACE,TWO,THREE,FOUR,FIVE,SIX,SEVEN,EIGHT,NINE,TEN,JACK,QUEEN,KING */
 extern const Rank rank[];

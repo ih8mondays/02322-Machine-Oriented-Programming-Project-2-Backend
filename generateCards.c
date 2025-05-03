@@ -56,3 +56,14 @@ Card * generateCards() {
 
     return head;
 }
+
+void chainDelete(Card * deckHeader) {
+    Card * current = deckHeader;
+    Card * previous;
+
+    while (current != NULL) {
+        previous = current;
+        current = current->next;
+        free(previous);
+    }
+}

@@ -15,6 +15,18 @@ void fillBoard(Card * deckHeader, Card * columnHeader[]) {
 
     //TODO change return value to int
 
+    if (deckHeader == NULL ||
+            columnHeader[0] != NULL ||
+            columnHeader[1] != NULL ||
+            columnHeader[2] != NULL ||
+            columnHeader[3] != NULL ||
+            columnHeader[4] != NULL ||
+            columnHeader[5] != NULL ||
+            columnHeader[6] != NULL) {
+        return;
+    }
+
+
     Card * currentFill = deckHeader;
     currentFill->visibility = SHOWN;
     Card * columnEnd = NULL;
