@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "validateInput.h"
+
 // Possible valid inputs ... C1-C7 & F1-F4
 // C = Column, F = Foundation, R = Rank, S = Suit
 //-----------------------------------------------
@@ -40,34 +42,12 @@ int moveCard(char * input) {
     if (input[2] == ':') {
         endType = input[7];
         endPos = input[8]-'0'-1;
-        Rank searchRank;
-        switch (input[3]) {
-            case 'A': searchRank = ACE;     break;
-            case '2':
-            case '3':
-            case '4':
-            case '5':
-            case '6':
-            case '7':
-            case '8':
-            case '9': searchRank = input[3]-'0'-1;    break;
-            case 'T': searchRank = TEN;     break;
-            case 'J': searchRank = JACK;    break;
-            case 'Q': searchRank = QUEEN;   break;
-            case 'K': searchRank = KING;    break;
-            default:
-                !debug? :printf("\n\nError at line %d in moveCard.c\n",__LINE__);
-                return -1;
-        }
-        Suit searchSuit;
-        switch (input[4]) {
-            case 'C': searchSuit = CLUBS;       break;
-            case 'D': searchSuit = DIAMONDS;    break;
-            case 'H': searchSuit = HEARTS;      break;
-            case 'S': searchSuit = SPADES;      break;
-            default:
-                !debug? :printf("\n\nError at line %d in moveCard.c\n",__LINE__);
-                return -1;
+        Rank searchRank = strToRank(input[3]);
+        Suit searchSuit = strToSuit(input[4]);
+        if (searchRank == NOT_RANK ||
+                searchSuit == NOT_SUIT) {
+            !debug? :printf("\n\nError at line %d in moveCard.c\n",__LINE__);
+            return -1;
         }
         if (endType == 'C') {
             dualStartPointer = searchColumn(columnHeader[startPos], searchRank, searchSuit);
@@ -204,5 +184,32 @@ DualPointer searchColumn(Card * searchHeader, Rank searchRank, Suit searchSuit) 
     return dualPointer;
 }
 
+Rank strToRank(char input) {
+    switch (input) {
+        case 'A': return ACE;
+        case '2': return TWO;
+        case '3': return THREE;
+        case '4': return FOUR;
+        case '5': return FIVE;
+        case '6': return SIX;
+        case '7': return SEVEN;
+        case '8': return EIGHT;
+        case '9': return NINE;
+        case 'T': return TEN;
+        case 'J': return JACK;
+        case 'Q': return QUEEN;
+        case 'K': return  KING;
+        default: return NOT_RANK;
+    }
+}
 
+Suit strToSuit(char input) {
+    switch (input) {
+        case 'C': return CLUBS;
+        case 'D': return DIAMONDS;
+        case 'H': return HEARTS;
+        case 'S': return SPADES;
+        default: return NOT_SUIT;
+    }
+}
 
