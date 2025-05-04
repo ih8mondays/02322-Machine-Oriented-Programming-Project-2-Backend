@@ -21,4 +21,6 @@ add_executable(YukonBackend
         shuffleDeck.h
         printBoard.c
         printBoard.h
+        gameController.c
+        gameController.h
 )
