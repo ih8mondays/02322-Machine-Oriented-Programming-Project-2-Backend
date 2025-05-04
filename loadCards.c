@@ -4,6 +4,10 @@
 #include "loadCards.h"
 
 #include <stdlib.h>
+#include <string.h>
+
+#include "gameController.h"
+#include "moveCard.h"
 
 
 /**
@@ -11,99 +15,121 @@
  * @param filename Name of the file to open. Accepted format is one card per line (AC, 2C, 3C...)
  * @return Pointer of the top card of the constructed deck
  */
-Card *loadCards(char filename[]) {
-    if (filename == NULL) {
-        perror("null filename");
-        return NULL;
+void loadCards(char * input) {
+
+    ////////////////////////////////////
+    //////////// Validation ////////////
+    ////////////////////////////////////
+
+    if (input[2] == '\0') {
+        chainDelete(deckHeader);
+        deckHeader = generateCards();
+        return;
     }
 
-    FILE *file = fopen(filename, "r");
+    char filename[50];
+    memcpy(filename,&input[3],sizeof(input) - 3);
+
+
+    if (filename == NULL) {
+        !debug? : setBoardMessage("Filename is NULL");
+        return;
+    }
+
+    FILE * file = fopen(filename, "r");
     if (file == NULL) {
-        perror("Error opening file\n");
-        return NULL;
+        !debug? : setBoardMessage("Error while opening file");
+        return;
     }
 
     //Validation procedure using matrix of zeroes
-    // printf("Validating file contents... \n");
     int validationMatrix[rankSize][suitSize];
-    for (int i = 0; i < rankSize; ++i) {
-        for (int j = 0; j < suitSize; ++j) {
-            validationMatrix[i][j] = 0;
-        }
-    }
+    memset(validationMatrix, 0, rankSize * suitSize * sizeof(int));
 
-    //Initializing with more than 2 chars so overflows do not occur
     char currentStr[10];
-    int lineCount = 0;
-    fscanf(file, "%s", &currentStr);
 
-    //Loop until file ends
-    while (!feof(file) && lineCount < rankSize * suitSize) {
-        for (int i = 0; i < rankSize; ++i) {
-            for (int j = 0; j < suitSize; ++j) {
-                if (currentStr[0] == *rankName[i] && currentStr[1] == *suitName[j]) {
-                    validationMatrix[i][j]++;
-                }
-            }
+    // Reads lines until file is empty and puts them into matrix
+    for  (int lineCount = 1 ; !feof(file) ; lineCount++) {
+        memset(currentStr, '\0', sizeof(currentStr));
+        fgets(currentStr, sizeof(currentStr), file);
+
+        //Ensure correct format so program won't crash
+        if (!isRank(currentStr[0]) || !isSuit(currentStr[1])) {
+            memset(boardMessage, '\0', sizeof(boardMessage));
+            snprintf(boardMessage,sizeof(boardMessage),"Incorrect formatting at line %d.",lineCount);
+            fclose(file);
+            return;
         }
-        ++lineCount;
-        fscanf(file, "%s", &currentStr);
+
+        Rank curR = strToRank(currentStr[0]);
+        Suit curS = strToSuit(currentStr[1]);
+
+        // End if we find a duplicate
+        if (validationMatrix[curR][curS] == 0) {
+            validationMatrix[curR][curS]++;
+        } else {
+            memset(boardMessage, '\0', sizeof(boardMessage));
+            snprintf(boardMessage,sizeof(boardMessage),"Duplicate card at line %d.",lineCount);
+            fclose(file);
+            return;
+        }
     }
 
     //Checks if the matrix contains only ones
     for (int i = 0; i < suitSize; ++i) {
         for (int j = 0; j < rankSize; ++j) {
             if (validationMatrix[j][i] != 1) {
-                perror("Invalid file format\n");
+                memset(boardMessage, '\0', sizeof(boardMessage));
+                snprintf(boardMessage,sizeof(boardMessage),"%s%s is missing from the file.",rankName[j],suitName[i]);
                 fclose(file);
-                return NULL;
+                return;
             }
         }
     }
 
-    // printf("%s\n", "File valid, loading...");
+    ///////////////////////////////////
+    //////// Loading procedure ////////
+    ///////////////////////////////////
 
-
-    //Loading procedure
     rewind(file);
     Card *head = (Card *) malloc(sizeof(Card));
     Card *current = head;
 
     if (head == NULL) {
-        !debug ? : printf("Memory couldn't be allocated while generating cards");
-        return NULL;
+        !debug ? : setBoardMessage("Memory couldn't be allocated while generating cards");
+        fclose(file);
+        return;
     }
 
     for (int i = 0; i < rankSize * suitSize; i++) {
-        fscanf(file, "%s", &currentStr);
 
-        for (int j = 0; j < rankSize; ++j) {
-            for (int k = 0; k < suitSize; ++k) {
-                if (currentStr[0] == *rankName[j] && currentStr[1] == *suitName[k]) {
-                    current->rank = rank[j];
-                    current->suit = suit[k];
-                    current->visibility = HIDDEN;
-                }
-            }
-        }
+        // Read next line
+        memset(currentStr, '\0', sizeof(currentStr));
+        fgets(currentStr, sizeof(currentStr), file);
+
+        // Assign current card values
+        current->rank = strToRank(currentStr[0]);
+        current->suit = strToSuit(currentStr[1]);
+        current->visibility = HIDDEN;
 
         // Last card won't allocate more memory
         if (i == rankSize * suitSize - 1) {
             current->next = NULL;
-            fclose(file);
-            return head;
+        } else {
+            // Set up next card
+            current->next = malloc(sizeof(Card));
+            current = current->next;
         }
 
-        // Set up next card
-        current->next = malloc(sizeof(Card));
-        current = current->next;
-
         if (current == NULL) {
-            !debug ? : printf("Memory couldn't be allocated while generating cards");
-            free(head);
-            return NULL;
+            !debug ? : setBoardMessage("Memory couldn't be allocated while generating cards");
+            chainDelete(head);
+            head = NULL;
+            fclose(file);
+            return;
         }
     }
     fclose(file);
-    return head;
+
+    deckHeader = head;
 }

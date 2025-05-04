@@ -26,10 +26,8 @@
 char * toCommandName[] = {"LD","LD_FILENAME","SW","SI","SI_SPLIT",
                           "SR","SD","QQ","Q","P","MOVE","INVALID",
                          "BREAKS_RULES"};
-// TODO set chars to UPPERCASE so C and c is accepted
 
-int isRank(char input);
-int isSuit(char input);
+// Helper functions
 void toUpperCase(char * input);
 Command validateMove(char * input);
 Command validateLoadFile(char * input);
@@ -139,9 +137,10 @@ Command validateShuffleSplit(char * input) {
         return CMD_INVALID;
     }
 
-    // must be less than 52
+    // 0 < split < 52
     int inputNumber = (input[3] - '0')*10 + (input[4] - '0');
-    if (inputNumber >= rankSize * suitSize) {
+    if (inputNumber >= rankSize * suitSize ||
+        inputNumber < 1) {
         return CMD_INVALID;
     }
 

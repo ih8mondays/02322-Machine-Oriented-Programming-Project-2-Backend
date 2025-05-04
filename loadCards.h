@@ -2,6 +2,6 @@
 #ifndef LOADCARDS_H
 #define LOADCARDS_H
 
-Card* loadCards(char filename[]);
+void loadCards(char * input);
 
 #endif //LOADCARDS_H
