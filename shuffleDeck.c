@@ -4,10 +4,13 @@
 #include <stdlib.h>
 #include "main.h"
 #include "shuffleDeck.h"
-/*
- *
- *
- **/
+
+// Helper functions
+Card *shuffle_at_random(Card **head, Card *card_to_insert, int pick);
+Card *shuffle(Card *pile1, Card *pile2);
+Card *insert_at_start(Card **head, Card *card_to_insert);
+Card *insert_at_end(Card **head, Card *card_to_insert);
+
 
 
 Card *randomShuffle(Card *passedDeck) {
@@ -39,7 +42,7 @@ Card *shuffle_at_random(Card **head, Card *card_to_insert, int pick) {
     }
     Card *temp = *head;
     for (int i = 1; i < pick && temp->next != NULL; i++) {
-        temp = temp->next; //travers
+        temp = temp->next; //traverse
     }
     card_to_insert->next = temp->next;
     temp->next = card_to_insert;
@@ -47,7 +50,7 @@ Card *shuffle_at_random(Card **head, Card *card_to_insert, int pick) {
     return *head;
 }
 /**
-* Takes a deck and a split position. Devides the deck into two at the given split
+* Takes a deck and a split position. Divides the deck into two at the given split
 * Passes the two lists onto shuffle
 * returns a shuffled deck
 */
@@ -70,7 +73,7 @@ Card *splitShuffle(Card *passedDeck, int split) {
    // }
 /**
 * merges the two piles by taking one from each pile at a time.
-* when a pile is exhaused remaining cards, loop makes sure the remaining cards in other pile gets added to the end
+* when a pile is exhausted remaining cards, loop makes sure the remaining cards in other pile gets added to the end
 *
 */
 Card *shuffle(Card *pile1, Card *pile2) {
@@ -92,8 +95,8 @@ Card *shuffle(Card *pile1, Card *pile2) {
   }
 
   /**
- * Traverses through the shuffled deck and attaches the passed card.
-* Might be able to do this with tail pointers instead, but for now this works
+   * Traverses through the shuffled deck and attaches the passed card.
+   * Might be able to do this with tail pointers instead, but for now this works
    */
 Card *insert_at_end(Card **head, Card *card_to_insert) {
     card_to_insert->next = NULL;
