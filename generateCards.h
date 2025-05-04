@@ -5,7 +5,8 @@ typedef enum Suit {
     CLUBS,
     DIAMONDS,
     HEARTS,
-    SPADES
+    SPADES,
+    NOT_SUIT
   } Suit;
 
 typedef enum Rank {
@@ -21,7 +22,8 @@ typedef enum Rank {
     TEN,
     JACK,
     QUEEN,
-    KING
+    KING,
+    NOT_RANK
   } Rank;
 
 typedef enum Visibility {
@@ -40,6 +42,7 @@ typedef struct Card {
 
 Card * generateCards();
 void chainDelete(Card * deckHeader);
+void clearBoard();
 
 /** ACE,TWO,THREE,FOUR,FIVE,SIX,SEVEN,EIGHT,NINE,TEN,JACK,QUEEN,KING */
 extern const Rank rank[];

@@ -33,7 +33,8 @@ Card * generateCards() {
 
             if (current == NULL) {
                 !debug? : printf("Memory couldn't be allocated while generating cards");
-                free(head);
+                chainDelete(head);
+                head = NULL;
                 return NULL;
             }
 
@@ -43,11 +44,11 @@ Card * generateCards() {
             current->visibility = HIDDEN;
 
             // Last card won't allocate more memory
-
             if (i == suitSize - 1 && j == rankSize - 1) {
                 current->next = NULL;
                 return head;
             }
+
             // Set up next card
             current->next = malloc(sizeof(Card));
             current = current->next;
@@ -65,5 +66,16 @@ void chainDelete(Card * deckHeader) {
         previous = current;
         current = current->next;
         free(previous);
+    }
+}
+
+void clearBoard() {
+    for (int i = 0 ; i < 7 ; i++) {
+        chainDelete(columnHeader[i]);
+        columnHeader[i] = NULL;
+    }
+    for (int i = 0 ; i < 4 ; i++) {
+        chainDelete(foundationHeader[i]);
+        foundationHeader[i] = NULL;
     }
 }
