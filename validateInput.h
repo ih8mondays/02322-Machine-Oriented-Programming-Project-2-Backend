@@ -10,14 +10,16 @@ typedef enum Command {
     CMD_SR,             // Shuffle Random
     CMD_SD,             // Save Deck
     CMD_QQ,             // Quit program
-    CMD_Q,              // Go to Initilization
-    CMD_P,              // Go to PlayPhase
+    CMD_Q,              // Go to STARTUP_PHASE
+    CMD_P,              // Go to PLAY_PHASE
     CMD_MOVE,
     CMD_INVALID,
     CMD_BREAKS_RULES
   } Command;
 
 Command validateInput(char * input);
+int isRank(char input);
+int isSuit(char input);
 extern char * toCommandName[];
 
 #endif //INPUTVALIDATION_H

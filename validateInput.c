@@ -95,9 +95,9 @@ Command validateLoadFile(char * input) {
     }
 
     // must end on .txt
-    if (input[i-4] != '.' &&
-            input[i-3] != 't' &&
-            input[i-2] != 'x' &&
+    if (input[i-4] != '.' ||
+            input[i-3] != 't' ||
+            input[i-2] != 'x' ||
             input[i-1] != 't') {
         return CMD_INVALID;
     }
@@ -261,7 +261,7 @@ void toUpperCase(char * input) {
         }
 
         // edgecase for LD_Input
-        if (i > 1 &&
+        if (i >= 2 &&
                 input[0] == 'L' &&
                 input[1] == 'D') {
             break;
