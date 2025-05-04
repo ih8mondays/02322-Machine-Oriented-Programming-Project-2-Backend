@@ -2,6 +2,6 @@
 #define FILLBOARD_H
 
 #include "generateCards.h"
-void fillBoard(Card * deckHeader, Card * columnHeader[]);
+void fillBoard(Card * deckHeader);
 
 #endif //FILLBOARD_H

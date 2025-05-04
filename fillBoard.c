@@ -3,39 +3,37 @@
 #include "main.h"
 #include "moveCard.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 /**
- * Fills the deck into the columns and toggles hidden/shown.
+ * Copies the deck into the columns and toggles hidden/shown.
  * Afterwards the game should be ready to start.
  *
  * @param deckHeader Input deck pointers
- * @param columnHeader Input board columns pointer array.
  */
-void fillBoard(Card * deckHeader, Card * columnHeader[]) {
+void fillBoard(Card * deckHeader){
 
-    //TODO change return value to int
-
-    if (deckHeader == NULL ||
-            columnHeader[0] != NULL ||
-            columnHeader[1] != NULL ||
-            columnHeader[2] != NULL ||
-            columnHeader[3] != NULL ||
-            columnHeader[4] != NULL ||
-            columnHeader[5] != NULL ||
-            columnHeader[6] != NULL) {
-        return;
+    if (deckHeader == NULL) {
+        return;              //TODO write to boardMessage
     }
+    clearBoard();
 
 
+    // Create a copy of the first card
     Card * currentFill = deckHeader;
-    currentFill->visibility = SHOWN;
-    Card * columnEnd = NULL;
+    Card * currentCopy = (Card*)malloc(sizeof(Card));
+    currentCopy->rank = currentFill->rank;
+    currentCopy->suit = currentFill->suit;
+    currentCopy->visibility = SHOWN;
+    currentCopy->next = NULL;
+
 
     // First column gets 1 card
-    columnHeader[0] = currentFill;
+    columnHeader[0] = currentCopy;
     Card * previousFill = currentFill;
+    Card * previousCopy = currentCopy;
     currentFill = currentFill->next;
-    previousFill->next = NULL;
+    Card * columnEnd = NULL;
 
     int offset = 0;
 
@@ -45,30 +43,34 @@ void fillBoard(Card * deckHeader, Card * columnHeader[]) {
         for (int j = 1 + offset; j < 7; j++) {  // j = column
             if (currentFill == NULL) {
                 !debug? : printf("\nNullPointerError in row %d column %d during fillBoard()\n",i+1,j+1);
+                clearBoard();
                 return;
             }
 
-            // Reveals cards as outlined by the rules
+            // Create cardCopy to fill onto board
+            currentCopy = (Card*)malloc(sizeof(Card));
+            currentCopy->rank = currentFill->rank;
+            currentCopy->suit = currentFill->suit;
+            currentCopy->next = NULL;
+
+            // Reveals cardCopy as outlined by the rules
             if (i >= j) {
-                currentFill->visibility = SHOWN;
+                currentCopy->visibility = SHOWN;
             } else {
-                currentFill->visibility = HIDDEN;
+                currentCopy->visibility = HIDDEN;
             }
 
-            // Put current card in next spot
+            // Place currentCopy on board
             if (i == 0) {
-                columnHeader[j] = currentFill;
+                columnHeader[j] = currentCopy;
             } else {
                 columnEnd = retColEnd(columnHeader[j]).current;
-                columnEnd->next = currentFill;
+                columnEnd->next = currentCopy;
             }
 
             // Increment to next card
             previousFill = currentFill;
             currentFill = currentFill->next;
-            previousFill->next = NULL;
-
         }
     }
-
 }
