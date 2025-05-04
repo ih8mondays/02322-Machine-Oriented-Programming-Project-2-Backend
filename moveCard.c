@@ -1,11 +1,12 @@
 #include "moveCard.h"
 #include "generateCards.h"
 #include "main.h"
+#include "gameController.h"
+#include "validateInput.h"
 #include <inttypes.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "validateInput.h"
 
 // Possible valid inputs ... C1-C7 & F1-F4
 // C = Column, F = Foundation, R = Rank, S = Suit

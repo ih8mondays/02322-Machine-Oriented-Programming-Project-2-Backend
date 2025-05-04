@@ -2,6 +2,7 @@
 #include "generateCards.h"
 #include "main.h"
 #include "moveCard.h"
+#include "gameController.h"
 #include <stdio.h>
 #include <stdlib.h>
 

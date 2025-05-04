@@ -6,12 +6,15 @@
 #include "loadCards.h"
 #include "moveCard.h"
 #include "validateInput.h"
+#include "gameController.h"
+#include "printBoard.h"
+#include "validateInput.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "printBoard.h"
-#include "validateInput.h"
+
+
 
 
 int debug = 1;
@@ -28,35 +31,39 @@ void testValidateInput();
 void testHelper(char * cmd);
 void countCards();
 
-// Initialize empty board
-Card * columnHeader[] = {NULL,NULL,NULL,NULL,NULL,NULL,NULL};
-Card * foundationHeader[] = {NULL,NULL,NULL,NULL};
-
-// Game variables
-
-
-
-// TODO test save/load
-//      test shuffle
+// TODO implement gameController()   X = done
+//      x   fix loadCards()
+//          fix
+//          fix shuffleSplit()
+//          fix saveCards()
+//      test gameController()
 //      implement printBoard()
 //      test printBoard()
-//      implement startUpPhase
-//      implement playPhase
-//      test game
-//      commands write into boardCommands
+//      test print_empty_board()
+//      test print_hidden_board()
+//      test print_shown_board()
+//      test loadCards()
+//      test saveCards()
+//      test randomShuffle()
+//      test splitShuffle()
+//      commands write into boardCommands[]   X = done
+//          fillBoard()
+//      X   gameController()
+//          generateCards()
+//      X   loadCards()
+//          main()
+//          moveCards()
+//          saveCards()
+//          shuffleDeck()         create checks to see if you return a full deck (52 cards)
+
 
 int main(void) {
-
-
-
-
-
 
     // ---------TESTS------------
     // testPrintDeck(deckHeader);
     // testPrintBoard();
     // testShuffleDeck();
-    // testLoadSave()
+    // testLoadSave();
     // testFillBoard();
     // testChainDelete();
     // testClearBoard();
@@ -112,7 +119,7 @@ void testPrintBoard() {
             printf("  ");
             printf("%s",rankName[currentCard->rank]);
             printf("%s",suitName[currentCard->suit]);
-            printf(" %d",currentCard->visibility);
+            //printf(" %d",currentCard->visibility);
 
             currentCard = currentCard->next;
         }
@@ -156,17 +163,22 @@ void testLoadSave() {
 }
 
 void testFillBoard() {
-    Card * deckHeader = generateCards();
+    deckHeader = generateCards();
     fillBoard(deckHeader);
     fillBoard(deckHeader);
     testPrintBoard();
     testPrintDeck(deckHeader);
+
+    // cleanup
+    clearBoard();
+    chainDelete(deckHeader);
+    deckHeader = NULL;
 }
 
 void testChainDelete() {
-    Card * deckHeader = generateCards();
+    deckHeader = generateCards();
     chainDelete(deckHeader);
-    deckHeader = NULL;      // prevents unintended use
+    deckHeader = NULL;          // prevents unintended use
     printf("\nDeck should be empty:");
     testPrintDeck(deckHeader);
 }
@@ -184,7 +196,7 @@ void testClearBoard() {
 
 void testMoveCard(){
     // initialization
-    Card * deckHeader = loadCards("test.txt");
+    loadCards("test.txt");
     fillBoard(deckHeader);
     testPrintBoard();
 
@@ -194,6 +206,8 @@ void testMoveCard(){
 
     // cleanup
     clearBoard();
+    chainDelete(deckHeader);
+    deckHeader = NULL;
 }
 
 void testValidateInput() {

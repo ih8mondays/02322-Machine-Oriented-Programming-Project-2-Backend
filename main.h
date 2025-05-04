@@ -3,8 +3,6 @@
 
 #include "generateCards.h"
 
-extern Card * columnHeader[];
-extern Card * foundationHeader[];
 extern int debug;
 extern int convertLowerCaseInput;
 

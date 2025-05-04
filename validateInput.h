@@ -2,6 +2,7 @@
 #define INPUTVALIDATION_H
 
 typedef enum Command {
+    NO_CMD_YET,
     CMD_LD,             // Load deck
     CMD_LD_FILENAME,    // ^ with input
     CMD_SW,             // Show
@@ -13,8 +14,7 @@ typedef enum Command {
     CMD_Q,              // Go to STARTUP_PHASE
     CMD_P,              // Go to PLAY_PHASE
     CMD_MOVE,
-    CMD_INVALID,
-    CMD_BREAKS_RULES
+    CMD_INVALID
   } Command;
 
 Command validateInput(char * input);

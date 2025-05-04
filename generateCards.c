@@ -1,8 +1,8 @@
 #include "generateCards.h"
+#include "gameController.h"
+#include "main.h"
 #include <stdio.h>
 #include <stdlib.h>
-
-#include "main.h"
 
 const Rank rank[] = {ACE,TWO,THREE,FOUR,FIVE,SIX,SEVEN,EIGHT,NINE,TEN,JACK,QUEEN,KING};
 const Suit suit[] = {CLUBS,DIAMONDS,HEARTS,SPADES};
