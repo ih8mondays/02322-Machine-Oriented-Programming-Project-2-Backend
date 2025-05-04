@@ -6,5 +6,6 @@
 extern Card * columnHeader[];
 extern Card * foundationHeader[];
 extern int debug;
+extern int convertLowerCaseInput;
 
 #endif //MAIN_H

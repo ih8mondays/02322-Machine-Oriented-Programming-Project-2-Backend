@@ -8,98 +8,93 @@
 #include "validateInput.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 #include "printBoard.h"
+#include "validateInput.h"
 
+
+int debug = 1;
+int convertLowerCaseInput = 1;
+void testPrintDeck(Card * deckHeader);
+void testPrintBoard();
+void testShuffleDeck();
+void testLoadSave();
+void testFillBoard();
+void testChainDelete();
+void testClearBoard();
+void testMoveCard();
+void testValidateInput();
+void testHelper(char * cmd);
+void countCards();
 
 // Initialize empty board
 Card * columnHeader[] = {NULL,NULL,NULL,NULL,NULL,NULL,NULL};
 Card * foundationHeader[] = {NULL,NULL,NULL,NULL};
 
-int debug = 1;
-void testPrintDeck(Card * deckHeader);
-void testPrintBoard();
-void countCards();
+// Game variables
 
-    // __FILE__
-    // __LINE__
-    // sprintf();
+
+
+// TODO test save/load
+//      test shuffle
+//      implement printBoard()
+//      test printBoard()
+//      implement startUpPhase
+//      implement playPhase
+//      test game
+//      commands write into boardCommands
 
 int main(void) {
-    srand(time(NULL));
-
-    // Set up 52 cards in a linked list
-    Card * deckHeader = loadCards("test.txt");
-    if (deckHeader == NULL) {
-        perror("Error in generateCards\n");
-        free(deckHeader);
-        return -1;
-    }
-
-    // TEST - display content of linked-list
-    testPrintDeck(deckHeader);
 
 
 
-    // TEST - save/load function
-    saveCards(deckHeader, "test.txt");
-    saveCards(deckHeader,NULL);
-
-    //loadCards("notReal.txt");
 
 
-    // Shuffle
-    // TEST - display content of shuffled linked-list
-    /*Card *splitDeck = generateCards();
-    Card *randomDeck = generateCards();
-    splitDeck = splitShuffle(splitDeck, 26);
-    randomDeck = randomShuffle(randomDeck);
-    printf("Split shuffle deck: \n");
-    testPrintDeck(splitDeck);
-    printf("Random shuffle deck: \n");
-    testPrintDeck(randomDeck);*/
 
-
-    fillBoard(deckHeader, columnHeader);
-
-    // TEST - display content of columns
-    testPrintBoard();
-
-    char testArray1[] = "C1:AC->F1";
-    // char testArray2[] = "C2:2C->F1";  // this should fail and return -2
-    char * testCommand = &testArray1[0];
-
-    if (validateInput(testArray1)) {
-        printf("\n\nmoveCard = %d\n",moveCard(testCommand));
-    } else {
-        !debug? : printf("\n\nInputvalidation failed\n");
-    }
-
+    // ---------TESTS------------
+    // testPrintDeck(deckHeader);
     // testPrintBoard();
+    // testShuffleDeck();
+    // testLoadSave()
+    // testFillBoard();
+    // testChainDelete();
+    // testClearBoard();
+    // testMoveCard();
+    // testValidateInput();
 
-    // testCommand = &testArray2[0];
-    // printf("\n\nmoveCard = %d\n",moveCard(testCommand));
-    // testPrintBoard();
 
-    // TEST PRINT BOARD
-    printf("BOARD START HERE\n");
-    print_empty_board();
+    //   TEST PRINT BOARD
+    // printf("BOARD START HERE\n");
+    // print_empty_board();
+
+    // srand(time(NULL));
 
     return 0;
 }
 
 
+// --------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------
+// -------------------  TESTS  ----------------------------------------------------------------
+// --------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------
+
 void testPrintDeck(Card * deck) {
-    Card *test = deck;
-    for (int i = 0; i < 52 && test != NULL ; i++) {
-        printf("%s",rankName[test->rank]);
-        printf("%s",suitName[test->suit]);
-        printf("  %s\n",hiddenName[test->visibility]);
-        test = test->next;
+    Card * current = deck;
+    printf("\nDeck:\n");
+    for (int i = 0; current != NULL ; i++) {
+        if (i <= 52) {
+            printf("%d: ",i+1);
+        }
+        printf("%s",rankName[current->rank]);
+        printf("%s",suitName[current->suit]);
+        printf("  %s\n",hiddenName[current->visibility]);
+        current = current->next;
     }
 }
 
-void countCards(Card *deck) {
+void countCards(Card * deck) {
     int count = 0;
     while (deck != NULL) {
         count++;
@@ -111,7 +106,7 @@ void countCards(Card *deck) {
 void testPrintBoard() {
     for (int i = 0; i < 7; i++) {
         Card * currentCard = columnHeader[i];
-        printf("\n%s%d","Column: ",i+1);
+        printf("\n%s%d:","Column ",i+1);
 
         while (currentCard != NULL) {
             printf("  ");
@@ -127,7 +122,7 @@ void testPrintBoard() {
 
     for (int i = 0; i < 4; i++) {
         Card * currentCard = foundationHeader[i];
-        printf("\n%s%d","Foundation: ",i+1);
+        printf("\nFoundation %d:",i+1);
         while (currentCard != NULL) {
             printf("  ");
             printf("%s",rankName[currentCard->rank]);
@@ -138,4 +133,112 @@ void testPrintBoard() {
         }
     }
 
+}
+
+void testShuffleDeck() {
+    // TEST - display content of shuffled linked-list
+    Card *splitDeck = generateCards();
+    Card *randomDeck = generateCards();
+    splitDeck = splitShuffle(splitDeck, 26);
+    randomDeck = randomShuffle(randomDeck);
+    printf("Split shuffle deck: \n");
+    testPrintDeck(splitDeck);
+    printf("Random shuffle deck: \n");
+    testPrintDeck(randomDeck);
+}
+
+void testLoadSave() {
+    // TEST - save/load function
+    Card * deckHeader = generateCards();
+    saveCards(deckHeader, "test.txt");
+    saveCards(deckHeader,NULL);
+    loadCards("notReal.txt");
+}
+
+void testFillBoard() {
+    Card * deckHeader = generateCards();
+    fillBoard(deckHeader);
+    fillBoard(deckHeader);
+    testPrintBoard();
+    testPrintDeck(deckHeader);
+}
+
+void testChainDelete() {
+    Card * deckHeader = generateCards();
+    chainDelete(deckHeader);
+    deckHeader = NULL;      // prevents unintended use
+    printf("\nDeck should be empty:");
+    testPrintDeck(deckHeader);
+}
+
+void testClearBoard() {
+    for (int i = 0; i < 7; i++) {
+        columnHeader[i] = generateCards();
+    }
+    for (int i = 0; i < 4; i++) {
+        foundationHeader[i] = generateCards();
+    }
+    clearBoard();
+    testPrintBoard();
+}
+
+void testMoveCard(){
+    // initialization
+    Card * deckHeader = loadCards("test.txt");
+    fillBoard(deckHeader);
+    testPrintBoard();
+
+
+    moveCard("C5:3H->C4");
+    testPrintBoard();
+
+    // cleanup
+    clearBoard();
+}
+
+void testValidateInput() {
+    char Arr1[] = "C1:kH->C4";
+    char * cmd1 = Arr1;
+
+    testHelper(cmd1);
+    testHelper("C0:KH->C1");
+    testHelper("C8:KH->C1");
+    testHelper("C1:0H->C1");
+    testHelper("C1:AD->F4");
+    testHelper("C1->C7");
+    testHelper("C0->C7");
+    testHelper("CA->C1");
+    testHelper("C1->F1");
+    testHelper("F1->C1");
+    testHelper("C1->C1");
+    testHelper("F1->F1");
+    testHelper("LD");
+    testHelper("LD ");
+    testHelper("LD  ");
+    testHelper("LD  /");
+    testHelper("LD test.txt");
+    testHelper("LD te/st.txt");
+    testHelper("LD test");
+    testHelper("SW");
+    testHelper("SW ");
+    testHelper("SI 25");
+    testHelper("SI 52");
+    testHelper("SI");
+    testHelper("SI ");
+    testHelper("SI 0");
+    testHelper("SR");
+    testHelper("SR ");
+    testHelper("SD");
+    testHelper("SD ");
+    testHelper("Q");
+    testHelper("Q ");
+    testHelper("QQ");
+    testHelper("QQ ");
+    testHelper("P");
+    testHelper("P ");
+}
+
+void testHelper(char * cmd) {
+    Command output = validateInput(cmd);
+    printf("\n%-12s = %s",cmd,toCommandName[output]);
 }
