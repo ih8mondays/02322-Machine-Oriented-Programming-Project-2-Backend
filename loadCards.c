@@ -12,8 +12,8 @@
 
 /**
  * Reads a file and validates if it contains exactly one of each card in a standard deck, then generates a deck according to the order listed in the file
- * @param filename Name of the file to open. Accepted format is one card per line (AC, 2C, 3C...)
- * @return Pointer of the top card of the constructed deck
+ * @param Validated input containing the name of the file to open. Accepted format is one card per line (AC, 2C, 3C...)
+ * The loaded deck is assigned to deckHeader.
  */
 void loadCards(char * input) {
 
@@ -129,7 +129,8 @@ void loadCards(char * input) {
             return;
         }
     }
-    fclose(file);
 
+    fclose(file);
+    chainDelete(deckHeader);
     deckHeader = head;
 }
