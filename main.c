@@ -37,7 +37,7 @@ int main(void) {
     }
 
     // TEST - display content of linked-list
-    testPrintDeck(deckHeader);
+   // testPrintDeck(deckHeader);
 
 
 
@@ -59,13 +59,12 @@ int main(void) {
     printf("Random shuffle deck: \n");
     testPrintDeck(randomDeck);*/
 
-
-    fillBoard(deckHeader, columnHeader);
+     fillBoard(deckHeader, columnHeader);
 
     // TEST - display content of columns
-    testPrintBoard();
+    // testPrintBoard();
 
-    char testArray1[] = "C1:AC->F1";
+    /*char testArray1[] = "C1:AC->F1";
     // char testArray2[] = "C2:2C->F1";  // this should fail and return -2
     char * testCommand = &testArray1[0];
 
@@ -73,7 +72,7 @@ int main(void) {
         printf("\n\nmoveCard = %d\n",moveCard(testCommand));
     } else {
         !debug? : printf("\n\nInputvalidation failed\n");
-    }
+    }*/
 
     // testPrintBoard();
 
@@ -83,8 +82,9 @@ int main(void) {
 
     // TEST PRINT BOARD
     printf("BOARD START HERE\n");
-    print_empty_board();
-
+    print_current_board();
+    moveCard("C1:AC->F4");
+    print_current_board();
     return 0;
 }
 
@@ -117,7 +117,6 @@ void testPrintBoard() {
             printf("  ");
             printf("%s",rankName[currentCard->rank]);
             printf("%s",suitName[currentCard->suit]);
-            printf(" %d",currentCard->visibility);
 
             currentCard = currentCard->next;
         }
