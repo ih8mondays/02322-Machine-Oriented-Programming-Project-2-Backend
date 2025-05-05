@@ -12,7 +12,7 @@
  *
  * @param deckHeader Input deck pointers
  */
-void fillBoard(Card * deckHeader){
+void fillBoard(){
 
     if (deckHeader == NULL) {
         return;              //TODO write to boardMessage
