@@ -5,7 +5,7 @@
 #ifndef SHUFFLEDECK_H
 #define SHUFFLEDECK_H
 
-Card *randomShuffle(Card *passedDeck);
+void randomShuffle();
 Card *splitShuffle(Card *passedDeck, int split);
 
 #endif //SHUFFLEDECK_H

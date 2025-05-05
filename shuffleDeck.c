@@ -5,6 +5,8 @@
 #include "main.h"
 #include "shuffleDeck.h"
 
+#include "gameController.h"
+
 // Helper functions
 Card *shuffle_at_random(Card **head, Card *card_to_insert, int pick);
 Card *shuffle(Card *pile1, Card *pile2);
@@ -13,21 +15,28 @@ Card *insert_at_end(Card **head, Card *card_to_insert);
 
 
 
-Card *randomShuffle(Card *passedDeck) {
+void randomShuffle() {
+
+    // stop if deck is empty
+    if (deckHeader == NULL) {
+        setBoardMessage("Can't shuffle an empty deck.");
+        return;
+    }
+
     Card *shuffledDeck = NULL;
-    Card *currentCard = passedDeck;
-    int max_position = 0;
+    Card *currentCard = deckHeader;
 
-    while (currentCard != NULL) {
+    for (int maxPos = 0 ; currentCard != NULL ; maxPos++) {
         Card *nextCard = currentCard->next;
-        currentCard->next = NULL; // detach card from passedDeck
+        // detach card from passedDeck
+        currentCard->next = NULL;
 
-        int pick = rand() % (max_position + 1); // picks random number between 0-max_position
+        // picks random number between 0-max_position
+        int pick = rand() % (maxPos + 1);
         shuffle_at_random(&shuffledDeck, currentCard, pick);
-        max_position++;
         currentCard = nextCard;
     }
-    return shuffledDeck;
+    deckHeader = shuffledDeck;
 }
 
 /**
