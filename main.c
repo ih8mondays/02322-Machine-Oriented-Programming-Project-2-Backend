@@ -91,7 +91,7 @@ void testPrintDeck(Card * deck) {
     printf("\nDeck:\n");
     for (int i = 0; current != NULL ; i++) {
         if (i <= 52) {
-            printf("%d: ",i+1);
+            printf("%2d: ",i+1);
         }
         printf("%s",rankName[current->rank]);
         printf("%s",suitName[current->suit]);
@@ -143,16 +143,16 @@ void testPrintBoard() {
 
 void testShuffleDeck() {
     // TEST - display content of shuffled linked-list
-    Card *splitDeck = generateCards();
-    splitDeck = splitShuffle(splitDeck, 26);
-    printf("Split shuffle deck: \n");
-    testPrintDeck(splitDeck);
+    deckHeader = generateCards();
+    splitShuffle(CMD_SI_SPLIT, "SI 26");
+    printf("Split shuffle deck:");
+    testPrintDeck(deckHeader);
 
-
-    Card *randomDeck = generateCards();
-    randomShuffle(randomDeck);
-    printf("Random shuffle deck: \n");
-    testPrintDeck(randomDeck);
+    chainDelete(deckHeader);
+    deckHeader = generateCards();
+    randomShuffle(deckHeader);
+    printf("\nRandom shuffle deck:");
+    testPrintDeck(deckHeader);
 
     // cleanup
     chainDelete(deckHeader);

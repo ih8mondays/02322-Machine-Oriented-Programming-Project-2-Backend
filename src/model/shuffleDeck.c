@@ -2,8 +2,10 @@
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "../../main.h"
 #include "shuffleDeck.h"
+#include "validateInput.h"
 #include "../controller/gameController.h"
 
 
@@ -62,26 +64,45 @@ Card *shuffle_at_random(Card **head, Card *card_to_insert, int pick) {
 * Passes the two lists onto shuffle
 * returns a shuffled deck
 */
-Card *splitShuffle(Card *passedDeck, int split) {
+void splitShuffle(Command command, char * input) {
+
+    // stop if deck is empty
+    if (deckHeader == NULL) {
+        setBoardMessage("Can't shuffle an empty deck.");
+        return;
+    }
+
+    int split;
+    // random split
+    if (command == CMD_SI) {
+        srand(time(NULL));
+        int min = 1;
+        int max = 51;
+        split = rand() % (max - min + 1) + min;
+    // read one digit from input
+    } else if (command == CMD_SI_SPLIT &&
+            input[4] == '\0') {
+        split = input[3] - '0';
+    // read two digits from input
+    } else if (command == CMD_SI_SPLIT) {
+        split = (input[3] - '0')*10 + (input[4] - '0');
+    // shouldn't happen
+    } else {
+        !debug? : memset(boardMessage, '\0', sizeof(boardMessage));
+        !debug? : snprintf(boardMessage,sizeof(boardMessage),"Error in %s line %d",__FILE_NAME__,__LINE__);
+        return;
+    }
 
 
-
-
-
-
-
-
-
-    Card *firstPile = passedDeck;
-    Card *ptr1 = passedDeck;
+    Card *firstPile = deckHeader;
+    Card *ptr1 = deckHeader;
     for (int i = 1; i < split && ptr1->next != NULL; i++) {
         ptr1 = ptr1->next;
     }
     Card *secondPile = ptr1->next; // Start of the second pile
     ptr1->next = NULL;
 
-    Card *shuffledDeck = shuffle(firstPile, secondPile);
-    return shuffledDeck;
+    deckHeader = shuffle(firstPile, secondPile);
 }
 
    // if (split == NULL || split < 0 || split > 52) {

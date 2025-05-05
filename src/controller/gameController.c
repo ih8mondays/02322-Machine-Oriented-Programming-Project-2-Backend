@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "gameController.h"
 #include "../../main.h"
 #include "../model/validateInput.h"
@@ -7,9 +10,6 @@
 #include "../model/saveCards.h"
 #include "../model/shuffleDeck.h"
 #include "../model/fillBoard.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 
 void startUpPhaseCommands(Command command);
@@ -21,11 +21,11 @@ char boardMessage[100];
 Command command = NO_CMD_YET;
 PrintState printState = PRINT_STARTUP_EMPTY;
 static GamePhase gamePhase = STARTUP_PHASE;
-Card * deckHeader = NULL;
 
-// Initialize empty board
-Card * columnHeader[] = {NULL,NULL,NULL,NULL,NULL,NULL,NULL};
-Card * foundationHeader[] = {NULL,NULL,NULL,NULL};
+// Initialize empty board and deck
+Card * deckHeader = NULL;
+Card * columnHeader[] = {NULL};
+Card * foundationHeader[] = {NULL};
 
 void playGame() {
 
@@ -70,7 +70,7 @@ void startUpPhaseCommands(Command command) {
             break;
         case CMD_SW: printState = PRINT_STARTUP_SHOWN; break;
         case CMD_SI:
-        case CMD_SI_SPLIT: /** shuffleSPlit(input); */ break;  // TODO fix parameters
+        case CMD_SI_SPLIT: splitShuffle(command,input); break;
         case CMD_SR: randomShuffle(deckHeader); break;
         case CMD_SD:
         case CMD_SD_FILENAME: saveCards(command, input); break;
