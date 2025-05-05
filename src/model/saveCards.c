@@ -26,14 +26,18 @@ void saveCards(Command command, char * input) {
     // reads file name from input
     } else if (command == CMD_SD_FILENAME) {
         strncpy(filename, &input + 3, sizeof(filename) - 1);
-    // this should never occur
+    // shouldn't happen
     } else {
         !debug? : memset(boardMessage, '\0', sizeof(boardMessage));
         !debug? : snprintf(boardMessage,sizeof(boardMessage),"Error in %s line %d",__FILE_NAME__,__LINE__);
         return;
     }
 
-    FILE * file = fopen(filename, "w");
+    char savedDeckDirectory[70] = "../../saved_decks/";
+    strcat(savedDeckDirectory,filename);
+    printf(savedDeckDirectory);
+
+    FILE * file = fopen(savedDeckDirectory, "w");
     if (file == NULL) {
         !debug? : setBoardMessage("Error opening file");
         return;
