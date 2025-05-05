@@ -14,6 +14,6 @@
 
 void print_empty_board();
 void print_hidden_board();
-void print_shown_board(Card* head);
+void print_shown_board();
 
 #endif //PRINTBOARD_H

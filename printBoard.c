@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "printBoard.h"
+#include "gameController.h"
 #include "generateCards.h"
 
 // Function to print the board layout.
@@ -62,8 +63,8 @@ void print_hidden_board() {
     printf("INPUT > \n");
 }
 
-void print_shown_board(Card * head) {
-    Card *current = head;
+void print_shown_board() {
+    Card *current = deckHeader;
     for (int col = 1; col <= COLUMNS; col++) {
         printf(" C%d\t", col);
     }
