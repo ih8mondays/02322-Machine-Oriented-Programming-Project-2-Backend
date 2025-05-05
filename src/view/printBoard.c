@@ -54,31 +54,8 @@ void print_empty_board() {
     printf("\n");
     for (int row = 0; row < MAX_ROWS; row++) {
         for (int col = 0; col < COLUMNS; col++) {
+
             printf("\t");
-        }
-        if (row == 0 || row == 2 || row == 4 || row == 6) {
-            printf("\t");
-            printf("[  ]    F%d", row / 2 + 1);
-        }
-        printf("\n");
-    }
-    printf("LAST Command: \n");
-    printf("Message: \n");
-    printf("INPUT > \n");
-}
-// Hacky print of the hidden board, does not actually take card locations into account
-void print_hidden_board() {
-    for (int col = 1; col <= COLUMNS; col++) {
-        printf(" C%d\t", col);
-    }
-    printf("\n\n");
-    for (int row = 0; row < MAX_ROWS; row++) {
-        for (int col = 0; col < COLUMNS; col++) {
-            if (row < 7 || (row < 8 && col < 3)) {
-                printf("%s\t", " []");
-            } else {
-                printf("\t");
-            }
         }
         if (row == 0 || row == 2 || row == 4 || row == 6) {
             printf("\t");
@@ -91,30 +68,32 @@ void print_hidden_board() {
     printf("INPUT > \n");
 }
 
-void print_shown_board() {
-    Card *current = deckHeader;
+void print_filled_board() {
     for (int col = 1; col <= COLUMNS; col++) {
         printf(" C%d\t", col);
     }
     printf("\n\n");
-    for (int row = 0; row < MAX_ROWS; row++) {
-        for (int col = 0; col < COLUMNS; col++) {
-            if (row < 7 || (row < 8 && col < 3)) {
-                printf("%s%s%s\t",
-                       " ",
-                       rankName[current->rank],
-                       suitName[current->suit]);
-                current = current->next;
+
+    Card *current = deckHeader;
+    int row = 0;
+
+    while (current != NULL) {
+        for (int col = 0; col < COLUMNS && current != NULL; col++) {
+            if (current->visibility == SHOWN) {
+                printf("%s%s\t ", rankName[current->rank], suitName[current->suit]);
             } else {
-                printf("\t");
+                printf("[  ]\t ");
             }
+            current = current->next; // Move to next card
         }
-        if (row == 0 || row == 2 || row == 4 || row == 6) {
-            printf("\t");
-            printf("[  ]    F%d", row / 2 + 1);
+        if (row % 2 == 0) {
+            printf("\t[  ]    F%d", row / 2 + 1);
         }
         printf("\n");
+        row++;
     }
+        printf("\n");
+
     printf("LAST Command: \n");
     printf("Message: \n");
     printf("INPUT > \n");
@@ -138,5 +117,13 @@ int get_max_rows() {
         }
     }
     return maxRows;
+}
+void reveal_all_cards(Card* deckHeader) {
+    Card* current = deckHeader;
+
+    while (current != NULL) {
+        current->visibility = SHOWN; // Set visibility to SHOWN
+        current = current->next; // Move to the next card
+    }
 }
 

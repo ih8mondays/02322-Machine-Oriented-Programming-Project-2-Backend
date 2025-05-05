@@ -75,7 +75,7 @@ int main(void) {
     // print_empty_board();
 
     // srand(time(NULL));
-
+    
     return 0;
 }
 
@@ -176,6 +176,7 @@ void testFillBoard() {
     fillBoard(deckHeader);
     testPrintBoard();
     testPrintDeck(deckHeader);
+
 
     // cleanup
     clearBoard();

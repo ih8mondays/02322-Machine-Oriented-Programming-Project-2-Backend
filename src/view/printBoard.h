@@ -13,9 +13,9 @@
 #define MAX_ROWS 10  // You can adjust this if you like
 
 void print_empty_board();
-void print_hidden_board();
-void print_shown_board();
+void print_filled_board();
 void print_current_board();
 int get_max_rows();
+void reveal_all_cards(Card* deckHeader);
 
 #endif //PRINTBOARD_H
