@@ -32,12 +32,11 @@ void testHelper(char * cmd);
 void countCards();
 
 // TODO implement gameController()   X = done
-//      x   fix loadCards()
-//          fix
+//      X   fix loadCards()
 //          fix shuffleSplit()
-//          fix saveCards()
+//      X   fix saveCards()
 //      test gameController()
-//      implement printBoard()
+//  ->  implement printBoard()
 //      test printBoard()
 //      test print_empty_board()
 //      test print_hidden_board()
@@ -53,7 +52,7 @@ void countCards();
 //      X   loadCards()
 //          main()
 //          moveCards()
-//          saveCards()
+//      X   saveCards()
 //          shuffleDeck()         create checks to see if you return a full deck (52 cards)
 
 
@@ -145,21 +144,30 @@ void testPrintBoard() {
 void testShuffleDeck() {
     // TEST - display content of shuffled linked-list
     Card *splitDeck = generateCards();
-    Card *randomDeck = generateCards();
     splitDeck = splitShuffle(splitDeck, 26);
-    randomDeck = randomShuffle(randomDeck);
     printf("Split shuffle deck: \n");
     testPrintDeck(splitDeck);
+
+
+    Card *randomDeck = generateCards();
+    randomShuffle(randomDeck);
     printf("Random shuffle deck: \n");
     testPrintDeck(randomDeck);
+
+    // cleanup
+    chainDelete(deckHeader);
+    deckHeader = NULL;
 }
 
 void testLoadSave() {
     // TEST - save/load function
-    Card * deckHeader = generateCards();
-    saveCards(deckHeader, "test.txt");
-    saveCards(deckHeader,NULL);
-    loadCards("notReal.txt");
+    deckHeader = generateCards();
+    saveCards(CMD_SD,NULL);
+    saveCards(CMD_SD_FILENAME, "test.txt");
+
+    loadCards("LD notReal.txt");
+    loadCards("LD real.txt");
+    loadCards("LD /test.txt");
 }
 
 void testFillBoard() {

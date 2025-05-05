@@ -6,6 +6,7 @@
 #include "printBoard.h"
 #include "saveCards.h"
 #include "shuffleDeck.h"
+#include "fillBoard.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -15,10 +16,11 @@ void startUpPhaseCommands(Command command);
 void playPhaseCommands(Command command);
 
 // Game variables
-char input[50];
-Command command = NO_CMD_YET;
+char input[50] = "Input must not be longer than 50 characters.";
 char boardMessage[100];
-static GamePhase gamePhase;
+Command command = NO_CMD_YET;
+PrintState printState = PRINT_STARTUP_EMPTY;
+static GamePhase gamePhase = STARTUP_PHASE;
 Card * deckHeader = NULL;
 
 // Initialize empty board
@@ -27,17 +29,20 @@ Card * foundationHeader[] = {NULL,NULL,NULL,NULL};
 
 void playGame() {
 
-    print_empty_board();
-
     while (command != CMD_QQ) {
 
         // Print current board
-
+        switch (printState) {
+            case PRINT_STARTUP_EMPTY: print_empty_board(); break;
+            case PRINT_STARTUP_HIDDEN: print_hidden_board(); break;
+            case PRINT_STARTUP_SHOWN: print_shown_board(); break;
+            case PRINT_PLAY:                               break; //TODO missing print command
+            default: printf("Error in printState.");
+        }
 
         // receive input
         memset(input, '\0', sizeof(input));
         fgets(input,sizeof(input), stdin);
-
 
         // validate input
         command = validateInput(input);
@@ -50,9 +55,7 @@ void playGame() {
         }
 
 
-
         // TODO handle CMD_BREAKS_RULES
-        //      make sure to print correctly
 
     }
 
@@ -61,13 +64,20 @@ void playGame() {
 void startUpPhaseCommands(Command command) {
     switch (command) {
         case CMD_LD:
-        case CMD_LD_FILENAME: loadCards(input); break; // TODO fix parameters
-        case CMD_SW: // TODO fix parameters
-        case CMD_SI: // TODO fix parameters
-        case CMD_SI_SPLIT: // TODO fix parameters
+        case CMD_LD_FILENAME:
+            loadCards(input);
+            printState = PRINT_STARTUP_HIDDEN;
+            break;
+        case CMD_SW: printState = PRINT_STARTUP_SHOWN; break;
+        case CMD_SI:
+        case CMD_SI_SPLIT: /** shuffleSPlit(input); */ break;  // TODO fix parameters
         case CMD_SR: randomShuffle(deckHeader); break;
-        case CMD_SD: //saveCards(); // TODO fix parameters
-        case CMD_P: gamePhase = PLAY_PHASE; break;
+        case CMD_SD:
+        case CMD_SD_FILENAME: saveCards(command, input); break;
+        case CMD_P:
+            fillBoard();
+            gamePhase = PLAY_PHASE;
+            break;
         case CMD_QQ: break;     //exit(0);
         case CMD_Q:
         case CMD_MOVE: setBoardMessage("Command not available in the PLAY phase."); break;

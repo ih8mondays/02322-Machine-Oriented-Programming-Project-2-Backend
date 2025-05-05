@@ -7,6 +7,13 @@ typedef enum GamePhase {
     PLAY_PHASE
   } GamePhase;
 
+typedef enum PrintState {
+    PRINT_STARTUP_EMPTY,
+    PRINT_STARTUP_HIDDEN,
+    PRINT_STARTUP_SHOWN,
+    PRINT_PLAY
+  } PrintState;
+
 void playGame();
 void setBoardMessage(char * newMessage);
 
