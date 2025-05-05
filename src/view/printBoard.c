@@ -99,3 +99,23 @@ void print_shown_board() {
     printf("INPUT > \n");
 }
 
+/*
+ Returns the longest list in columnHeader as an int, so board can dynamically print the correct length
+ */
+int get_max_rows() {
+    int maxRows = 0;
+    for (int col = 0; col < COLUMNS; col++) {
+        int depth = 0;
+        Card *currentCard = columnHeader[col];
+
+        while (currentCard != NULL) {
+            currentCard = currentCard->next;
+            depth++;
+        }
+        if (depth > maxRows) {
+            maxRows = depth;
+        }
+    }
+    return maxRows;
+}
+

@@ -15,5 +15,6 @@
 void print_empty_board();
 void print_hidden_board();
 void print_shown_board();
+int get_max_rows();
 
 #endif //PRINTBOARD_H
