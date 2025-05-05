@@ -2,6 +2,49 @@
 #include "../controller/gameController.h"
 #include "../model/generateCards.h"
 #include <stdio.h>
+void print_current_board() {
+    int maxRows = get_max_rows();
+
+    for (int col = 0; col < COLUMNS; col++) {
+        printf("C%d\t", col + 1);
+    }
+    printf("\n\n");
+    // For each row find and print the element at each depth. No element is printed as blank space
+    for (int row = 0; row < maxRows; row++) {
+        for (int col = 0; col < COLUMNS; col++) {
+            Card *currentCard = columnHeader[col];
+            int depth = 0;
+
+            while (currentCard != NULL && depth < row) {
+                currentCard = currentCard->next;
+                depth++;
+            }
+            if (currentCard != NULL) {
+                printf("%s%s\t", rankName[currentCard->rank], suitName[currentCard->suit]);
+            } else {
+                printf("\t");
+            }
+        }
+        // Traverse through foundationPiles and prints last element. If no element excist in pile a placeholder is printed.
+        if (row == 0 || row == 2 || row == 4 || row == 6) {
+            printf("\t");
+            Card *pileCard = foundationHeader[row / 2];
+
+            while (pileCard != NULL && pileCard->next != NULL) {
+                pileCard = pileCard->next;
+            }
+            if (pileCard != NULL) {
+                printf(" %s%s     F%d", rankName[pileCard->rank], suitName[pileCard->suit], row / 2 + 1);
+            } else {
+                printf("[  ]    F%d", row / 2 + 1);
+            }
+        }
+        printf("\n");
+    }
+    printf("LAST Command: \n");
+    printf("Message: \n");
+    printf("INPUT > \n");
+}
 
 // Function to print the board layout.
 void print_empty_board() {
