@@ -1,7 +1,9 @@
 #include "main.h"
 #include "validateInput.h"
-
+#include "gameController.h"
 #include <ctype.h>
+#include <stdio.h>
+#include <string.h>
 
 // Possible valid inputs ... C1-C7 & F1-F4
 // C = Column, F = Foundation, R = Rank, S = Suit
@@ -32,6 +34,9 @@ void toUpperCase(char * input);
 Command validateMove(char * input);
 Command validateLoadFile(char * input);
 Command validateShuffleSplit(char * input);
+Command validateSaveDeck(char * input);
+int fileNameValidation(char * input);
+int endsWithTXT(char * input);
 
 
 Command validateInput(char * input) {
@@ -49,8 +54,7 @@ Command validateInput(char * input) {
                           else return CMD_INVALID;
                 case 'R': if (input[2] == '\0') return CMD_SR;
                           else return CMD_INVALID;
-                case 'D': if (input[2] =='\0') return CMD_SD;
-                          else return CMD_INVALID;
+                case 'D': return validateSaveDeck(input);
                 default: return CMD_INVALID;
             }
         case 'Q': if (input[1] == '\0') return CMD_Q;
@@ -60,6 +64,42 @@ Command validateInput(char * input) {
                   else return CMD_INVALID;
         default: return CMD_INVALID;
     }
+}
+
+Command validateSaveDeck(char * input) {
+
+    // first two must be SD
+    if (input[0] != 'S' ||
+            input[1] != 'D') {
+        return CMD_INVALID;
+    }
+
+    // return if done
+    if (input[2] == '\0') {
+        return CMD_SD;
+    }
+
+    // must be space
+    if (input[2] != ' ') {
+        return CMD_INVALID;
+    }
+
+    // search for illegal file name characters
+    if (!fileNameValidation(input)) {
+        return CMD_INVALID;
+    }
+
+    int i = 0;
+    while (input[i] != '\0') {
+        i++;
+    }
+
+    // must end on .txt
+    if (!endsWithTXT(input)) {
+        return CMD_INVALID;
+    }
+
+    return CMD_SD_FILENAME;
 }
 
 Command validateLoadFile(char * input) {
@@ -80,23 +120,13 @@ Command validateLoadFile(char * input) {
         return CMD_INVALID;
     }
 
-    // file names can't contain '/'
-    for (int i = 0 ; input[i] != '\0' ; i++) {
-        if (input[i] == '/') {
-            return CMD_INVALID;
-        }
-    }
-
-    int i = 0;
-    while (input[i] != '\0') {
-        i++;
+    // search for illegal file name characters
+    if (!fileNameValidation(input)) {
+        return CMD_INVALID;
     }
 
     // must end on .txt
-    if (input[i-4] != '.' ||
-            input[i-3] != 't' ||
-            input[i-2] != 'x' ||
-            input[i-1] != 't') {
+    if (!endsWithTXT(input)) {
         return CMD_INVALID;
     }
 
@@ -267,4 +297,47 @@ void toUpperCase(char * input) {
         }
 
     }
+}
+
+/**
+ * Checks input for illegal Windows file name characters.
+ * @return 0 if an illegal character is found.
+ * @return 1 if input doesn't contain illegal characters.
+ */
+int fileNameValidation(char * input) {
+    for (int i = 0 ; input[i] != '\0' ; i++) {
+        switch (input[i]) {
+            case '<':
+            case '>':
+            case ':':
+            case '"':
+            case '/':
+            case '\\':
+            case '|':
+            case '?':
+            case '*':
+                memset(boardMessage, '\0', sizeof(boardMessage));
+                snprintf(boardMessage,sizeof(boardMessage),"File names can't contain '%s'",input[i]);
+                return 0;
+            default: break;
+        }
+    }
+    return 1;
+}
+
+int endsWithTXT(char * input) {
+    int i = 0;
+    while (input[i] != '\0') {
+        i++;
+    }
+
+    // must end on .txt
+    if (input[i-4] != '.' ||
+            input[i-3] != 't' ||
+            input[i-2] != 'x' ||
+            input[i-1] != 't') {
+        setBoardMessage("File names must end with .txt");
+        return 0;
+    }
+    return 1;
 }

@@ -10,6 +10,7 @@ typedef enum Command {
     CMD_SI_SPLIT,       // ^ with input
     CMD_SR,             // Shuffle Random
     CMD_SD,             // Save Deck
+    CMD_SD_FILENAME,    // ^ with input
     CMD_QQ,             // Quit program
     CMD_Q,              // Go to STARTUP_PHASE
     CMD_P,              // Go to PLAY_PHASE
