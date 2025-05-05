@@ -4,6 +4,7 @@
 
 #ifndef SHUFFLEDECK_H
 #define SHUFFLEDECK_H
+#include "generateCards.h"
 
 void randomShuffle();
 Card *splitShuffle(Card *passedDeck, int split);

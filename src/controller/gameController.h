@@ -1,6 +1,6 @@
 #ifndef GAMECONTROLLER_H
 #define GAMECONTROLLER_H
-#include "generateCards.h"
+#include "../model/generateCards.h"
 
 typedef enum GamePhase {
     STARTUP_PHASE,

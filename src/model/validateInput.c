@@ -1,6 +1,6 @@
-#include "main.h"
+#include "../../main.h"
 #include "validateInput.h"
-#include "gameController.h"
+#include "../controller/gameController.h"
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>

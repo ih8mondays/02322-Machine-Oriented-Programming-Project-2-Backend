@@ -1,8 +1,6 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include "generateCards.h"
-
 extern int debug;
 extern int convertLowerCaseInput;
 

@@ -2,17 +2,16 @@
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "main.h"
+#include "../../main.h"
 #include "shuffleDeck.h"
+#include "../controller/gameController.h"
 
-#include "gameController.h"
 
 // Helper functions
 Card *shuffle_at_random(Card **head, Card *card_to_insert, int pick);
 Card *shuffle(Card *pile1, Card *pile2);
 Card *insert_at_start(Card **head, Card *card_to_insert);
 Card *insert_at_end(Card **head, Card *card_to_insert);
-
 
 
 void randomShuffle() {
@@ -64,6 +63,15 @@ Card *shuffle_at_random(Card **head, Card *card_to_insert, int pick) {
 * returns a shuffled deck
 */
 Card *splitShuffle(Card *passedDeck, int split) {
+
+
+
+
+
+
+
+
+
     Card *firstPile = passedDeck;
     Card *ptr1 = passedDeck;
     for (int i = 1; i < split && ptr1->next != NULL; i++) {

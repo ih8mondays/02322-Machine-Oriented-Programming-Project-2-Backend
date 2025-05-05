@@ -6,7 +6,7 @@
 #define PRINTBOARD_H
 // Constants for board dimensions.
 
-#include "generateCards.h"
+#include "../model/generateCards.h"
 
 #define COLUMNS 7
 #define FOUNDATIONS 4

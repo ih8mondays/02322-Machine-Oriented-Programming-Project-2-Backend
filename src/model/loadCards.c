@@ -1,13 +1,11 @@
-#include <stdio.h>
-#include "main.h"
+#include "moveCard.h"
+#include "../../main.h"
 #include "generateCards.h"
 #include "loadCards.h"
-
+#include "../controller/gameController.h"
 #include <stdlib.h>
 #include <string.h>
-
-#include "gameController.h"
-#include "moveCard.h"
+#include <stdio.h>
 
 
 /**

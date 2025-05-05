@@ -1,7 +1,7 @@
 #include "moveCard.h"
 #include "generateCards.h"
-#include "main.h"
-#include "gameController.h"
+#include "../../main.h"
+#include "../controller/gameController.h"
 #include "validateInput.h"
 #include <inttypes.h>
 #include <stdio.h>

@@ -1,7 +1,7 @@
-#include <stdio.h>
 #include "printBoard.h"
-#include "gameController.h"
-#include "generateCards.h"
+#include "../controller/gameController.h"
+#include "../model/generateCards.h"
+#include <stdio.h>
 
 // Function to print the board layout.
 void print_empty_board() {
