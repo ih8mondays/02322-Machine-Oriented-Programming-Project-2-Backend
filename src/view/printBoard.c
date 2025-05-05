@@ -48,7 +48,6 @@ void print_current_board() {
 
 // Function to print the board layout.
 void print_empty_board() {
-
     for (int col = 1; col <= COLUMNS; col++) {
         printf(" C%d\t", col);
     }
@@ -59,14 +58,7 @@ void print_empty_board() {
         }
         if (row == 0 || row == 2 || row == 4 || row == 6) {
             printf("\t");
-            if (row == 0)
-                printf("[  ]    F1");
-            else if (row == 2)
-                printf("[  ]    F2");
-            else if (row == 4)
-                printf("[  ]    F3");
-            else if (row == 6)
-                printf("[  ]    F4");
+            printf("[  ]    F%d", row / 2 + 1);
         }
         printf("\n");
     }
@@ -90,14 +82,7 @@ void print_hidden_board() {
         }
         if (row == 0 || row == 2 || row == 4 || row == 6) {
             printf("\t");
-            if (row == 0)
-                printf("[  ]    F1");
-            else if (row == 2)
-                printf("[  ]    F2");
-            else if (row == 4)
-                printf("[  ]    F3");
-            else if (row == 6)
-                printf("[  ]    F4");
+            printf("[  ]    F%d", row / 2 + 1);
         }
         printf("\n");
     }
@@ -126,14 +111,7 @@ void print_shown_board() {
         }
         if (row == 0 || row == 2 || row == 4 || row == 6) {
             printf("\t");
-            if (row == 0)
-                printf("[  ]    F1");
-            else if (row == 2)
-                printf("[  ]    F2");
-            else if (row == 4)
-                printf("[  ]    F3");
-            else if (row == 6)
-                printf("[  ]    F4");
+            printf("[  ]    F%d", row / 2 + 1);
         }
         printf("\n");
     }
