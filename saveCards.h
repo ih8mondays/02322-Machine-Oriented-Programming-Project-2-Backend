@@ -1,6 +1,7 @@
 #ifndef SAVECARDS_H
 #define SAVECARDS_H
+#include "validateInput.h"
 
-int saveCards(Card* head, char filename[]);
+void saveCards(Command command, char * input);
 
 #endif //SAVECARDS_H
