@@ -24,8 +24,8 @@ static GamePhase gamePhase = STARTUP_PHASE;
 
 // Initialize empty board and deck
 Card * deckHeader = NULL;
-Card * columnHeader[] = {NULL};
-Card * foundationHeader[] = {NULL};
+Card * columnHeader[] = {NULL,NULL,NULL,NULL,NULL,NULL,NULL};
+Card * foundationHeader[] = {NULL,NULL,NULL,NULL};
 
 void playGame() {
 
@@ -36,7 +36,7 @@ void playGame() {
             case PRINT_STARTUP_EMPTY: print_empty_board(); break;
             case PRINT_STARTUP_HIDDEN: print_hidden_board(); break;
             case PRINT_STARTUP_SHOWN: print_shown_board(); break;
-            case PRINT_PLAY:                               break; //TODO missing print command
+            case PRINT_PLAY: print_current_board(); break;
             default: printf("Error in printState.");
         }
 
@@ -53,12 +53,7 @@ void playGame() {
         } else if (gamePhase == PLAY_PHASE) {
             playPhaseCommands(command);
         }
-
-
-        // TODO handle CMD_BREAKS_RULES
-
     }
-
 }
 
 void startUpPhaseCommands(Command command) {
