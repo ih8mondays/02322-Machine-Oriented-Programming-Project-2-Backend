@@ -10,7 +10,7 @@ void print_current_board() {
     }
     printf("\n\n");
     // For each row find and print the element at each depth. No element is printed as blank space
-    for (int row = 0; row < maxRows; row++) {
+    for (int row = 0; row < (maxRows > 7 ? maxRows : 7); row++) {
         for (int col = 0; col < COLUMNS; col++) {
             Card *currentCard = columnHeader[col];
             int depth = 0;
