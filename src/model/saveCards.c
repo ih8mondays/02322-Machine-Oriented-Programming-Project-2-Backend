@@ -30,8 +30,8 @@ void saveCards(Command command, char * input) {
         strncpy(filename, input + 3, sizeof(filename) - 1);
     // shouldn't happen
     } else {
-        !debug? : memset(boardMessage, '\0', sizeof(boardMessage));
-        !debug? : snprintf(boardMessage,sizeof(boardMessage),"Error in %s line %d",__FILE_NAME__,__LINE__);
+        !yukonDebugMode? : memset(boardMessage, '\0', sizeof(boardMessage));
+        !yukonDebugMode? : snprintf(boardMessage,sizeof(boardMessage),"Error in %s line %d",__FILE_NAME__,__LINE__);
         return;
     }
 
@@ -41,7 +41,7 @@ void saveCards(Command command, char * input) {
 
     FILE * file = fopen(filename, "w");
     if (file == NULL) {
-        !debug? : setBoardMessage("Error opening file");
+        !yukonDebugMode? : setBoardMessage("Error opening file");
         return;
     }
 

@@ -97,7 +97,7 @@ void startUpPhaseCommands(Command command) {
         case CMD_Q:
         case CMD_MOVE: setBoardMessage("Command not available in the PLAY phase."); break;
         case CMD_INVALID: specificError? : setBoardMessage("Invalid input"); break;
-        default: !debug? : setBoardMessage("Input validation failed"); break;
+        default: !yukonDebugMode? : setBoardMessage("Input validation failed"); break;
     }
 }
 
@@ -118,7 +118,7 @@ void playPhaseCommands(Command command) {
             break;
         case CMD_MOVE: moveCard(input); break;
         case CMD_INVALID: specificError? : setBoardMessage("Invalid input"); break;
-        default: !debug? : setBoardMessage("Inputvalidation failed"); break;
+        default: !yukonDebugMode? : setBoardMessage("Inputvalidation failed"); break;
     }
 }
 
@@ -128,8 +128,8 @@ void setBoardMessage(char * newMessage) {
 }
 
 void setBoardErrorMessage(int line, char * fileName) {
-    !debug? : memset(boardMessage, '\0', sizeof(boardMessage));
-    !debug? : snprintf(boardMessage,sizeof(boardMessage),"Error at line %d in %s",line,fileName);
+    !yukonDebugMode? : memset(boardMessage, '\0', sizeof(boardMessage));
+    !yukonDebugMode? : snprintf(boardMessage,sizeof(boardMessage),"Error at line %d in %s",line,fileName);
     specificError = 1;
 }
 

@@ -37,7 +37,7 @@ void loadCards(char * input) {
 
     FILE * file = fopen(fileName, "r");
     if (file == NULL) {
-        !debug? : setBoardMessage("Error while opening file");
+        !yukonDebugMode? : setBoardMessage("Error while opening file");
         specificError = 1;
         return;
     }
@@ -96,7 +96,7 @@ void loadCards(char * input) {
     Card *current = head;
 
     if (head == NULL) {
-        !debug ? : setBoardMessage("Memory couldn't be allocated while generating cards");
+        !yukonDebugMode ? : setBoardMessage("Memory couldn't be allocated while generating cards");
         specificError = 1;
         fclose(file);
         return;
@@ -123,7 +123,7 @@ void loadCards(char * input) {
         }
 
         if (current == NULL) {
-            !debug ? : setBoardMessage("Memory couldn't be allocated while generating cards");
+            !yukonDebugMode ? : setBoardMessage("Memory couldn't be allocated while generating cards");
             specificError = 1;
             chainDelete(head);
             head = NULL;

@@ -24,7 +24,7 @@ Card * generateCards() {
     Card * current = head;
 
     if (head == NULL) {
-        !debug? : setBoardMessage("Memory couldn't be allocated while generating cards");
+        !yukonDebugMode? : setBoardMessage("Memory couldn't be allocated while generating cards");
         specificError = 1;
         return NULL;
     }
@@ -33,7 +33,7 @@ Card * generateCards() {
         for (int j = 0 ; j < rankSize; j++) {
 
             if (current == NULL) {
-                !debug? : setBoardMessage("Memory couldn't be allocated while generating cards");
+                !yukonDebugMode? : setBoardMessage("Memory couldn't be allocated while generating cards");
                 specificError = 1;
                 chainDelete(head);
                 head = NULL;

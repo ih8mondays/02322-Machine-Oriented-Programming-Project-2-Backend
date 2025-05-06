@@ -15,7 +15,7 @@
 #include <time.h>
 
 
-int debug = 1;
+int yukonDebugMode = 1;
 int convertLowerCaseInput = 1;
 void testPrintDeck(Card * deckHeader);
 void testPrintBoard();
@@ -29,18 +29,15 @@ void testValidateInput();
 void testHelper(char * cmd);
 void countCards();
 
-// TODO implement playGame()
-//      X   fix loadCards()
-//      X   fix shuffleSplit()
-//      X   fix saveCards()
-//      test gameController()
-//      test printBoard()
-//      test print_empty_board()
+// TODO implement
+//      test playGame()
+//    X test printBoard()
+//    X test print_empty_board()
 //      test print_hidden_board()
 //      test print_shown_board()
 //      test loadCards()
-//      test saveCards()
-//      test randomShuffle()
+//    X test saveCards()
+//    X test randomShuffle()
 //      test splitShuffle()
 //      commands write into boardCommands[]   X = done
 //      X   validateInput()

@@ -88,8 +88,8 @@ void splitShuffle(Command command, char * input) {
         split = (input[3] - '0')*10 + (input[4] - '0');
     // shouldn't happen
     } else {
-        !debug? : memset(boardMessage, '\0', sizeof(boardMessage));
-        !debug? : snprintf(boardMessage,sizeof(boardMessage),"Error in %s line %d",__FILE_NAME__,__LINE__);
+        !yukonDebugMode? : memset(boardMessage, '\0', sizeof(boardMessage));
+        !yukonDebugMode? : snprintf(boardMessage,sizeof(boardMessage),"Error in %s line %d",__FILE_NAME__,__LINE__);
         return;
     }
 

@@ -44,8 +44,8 @@ void fillBoard(){
 
         for (int j = 1 + offset; j < 7; j++) {  // j = column
             if (currentFill == NULL) {
-                !debug? : memset(boardMessage, '\0', sizeof(boardMessage));
-                !debug? : snprintf(boardMessage,sizeof(boardMessage),"NullPointerError in row %d column %d in ",i+1,j+1,__FILE_NAME__);
+                !yukonDebugMode? : memset(boardMessage, '\0', sizeof(boardMessage));
+                !yukonDebugMode? : snprintf(boardMessage,sizeof(boardMessage),"NullPointerError in row %d column %d in ",i+1,j+1,__FILE_NAME__);
                 clearBoard();
                 specificError = 1;
                 return;
