@@ -43,6 +43,7 @@ void countCards();
 //      test randomShuffle()
 //      test splitShuffle()
 //      commands write into boardCommands[]   X = done
+//      X   validateInput()
 //          fillBoard()
 //      X   gameController()
 //          generateCards()
@@ -54,6 +55,7 @@ void countCards();
 
 
 int main(void) {
+    srand(time(NULL));
     playGame();
 
     //deckHeader = generateCards();
