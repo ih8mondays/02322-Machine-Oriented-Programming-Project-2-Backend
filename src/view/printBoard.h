@@ -10,7 +10,7 @@
 
 #define COLUMNS 7
 #define FOUNDATIONS 4
-#define MAX_ROWS 10  // You can adjust this if you like
+#define MAX_ROWS 8  // You can adjust this if you like
 
 void print_empty_board();
 void print_filled_board();
