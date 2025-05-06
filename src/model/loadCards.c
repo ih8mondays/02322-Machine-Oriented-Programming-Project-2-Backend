@@ -31,11 +31,11 @@ void loadCards(char * input) {
     printf(fileName);
 
 
-    char savedDeckPath[70] = "saved_decks/";
-    strcat(savedDeckPath,fileName);
-    printf("Loading deck %s\n", savedDeckPath);
+    //char savedDeckPath[70] = "saved_decks/";
+    //strcat(savedDeckPath,fileName);
+    //printf("Loading deck %s\n", savedDeckPath);
 
-    FILE * file = fopen(savedDeckPath, "r");
+    FILE * file = fopen(fileName, "r");
     if (file == NULL) {
         !debug? : setBoardMessage("Error while opening file");
         specificError = 1;

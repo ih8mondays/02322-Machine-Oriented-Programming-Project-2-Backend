@@ -1,3 +1,5 @@
+#include <direct.h>
+
 #include "../controller/gameController.h"
 #include "../../main.h"
 #include "generateCards.h"
@@ -33,10 +35,11 @@ void saveCards(Command command, char * input) {
         return;
     }
 
-    char savedDeckPath[70] = "saved_decks/";
-    strcat(savedDeckPath,filename);
+    //char savedDeckPath[70] = "saved_decks/";
+    //strcat(savedDeckPath,filename);
+    //_mkdir(savedDeckPath); // creates folder   // DOESN'T WORK1!!!!!!!!!
 
-    FILE * file = fopen(savedDeckPath, "w");
+    FILE * file = fopen(filename, "w");
     if (file == NULL) {
         !debug? : setBoardMessage("Error opening file");
         return;
@@ -48,8 +51,8 @@ void saveCards(Command command, char * input) {
         fprintf(file,"%s%s\n",
             rankName[current->rank],
             suitName[current->suit]);
+        fflush(file);
         current = current -> next;
     }
     fclose(file);
-    fflush(file);
 }
