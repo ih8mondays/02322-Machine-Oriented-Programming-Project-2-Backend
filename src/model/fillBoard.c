@@ -5,20 +5,21 @@
 #include "../controller/gameController.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 /**
  * Copies the deck into the columns and toggles hidden/shown.
  * Afterwards the game should be ready to start.
- *
- * @param deckHeader Input deck pointers
  */
 void fillBoard(){
 
     if (deckHeader == NULL) {
-        return;              //TODO write to boardMessage
+        setBoardMessage("Can't fill the board with an empty deck.");
+        return;
     }
-    clearBoard();
 
+    // empty board before filling it
+    clearBoard();
 
     // Create a copy of the first card
     Card * currentFill = deckHeader;
@@ -43,8 +44,10 @@ void fillBoard(){
 
         for (int j = 1 + offset; j < 7; j++) {  // j = column
             if (currentFill == NULL) {
-                !debug? : printf("\nNullPointerError in row %d column %d during fillBoard()\n",i+1,j+1);
+                !debug? : memset(boardMessage, '\0', sizeof(boardMessage));
+                !debug? : snprintf(boardMessage,sizeof(boardMessage),"NullPointerError in row %d column %d in ",i+1,j+1,__FILE_NAME__);
                 clearBoard();
+                specificError = 1;
                 return;
             }
 
@@ -65,8 +68,12 @@ void fillBoard(){
             if (i == 0) {
                 columnHeader[j] = currentCopy;
             } else {
-                columnEnd = retColEnd(columnHeader[j]).current;
-                columnEnd->next = currentCopy;
+                columnEnd = retColEndDual(columnHeader[j]).current;
+                if (columnEnd != NULL) {
+                    columnEnd->next = currentCopy;
+                } else {
+                    setBoardErrorMessage(__LINE__,__FILE_NAME__);
+                }
             }
 
             // Increment to next card

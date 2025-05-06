@@ -12,7 +12,8 @@ typedef struct DualPointer{
 int moveCard(char * input);
 Rank strToRank(char input);
 Suit strToSuit(char input);
-DualPointer retColEnd(Card * columnHeader);
+Card * retColEnd(Card * columnHeader);
+DualPointer retColEndDual(Card * columnHeader);
 DualPointer searchColumn(Card * searchHeader, Rank searchRank, Suit searchSuit);
 
 #endif //SEARCHCOLUMN_H

@@ -6,6 +6,7 @@
 #include <inttypes.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 
 // Possible valid inputs ... C1-C7 & F1-F4
@@ -21,7 +22,7 @@
 /** Returns 1 on success, 0 on invalid move and -1 on error */
 int moveCard(char * input) {
     if (input == NULL) {
-        !debug? : printf("\n\nError at line %d in moveCard.c\n",__LINE__);
+        setBoardErrorMessage(__LINE__,__FILE_NAME__);
         return -1;
     }
 
@@ -47,15 +48,15 @@ int moveCard(char * input) {
         Suit searchSuit = strToSuit(input[4]);
         if (searchRank == NOT_RANK ||
                 searchSuit == NOT_SUIT) {
-            !debug? :printf("\n\nError at line %d in moveCard.c\n",__LINE__);
+            setBoardErrorMessage(__LINE__,__FILE_NAME__);
             return -1;
         }
         if (endType == 'C') {
             dualStartPointer = searchColumn(columnHeader[startPos], searchRank, searchSuit);
         } else if (endType == 'F') {
-            dualStartPointer = retColEnd(columnHeader[startPos]);
+            dualStartPointer = retColEndDual(columnHeader[startPos]);
         } else {
-            !debug? :printf("\n\nError at line %d in moveCard.c\n",__LINE__);
+            setBoardErrorMessage(__LINE__,__FILE_NAME__);
             return -1;
         }
     } else if (input[2] == '-') {
@@ -64,15 +65,15 @@ int moveCard(char * input) {
 
             // look in columnHeader or foundationHeader
             if (startType == 'C') {
-                dualStartPointer = retColEnd(columnHeader[startPos]);
+                dualStartPointer = retColEndDual(columnHeader[startPos]);
             } else if (startType == 'F') {
-                dualStartPointer = retColEnd(foundationHeader[startPos]);
+                dualStartPointer = retColEndDual(foundationHeader[startPos]);
             } else {
-                !debug? :printf("\n\nError at line %d in moveCard.c\n",__LINE__);
+                setBoardErrorMessage(__LINE__,__FILE_NAME__);
                 return -1;
             }
     } else {
-        !debug? :printf("\n\nError at line %d in moveCard.c\n",__LINE__);
+        setBoardErrorMessage(__LINE__,__FILE_NAME__);
         return -1;
     }
 
@@ -84,12 +85,12 @@ int moveCard(char * input) {
     int emptyEndPointFlag = 0;
     if (endType == 'C') {
         if (columnHeader[endPos] == NULL) { emptyEndPointFlag = 1; }
-        emptyEndPointFlag? : (endPoint = retColEnd(columnHeader[endPos]).current);
+        emptyEndPointFlag? : (endPoint = retColEndDual(columnHeader[endPos]).current);
     } else if (endType == 'F') {
         if (foundationHeader[endPos] == NULL) { emptyEndPointFlag = 1; }
-        emptyEndPointFlag? : (endPoint = retColEnd(foundationHeader[endPos]).current);
+        emptyEndPointFlag? : (endPoint = retColEndDual(foundationHeader[endPos]).current);
     } else {
-        !debug? : printf("\n\nError at line %d in moveCard.c\n",__LINE__);
+        setBoardErrorMessage(__LINE__,__FILE_NAME__);
         return -1;
     }
 
@@ -101,24 +102,24 @@ int moveCard(char * input) {
 
     // faulty input guard clause
     if (!emptyEndPointFlag &&
-        (startPoint == NULL ||
-        startPointPrev == NULL ||
-        endPoint == NULL)) {
-        !debug? : printf("\n\nError at line %d in moveCard.c",__LINE__);
+            (startPoint == NULL ||
+            startPointPrev == NULL ||
+            endPoint == NULL)) {
+        setBoardErrorMessage(__LINE__,__FILE_NAME__);
         return -1;
         }
 
     // invalid move guard clause
     if (!emptyEndPointFlag &&
-        endType == 'C' &&
-        startPoint->rank != endPoint->rank - 1 &&
-        startPoint->suit == endPoint->suit) {
-            return 0;
+            endType == 'C' &&
+            startPoint->rank != endPoint->rank - 1 &&
+            startPoint->suit == endPoint->suit) {
+        return 0;
     } else if (!emptyEndPointFlag &&
-        endType == 'F' &&
-        startPoint->rank != endPoint->rank + 1 &&
-        startPoint->suit != endPoint->suit) {
-            return 0;
+            endType == 'F' &&
+            startPoint->rank != endPoint->rank + 1 &&
+            startPoint->suit != endPoint->suit) {
+        return 0;
     }
 
     // detach from start column
@@ -134,12 +135,10 @@ int moveCard(char * input) {
     // attach to end column
     if (!emptyEndPointFlag) {
         endPoint->next = startPoint;
-    } else if (emptyEndPointFlag &&       // King moves to empty
-               endType == 'C' &&
+    } else if (endType == 'C' &&          // King moves to empty
                startPoint->rank == KING) {
         columnHeader[endPos] = startPoint;
-    } else if (emptyEndPointFlag &&       // Ace moves to empty
-               endType == 'F' &&
+    } else if (endType == 'F' &&          // Ace moves to empty
                startPoint->rank == ACE) {
         foundationHeader[endPos] = startPoint;
     }
@@ -148,10 +147,7 @@ int moveCard(char * input) {
 }
 
 /** Can return a DualPointer containing NULLs */
-DualPointer retColEnd(Card * columnHeader) {
-    if (columnHeader == NULL) {
-        !debug? : printf("\n\nError at line %d in moveCard.c",__LINE__);
-    }
+DualPointer retColEndDual(Card * columnHeader) {
 
     Card * previous = columnHeader;
     Card * current  = columnHeader;
@@ -165,6 +161,16 @@ DualPointer retColEnd(Card * columnHeader) {
     dualPointer.current = current;
 
     return dualPointer;
+}
+
+Card * retColEnd(Card * columnHeader) {
+    Card * current  = columnHeader;
+    DualPointer dualPointer = {NULL,NULL};
+
+    while (current->next != NULL) {
+        current = current->next;
+    }
+    return current;
 }
 
 /** Can return a DualPointer containing NULL */
@@ -199,7 +205,7 @@ Rank strToRank(char input) {
         case 'T': return TEN;
         case 'J': return JACK;
         case 'Q': return QUEEN;
-        case 'K': return  KING;
+        case 'K': return KING;
         default: return NOT_RANK;
     }
 }

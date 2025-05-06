@@ -25,18 +25,18 @@ void loadCards(char * input) {
         return;
     }
 
-    char filename[50];
-    memcpy(filename,&input[3],sizeof(input) - 3);
+    char fileName[50];
+    strcpy(fileName,&input[3]);
+    printf(fileName);
 
+    char savedDeckPath[70] = "../../saved_decks/";
+    strcat(savedDeckPath,fileName);
+    printf("Loading deck %s\n", savedDeckPath);
 
-    if (filename == NULL) {
-        !debug? : setBoardMessage("Filename is NULL");
-        return;
-    }
-
-    FILE * file = fopen(filename, "r");
+    FILE * file = fopen(savedDeckPath, "r");
     if (file == NULL) {
         !debug? : setBoardMessage("Error while opening file");
+        specificError = 1;
         return;
     }
 
@@ -95,6 +95,7 @@ void loadCards(char * input) {
 
     if (head == NULL) {
         !debug ? : setBoardMessage("Memory couldn't be allocated while generating cards");
+        specificError = 1;
         fclose(file);
         return;
     }
@@ -121,6 +122,7 @@ void loadCards(char * input) {
 
         if (current == NULL) {
             !debug ? : setBoardMessage("Memory couldn't be allocated while generating cards");
+            specificError = 1;
             chainDelete(head);
             head = NULL;
             fclose(file);
