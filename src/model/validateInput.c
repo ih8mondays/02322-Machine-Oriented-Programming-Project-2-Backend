@@ -30,6 +30,7 @@ const char * commandName[] = {"Good luck!","LD","LD <FILENAME>","SW","SI","SI <S
 
 // Helper functions
 void toUpperCase(char * input);
+void removeEnter(char * input);
 Command validateMove(char * input);
 Command validateLoadFile(char * input);
 Command validateShuffleSplit(char * input);
@@ -41,6 +42,7 @@ int endsWithTXT(char * input);
 Command validateInput(char * input) {
 
     convertLowerCaseInput? toUpperCase(input) : 0 ;
+    removeEnter(input);
 
     switch (input[0]) {
         case 'C':
@@ -297,6 +299,14 @@ void toUpperCase(char * input) {
             break;
         }
 
+    }
+}
+
+void removeEnter(char * input) {
+    for (int i = 0 ; input[i] != '\0' ; i++) {
+        if (input[i] == '\n') {
+            input[i] = '\0'; // set to NULL
+        }
     }
 }
 
