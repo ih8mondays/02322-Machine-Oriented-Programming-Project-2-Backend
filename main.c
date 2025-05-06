@@ -46,7 +46,7 @@ void countCards();
 //          generateCards()
 //      X   loadCards()
 //          main()
-//          moveCards()
+//      X   moveCards()
 //      X   saveCards()
 //          shuffleDeck()         create checks to see if you return a full deck (52 cards)
 

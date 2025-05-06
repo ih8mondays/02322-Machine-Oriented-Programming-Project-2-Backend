@@ -34,9 +34,11 @@ int moveCard(char * input) {
 
     //  start can't be empty - guard clause
     if (startType == 'C'&&
-        columnHeader[startPos] == NULL ||
-        startType == 'F'&&
-        foundationHeader[startPos] == NULL) {
+            columnHeader[startPos] == NULL ||
+            startType == 'F'&&
+            foundationHeader[startPos] == NULL) {
+        setBoardMessage("Start column can't be empty.");
+        specificError = 1;
         return 0;
     }
 
@@ -107,18 +109,20 @@ int moveCard(char * input) {
             endPoint == NULL)) {
         setBoardErrorMessage(__LINE__,__FILE_NAME__);
         return -1;
-        }
+    }
 
     // invalid move guard clause
     if (!emptyEndPointFlag &&
             endType == 'C' &&
             startPoint->rank != endPoint->rank - 1 &&
             startPoint->suit == endPoint->suit) {
+        setBoardMessage("Move breaks rules!");
         return 0;
     } else if (!emptyEndPointFlag &&
             endType == 'F' &&
             startPoint->rank != endPoint->rank + 1 &&
             startPoint->suit != endPoint->suit) {
+        setBoardMessage("Move breaks rules!");
         return 0;
     }
 
