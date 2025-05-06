@@ -15,8 +15,6 @@
 #include <time.h>
 
 
-
-
 int debug = 1;
 int convertLowerCaseInput = 1;
 void testPrintDeck(Card * deckHeader);
@@ -31,12 +29,11 @@ void testValidateInput();
 void testHelper(char * cmd);
 void countCards();
 
-// TODO implement gameController()   X = done
+// TODO implement playGame()
 //      X   fix loadCards()
-//          fix shuffleSplit()
+//      X   fix shuffleSplit()
 //      X   fix saveCards()
 //      test gameController()
-//  ->  implement printBoard()
 //      test printBoard()
 //      test print_empty_board()
 //      test print_hidden_board()
@@ -57,6 +54,13 @@ void countCards();
 
 
 int main(void) {
+    playGame();
+
+    //deckHeader = generateCards();
+    //print_shown_board();
+    // fillBoard();
+    // print_current_board();
+
 
     // ---------TESTS------------
     // testPrintDeck(deckHeader);
@@ -185,6 +189,10 @@ void testFillBoard() {
 }
 
 void testChainDelete() {
+    // test for empty deck
+    chainDelete(deckHeader);
+
+    // test for full deck
     deckHeader = generateCards();
     chainDelete(deckHeader);
     deckHeader = NULL;          // prevents unintended use
@@ -263,5 +271,5 @@ void testValidateInput() {
 
 void testHelper(char * cmd) {
     Command output = validateInput(cmd);
-    printf("\n%-12s = %s",cmd,toCommandName[output]);
+    printf("\n%-12s = %s",cmd,commandName[output]);
 }
