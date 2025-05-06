@@ -25,7 +25,7 @@ void saveCards(Command command, char * input) {
         strncpy(filename, "cards.txt", sizeof(filename) - 1);
     // reads file name from input
     } else if (command == CMD_SD_FILENAME) {
-        strncpy(filename, &input + 3, sizeof(filename) - 1);
+        strncpy(filename, input + 3, sizeof(filename) - 1);
     // shouldn't happen
     } else {
         !debug? : memset(boardMessage, '\0', sizeof(boardMessage));
@@ -33,11 +33,10 @@ void saveCards(Command command, char * input) {
         return;
     }
 
-    char savedDeckDirectory[70] = "../../saved_decks/";
-    strcat(savedDeckDirectory,filename);
-    printf(savedDeckDirectory);
+    char savedDeckPath[70] = "../../saved_decks/";
+    strcat(savedDeckPath,filename);
 
-    FILE * file = fopen(savedDeckDirectory, "w");
+    FILE * file = fopen(savedDeckPath, "w");
     if (file == NULL) {
         !debug? : setBoardMessage("Error opening file");
         return;
