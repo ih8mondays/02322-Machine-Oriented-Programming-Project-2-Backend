@@ -21,6 +21,7 @@ typedef enum Command {
 Command validateInput(char * input);
 int isRank(char input);
 int isSuit(char input);
-extern char * toCommandName[];
+
+extern const char * commandName[];
 
 #endif //INPUTVALIDATION_H

@@ -25,9 +25,8 @@
 //   P                  Start PlayPhase
 //
 //-----------------------------------------------
-char * toCommandName[] = {"LD","LD_FILENAME","SW","SI","SI_SPLIT",
-                          "SR","SD","QQ","Q","P","MOVE","INVALID",
-                         "BREAKS_RULES"};
+const char * commandName[] = {"Good luck!","LD","LD <FILENAME>","SW","SI","SI <SPLIT>",
+                              "SR","SD","SD <FILENAME>","QQ","Q","P","MOVE","INVALID"};
 
 // Helper functions
 void toUpperCase(char * input);
@@ -79,7 +78,7 @@ Command validateSaveDeck(char * input) {
         return CMD_SD;
     }
 
-    // must be space
+    //  next must be space
     if (input[2] != ' ') {
         return CMD_INVALID;
     }
@@ -87,11 +86,6 @@ Command validateSaveDeck(char * input) {
     // search for illegal file name characters
     if (!fileNameValidation(input)) {
         return CMD_INVALID;
-    }
-
-    int i = 0;
-    while (input[i] != '\0') {
-        i++;
     }
 
     // must end on .txt
@@ -175,11 +169,11 @@ Command validateShuffleSplit(char * input) {
     }
 
     // return if done
-    if (input[5] == '\0') {
-        return CMD_SI_SPLIT;
+    if (input[5] != '\0') {
+        return CMD_INVALID;
     }
 
-    return CMD_INVALID;
+    return CMD_SI_SPLIT;
 }
 
 Command validateMove(char * input) {
@@ -290,8 +284,15 @@ void toUpperCase(char * input) {
         }
 
         // edgecase for LD_Input
-        if (i >= 2 &&
+        if (i >= 1 &&
                 input[0] == 'L' &&
+                input[1] == 'D') {
+            break;
+        }
+
+        //edgecase for SD_Input
+        if (i >= 1 &&
+                input[0] == 'S' &&
                 input[1] == 'D') {
             break;
         }

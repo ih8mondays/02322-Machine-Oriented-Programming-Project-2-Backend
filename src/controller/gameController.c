@@ -16,16 +16,17 @@ void startUpPhaseCommands(Command command);
 void playPhaseCommands(Command command);
 
 // Game variables
-char input[50] = "Input must not be longer than 50 characters.";
+char input[50];
 char boardMessage[100];
+int specificError = 0; // flag - error message already set
 Command command = NO_CMD_YET;
-PrintState printState = PRINT_STARTUP_EMPTY;
+PrintState printState = PRINT_EMPTY;
 static GamePhase gamePhase = STARTUP_PHASE;
 
 // Initialize empty board and deck
 Card * deckHeader = NULL;
-Card * columnHeader[] = {NULL,NULL,NULL,NULL,NULL,NULL,NULL};
-Card * foundationHeader[] = {NULL,NULL,NULL,NULL};
+Card * columnHeader[7] = {NULL};
+Card * foundationHeader[4] = {NULL};
 
 void playGame() {
 
@@ -33,16 +34,21 @@ void playGame() {
 
         // Print current board
         switch (printState) {
-            case PRINT_STARTUP_EMPTY: print_empty_board(); break;
-            case PRINT_STARTUP_HIDDEN: print_hidden_board(); break;
-            case PRINT_STARTUP_SHOWN: print_shown_board(); break;
+            case PRINT_EMPTY: print_empty_board(); break;
+            case PRINT_HIDDEN: print_filled_board(); break;
+            case PRINT_SHOWN: print_filled_board(); break;
             case PRINT_PLAY: print_current_board(); break;
             default: printf("Error in printState.");
         }
 
+        setBoardMessage("OK");
+
         // receive input
         memset(input, '\0', sizeof(input));
         fgets(input,sizeof(input), stdin);
+
+        // reset flag
+        specificError = 0;
 
         // validate input
         command = validateInput(input);
@@ -61,9 +67,19 @@ void startUpPhaseCommands(Command command) {
         case CMD_LD:
         case CMD_LD_FILENAME:
             loadCards(input);
-            printState = PRINT_STARTUP_HIDDEN;
+            if (deckHeader != NULL) {
+                printState = PRINT_HIDDEN;
+            }
             break;
-        case CMD_SW: printState = PRINT_STARTUP_SHOWN; break;
+        case CMD_SW:
+            if (printState == PRINT_HIDDEN && deckHeader != NULL) {
+                printState = PRINT_SHOWN;
+            } else if (printState == PRINT_SHOWN) {
+                setBoardMessage("The board is already visible.");
+            } else {
+                setBoardMessage("You must load a deck first.");
+            }
+            break;
         case CMD_SI:
         case CMD_SI_SPLIT: splitShuffle(command,input); break;
         case CMD_SR: randomShuffle(deckHeader); break;
@@ -72,11 +88,12 @@ void startUpPhaseCommands(Command command) {
         case CMD_P:
             fillBoard();
             gamePhase = PLAY_PHASE;
+            printState = PRINT_PLAY;
             break;
         case CMD_QQ: break;     //exit(0);
         case CMD_Q:
         case CMD_MOVE: setBoardMessage("Command not available in the PLAY phase."); break;
-        case CMD_INVALID: setBoardMessage("Invalid input"); break;
+        case CMD_INVALID: specificError? : setBoardMessage("Invalid input"); break;
         default: !debug? : setBoardMessage("Input validation failed"); break;
     }
 }
@@ -92,9 +109,12 @@ void playPhaseCommands(Command command) {
         case CMD_SD:
         case CMD_P:
         case CMD_QQ: setBoardMessage("Command not available in the PLAY phase."); break;
-        case CMD_Q: gamePhase = STARTUP_PHASE; break;
+        case CMD_Q:
+            gamePhase = STARTUP_PHASE;
+            printState = PRINT_SHOWN;
+            break;
         case CMD_MOVE: moveCard(input); break;
-        case CMD_INVALID: setBoardMessage("Invalid input"); break;
+        case CMD_INVALID: specificError? : setBoardMessage("Invalid input"); break;
         default: !debug? : setBoardMessage("Inputvalidation failed"); break;
     }
 }
@@ -102,6 +122,12 @@ void playPhaseCommands(Command command) {
 void setBoardMessage(char * newMessage) {
     memset(boardMessage, '\0', sizeof(boardMessage));
     snprintf(boardMessage,sizeof(boardMessage),newMessage);
+}
+
+void setBoardErrorMessage(int line, char * fileName) {
+    !debug? : memset(boardMessage, '\0', sizeof(boardMessage));
+    !debug? : snprintf(boardMessage,sizeof(boardMessage),"Error at line %d in %s",line,fileName);
+    specificError = 1;
 }
 
 
