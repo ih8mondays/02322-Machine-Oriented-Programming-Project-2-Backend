@@ -152,6 +152,12 @@ Command validateShuffleSplit(char * input) {
         return CMD_INVALID;
     }
 
+    if (input[4]-'0' == 0) {
+        setBoardMessage(".....Just no.");
+        specificError = 1;
+        return CMD_INVALID;
+    }
+
     // return if done
     if (input[4] == '\0') {
         return CMD_SI_SPLIT;
@@ -166,7 +172,9 @@ Command validateShuffleSplit(char * input) {
     // 0 < split < 52
     int inputNumber = (input[3] - '0')*10 + (input[4] - '0');
     if (inputNumber >= rankSize * suitSize ||
-        inputNumber < 1) {
+            inputNumber < 1) {
+        setBoardMessage("Split value given isn't 0 < x < 52");
+        specificError = 1;
         return CMD_INVALID;
     }
 
@@ -201,20 +209,22 @@ Command validateMove(char * input) {
         if(!isRank(input[3]) ||
               !isSuit(input[4])) {
             return CMD_INVALID;
-           }
+        }
     }
 
     // validate ->
     if (input[2+offset] != '-' &&
-        input[3+offset] != '>') {
+            input[3+offset] != '>') {
         return CMD_INVALID;
-        }
+    }
 
     // edgecase can't move F to F
     if (input[0] == 'F' &&
             input[4+offset] == 'F') {
+        setBoardMessage("Move between foundations isn't allowed.");
+        specificError = 1;
         return CMD_INVALID;
-        }
+    }
     // validate CX
     if (input[4+offset] != 'C' &&
             input[4+offset] != 'F') {
@@ -234,6 +244,8 @@ Command validateMove(char * input) {
     if (input[0] == 'C' &&
             input[4+offset] == 'C' &&
             input[1] == input[5+offset]) {
+        setBoardMessage("Can't move to and from the same column.");
+        specificError = 1;
         return CMD_INVALID;
     }
 
@@ -329,6 +341,7 @@ int fileNameValidation(char * input) {
             case '*':
                 memset(boardMessage, '\0', sizeof(boardMessage));
                 snprintf(boardMessage,sizeof(boardMessage),"File names can't contain '%s'",input[i]);
+                specificError = 1;
                 return 0;
             default: break;
         }
@@ -348,6 +361,7 @@ int endsWithTXT(char * input) {
             input[i-2] != 'x' ||
             input[i-1] != 't') {
         setBoardMessage("File names must end with .txt");
+        specificError = 1;
         return 0;
     }
     return 1;
