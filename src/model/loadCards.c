@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <direct.h>
 
 
 /**
@@ -29,7 +30,8 @@ void loadCards(char * input) {
     strcpy(fileName,&input[3]);
     printf(fileName);
 
-    char savedDeckPath[70] = "../../saved_decks/";
+
+    char savedDeckPath[70] = "saved_decks/";
     strcat(savedDeckPath,fileName);
     printf("Loading deck %s\n", savedDeckPath);
 
@@ -46,8 +48,8 @@ void loadCards(char * input) {
 
     char currentStr[10];
 
-    // Reads lines until file is empty and puts them into matrix
-    for  (int lineCount = 1 ; !feof(file) ; lineCount++) {
+    // Reads lines and puts them into matrix
+    for  (int lineCount = 1 ; !feof(file) && lineCount <= rankSize * suitSize ; lineCount++) {
         memset(currentStr, '\0', sizeof(currentStr));
         fgets(currentStr, sizeof(currentStr), file);
 

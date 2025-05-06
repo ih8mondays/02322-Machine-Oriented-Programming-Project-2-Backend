@@ -68,7 +68,7 @@ int main(void) {
     // testShuffleDeck();
     // testLoadSave();
     // testFillBoard();
-    // testChainDelete();
+    //testChainDelete();
     // testClearBoard();
     // testMoveCard();
     // testValidateInput();

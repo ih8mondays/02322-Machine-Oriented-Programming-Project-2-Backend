@@ -33,7 +33,7 @@ void saveCards(Command command, char * input) {
         return;
     }
 
-    char savedDeckPath[70] = "../../saved_decks/";
+    char savedDeckPath[70] = "saved_decks/";
     strcat(savedDeckPath,filename);
 
     FILE * file = fopen(savedDeckPath, "w");
@@ -51,4 +51,5 @@ void saveCards(Command command, char * input) {
         current = current -> next;
     }
     fclose(file);
+    fflush(file);
 }
