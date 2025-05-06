@@ -69,6 +69,7 @@ void splitShuffle(Command command, char * input) {
     // stop if deck is empty
     if (deckHeader == NULL) {
         setBoardMessage("Can't shuffle an empty deck.");
+        specificError = 1;
         return;
     }
 
@@ -88,8 +89,7 @@ void splitShuffle(Command command, char * input) {
         split = (input[3] - '0')*10 + (input[4] - '0');
     // shouldn't happen
     } else {
-        !yukonDebugMode? : memset(boardMessage, '\0', sizeof(boardMessage));
-        !yukonDebugMode? : snprintf(boardMessage,sizeof(boardMessage),"Error in %s line %d",__FILE_NAME__,__LINE__);
+        setBoardErrorMessage(__LINE__,__FILE_NAME__);
         return;
     }
 

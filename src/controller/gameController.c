@@ -123,8 +123,8 @@ void playPhaseCommands(Command command) {
 }
 
 void setBoardMessage(char * newMessage) {
-    memset(boardMessage, '\0', sizeof(boardMessage));
-    snprintf(boardMessage,sizeof(boardMessage),newMessage);
+    !yukonDebugMode? : memset(boardMessage, '\0', sizeof(boardMessage));
+    !yukonDebugMode? : snprintf(boardMessage,sizeof(boardMessage),newMessage);
 }
 
 void setBoardErrorMessage(int line, char * fileName) {

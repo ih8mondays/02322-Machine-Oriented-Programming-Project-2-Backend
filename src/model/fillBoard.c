@@ -15,6 +15,7 @@ void fillBoard(){
 
     if (deckHeader == NULL) {
         setBoardMessage("Can't play without cards.");
+        specificError = 1;
         return;
     }
 

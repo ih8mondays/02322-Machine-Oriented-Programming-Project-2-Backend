@@ -33,22 +33,22 @@ void countCards();
 //      test playGame()
 //    X test printBoard()
 //    X test print_empty_board()
-//      test print_hidden_board()
-//      test print_shown_board()
+//    X test print_hidden_board()
+//    X test print_shown_board()
 //      test loadCards()
 //    X test saveCards()
 //    X test randomShuffle()
-//      test splitShuffle()
-//      commands write into boardCommands[]   X = done
+//    X test splitShuffle()
+//      commands write into boardCommands[]
 //      X   validateInput()
-//          fillBoard()
+//      X   fillBoard()
 //      X   gameController()
-//          generateCards()
+//      X   generateCards()
 //      X   loadCards()
-//          main()
+//      X   main()
 //      X   moveCards()
 //      X   saveCards()
-//          shuffleDeck()         create checks to see if you return a full deck (52 cards)
+//      X   shuffleDeck()
 
 
 int main(void) {
