@@ -32,13 +32,13 @@ void print_current_board() {
                 printf("[ ]\t");
             }else {
                 printf("\t");
-                printf("\t");
             }
         }
 
         if (row % 2 == 0 && row < 7) {
             printf("\t");
             Card *pileCard = foundationHeader[row / 2];
+
             while (pileCard != NULL && pileCard->next != NULL) {
                 pileCard = pileCard->next;
             }
