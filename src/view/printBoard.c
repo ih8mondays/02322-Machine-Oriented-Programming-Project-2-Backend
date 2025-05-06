@@ -9,10 +9,8 @@
 int get_max_rows();
 void printInputBar();
 
-char printBuffer[700] ={'\0'};
 
 void print_current_board() {
-    memset(printBuffer, '\0', sizeof(printBuffer));
     int maxRows = get_max_rows();
 
     printf("\n\n\n\n\n");
@@ -56,13 +54,11 @@ void print_current_board() {
         printf("\n");
     }
     printInputBar();
-    printf(printBuffer);
 }
 
 
 // Function to print the board layout.
 void print_empty_board() {
-    memset(printBuffer, '\0', sizeof(printBuffer));
     printf("\n\n\n\n\n");
 
     for (int col = 1; col <= COLUMNS; col++) {
@@ -80,11 +76,9 @@ void print_empty_board() {
         printf("\n");
     }
     printInputBar();
-    printf(printBuffer);
 }
 
 void print_filled_board() {
-    memset(printBuffer, '\0', sizeof(printBuffer));
     printf("\n\n\n\n\n");
 
     for (int col = 1; col <= COLUMNS; col++) {
@@ -113,7 +107,6 @@ void print_filled_board() {
         printf("\n");
 
     printInputBar();
-    printf(printBuffer);
 }
 
 /*
