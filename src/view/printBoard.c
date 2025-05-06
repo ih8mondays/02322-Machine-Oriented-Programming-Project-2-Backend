@@ -19,8 +19,11 @@ void print_current_board() {
                 currentCard = currentCard->next;
                 depth++;
             }
-            if (currentCard != NULL) {
-                printf("%s%s\t", rankName[currentCard->rank], suitName[currentCard->suit]);
+            if (currentCard != NULL && currentCard->visibility == SHOWN) {
+                printf("%s%s", rankName[currentCard->rank], suitName[currentCard->suit]);if (currentCard->visibility == HIDDEN);
+            }
+            if (currentCard != NULL && currentCard->visibility == HIDDEN) {
+                printf("[ ]\t");
             } else {
                 printf("\t");
             }
