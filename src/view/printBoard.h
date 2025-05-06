@@ -15,7 +15,7 @@
 void print_empty_board();
 void print_filled_board();
 void print_current_board();
-int get_max_rows();
+
 void reveal_all_cards(Card* deckHeader);
 
 #endif //PRINTBOARD_H

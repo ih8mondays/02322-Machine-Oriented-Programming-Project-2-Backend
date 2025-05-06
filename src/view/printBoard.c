@@ -1,7 +1,13 @@
 #include "printBoard.h"
 #include "../controller/gameController.h"
 #include "../model/generateCards.h"
+#include "../model/validateInput.h"
 #include <stdio.h>
+
+// Helper functions
+int get_max_rows();
+
+
 void print_current_board() {
     int maxRows = get_max_rows();
 
@@ -19,17 +25,20 @@ void print_current_board() {
                 currentCard = currentCard->next;
                 depth++;
             }
-            if (currentCard != NULL) {
+
+            if (currentCard != NULL && currentCard->visibility == SHOWN) {
                 printf("%s%s\t", rankName[currentCard->rank], suitName[currentCard->suit]);
-            } else {
+            } else if (currentCard != NULL && currentCard->visibility == HIDDEN) {
+                printf("[ ]\t");
+            }else {
+                printf("\t");
                 printf("\t");
             }
         }
-        // Traverse through foundationPiles and prints last element. If no element excist in pile a placeholder is printed.
-        if (row == 0 || row == 2 || row == 4 || row == 6) {
+
+        if (row % 2 == 0 && row < 7) {
             printf("\t");
             Card *pileCard = foundationHeader[row / 2];
-
             while (pileCard != NULL && pileCard->next != NULL) {
                 pileCard = pileCard->next;
             }
@@ -41,31 +50,32 @@ void print_current_board() {
         }
         printf("\n");
     }
-    printf("LAST Command: \n");
-    printf("Message: \n");
-    printf("INPUT > \n");
+    printf("LAST Command: %s\n",commandName[command]);
+    printf("Message: %s\n",boardMessage);
+    printf("INPUT >");
 }
+
 
 // Function to print the board layout.
 void print_empty_board() {
+
     for (int col = 1; col <= COLUMNS; col++) {
         printf(" C%d\t", col);
     }
     printf("\n");
     for (int row = 0; row < MAX_ROWS; row++) {
         for (int col = 0; col < COLUMNS; col++) {
-
             printf("\t");
         }
-        if (row == 0 || row == 2 || row == 4 || row == 6) {
+        if (row % 2 == 0) {
             printf("\t");
             printf("[  ]    F%d", row / 2 + 1);
         }
         printf("\n");
     }
-    printf("LAST Command: \n");
-    printf("Message: \n");
-    printf("INPUT > \n");
+        printf("LAST Command: %s\n",commandName[command]);
+    printf("Message: %s\n",boardMessage);
+    printf("INPUT >");
 }
 
 void print_filled_board() {
@@ -94,9 +104,9 @@ void print_filled_board() {
     }
         printf("\n");
 
-    printf("LAST Command: \n");
-    printf("Message: \n");
-    printf("INPUT > \n");
+    printf("LAST Command: %s\n",commandName[command]);
+    printf("Message: %s\n",boardMessage);
+    printf("INPUT >");
 }
 
 /*
@@ -118,6 +128,8 @@ int get_max_rows() {
     }
     return maxRows;
 }
+
+
 void reveal_all_cards(Card* deckHeader) {
     Card* current = deckHeader;
 
