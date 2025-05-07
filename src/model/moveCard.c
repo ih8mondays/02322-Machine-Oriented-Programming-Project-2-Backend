@@ -20,10 +20,10 @@
 //-----------------------------------------------
 
 /** Returns 1 on success, 0 on invalid move and -1 on error */
-int moveCard(char * input) {
+void moveCard(char * input) {
     if (input == NULL) {
         setBoardErrorMessage(__LINE__,__FILE_NAME__);
-        return -1;
+        return;
     }
 
     char startType = input[0];
@@ -33,13 +33,13 @@ int moveCard(char * input) {
     DualPointer dualStartPointer;
 
     //  start can't be empty - guard clause
-    if (startType == 'C'&&
+    if (startType == 'C' &&
             columnHeader[startPos] == NULL ||
             startType == 'F'&&
             foundationHeader[startPos] == NULL) {
         setBoardMessage("Start column can't be empty.");
-        specificError = 1;
-        return 0;
+        dontOverwriteMessage = 1;
+        return;
     }
 
     // find startPoint
@@ -51,7 +51,7 @@ int moveCard(char * input) {
         if (searchRank == NOT_RANK ||
                 searchSuit == NOT_SUIT) {
             setBoardErrorMessage(__LINE__,__FILE_NAME__);
-            return -1;
+            return;
         }
         if (endType == 'C') {
             dualStartPointer = searchColumn(columnHeader[startPos], searchRank, searchSuit);
@@ -59,7 +59,7 @@ int moveCard(char * input) {
             dualStartPointer = retColEndDual(columnHeader[startPos]);
         } else {
             setBoardErrorMessage(__LINE__,__FILE_NAME__);
-            return -1;
+            return;
         }
     } else if (input[2] == '-') {
         endType = input[4];
@@ -72,11 +72,11 @@ int moveCard(char * input) {
                 dualStartPointer = retColEndDual(foundationHeader[startPos]);
             } else {
                 setBoardErrorMessage(__LINE__,__FILE_NAME__);
-                return -1;
+                return;
             }
     } else {
         setBoardErrorMessage(__LINE__,__FILE_NAME__);
-        return -1;
+        return;
     }
 
     Card * startPoint = dualStartPointer.current;       // move card from
@@ -84,52 +84,70 @@ int moveCard(char * input) {
     Card * endPoint;                                    // move card to
 
     // find endpoint
-    int emptyEndPointFlag = 0;
+    int emptyEndPoint = 0;
     if (endType == 'C') {
-        if (columnHeader[endPos] == NULL) { emptyEndPointFlag = 1; }
-        emptyEndPointFlag? : (endPoint = retColEndDual(columnHeader[endPos]).current);
+        if (columnHeader[endPos] == NULL) { emptyEndPoint = 1; }
+        emptyEndPoint? : (endPoint = retColEndDual(columnHeader[endPos]).current);
     } else if (endType == 'F') {
-        if (foundationHeader[endPos] == NULL) { emptyEndPointFlag = 1; }
-        emptyEndPointFlag? : (endPoint = retColEndDual(foundationHeader[endPos]).current);
+        if (foundationHeader[endPos] == NULL) { emptyEndPoint = 1; }
+        emptyEndPoint? : (endPoint = retColEndDual(foundationHeader[endPos]).current);
     } else {
         setBoardErrorMessage(__LINE__,__FILE_NAME__);
-        return -1;
+        return;
     }
 
     // can't start and end in same column/foundation
     if (startType == endType &&
             startPos == endPos) {
-        return 0;
+        return;
     }
 
     // faulty input guard clause
-    if (!emptyEndPointFlag &&
-            (startPoint == NULL ||
-            startPointPrev == NULL ||
-            endPoint == NULL)) {
+    if (!emptyEndPoint &&
+        endPoint == NULL ||
+            startPoint == NULL ||
+            startPointPrev == NULL) {
         setBoardErrorMessage(__LINE__,__FILE_NAME__);
-        return -1;
+        return;
     }
 
-    // invalid move guard clause
-    if (!emptyEndPointFlag &&
+    // only KING can move to empty column
+    if (emptyEndPoint &&
             endType == 'C' &&
+            startPoint->rank != KING) {
+        setBoardMessage("Move breaks rules!");
+        dontOverwriteMessage = 1;
+        return;
+
+    // only ACE can move to empty foundation
+    } else if (emptyEndPoint &&
+        endType == 'F' &&
+        startPoint->rank != ACE) {
+        setBoardMessage("Move breaks rules!");
+        dontOverwriteMessage = 1;
+        return;
+
+    // handle other disallowed moves
+    } else if (endType == 'C' &&
             startPoint->rank != endPoint->rank - 1 &&
             startPoint->suit == endPoint->suit) {
         setBoardMessage("Move breaks rules!");
-        return 0;
-    } else if (!emptyEndPointFlag &&
+        dontOverwriteMessage = 1;
+        return;
+    } else if (!emptyEndPoint &&
             endType == 'F' &&
             startPoint->rank != endPoint->rank + 1 &&
             startPoint->suit != endPoint->suit) {
         setBoardMessage("Move breaks rules!");
-        return 0;
+        dontOverwriteMessage = 1;
+        return;
     }
 
     // detach from start column
     if (startPoint != startPointPrev) {
         startPointPrev->visibility = SHOWN;
         startPointPrev->next = NULL;
+    // start card must be at the top of column/foundation
     } else if (startType == 'C') {
         columnHeader[startPos] = NULL;
     } else if (startType == 'F') {
@@ -137,7 +155,7 @@ int moveCard(char * input) {
     }
 
     // attach to end column
-    if (!emptyEndPointFlag) {
+    if (!emptyEndPoint) {
         endPoint->next = startPoint;
     } else if (endType == 'C' &&          // King moves to empty
                startPoint->rank == KING) {
@@ -146,8 +164,6 @@ int moveCard(char * input) {
                startPoint->rank == ACE) {
         foundationHeader[endPos] = startPoint;
     }
-
-    return 1;
 }
 
 /** Can return a DualPointer containing NULLs */
@@ -169,8 +185,6 @@ DualPointer retColEndDual(Card * columnHeader) {
 
 Card * retColEnd(Card * columnHeader) {
     Card * current  = columnHeader;
-    DualPointer dualPointer = {NULL,NULL};
-
     while (current->next != NULL) {
         current = current->next;
     }

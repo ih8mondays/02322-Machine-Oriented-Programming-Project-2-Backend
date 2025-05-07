@@ -9,7 +9,7 @@ typedef struct DualPointer{
     Card * current;
 } DualPointer;
 
-int moveCard(char * input);
+void moveCard(char * input);
 Rank strToRank(char input);
 Suit strToSuit(char input);
 Card * retColEnd(Card * columnHeader);
