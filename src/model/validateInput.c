@@ -152,8 +152,8 @@ Command validateShuffleSplit(char * input) {
         return CMD_INVALID;
     }
 
-    if (input[4]-'0' == 0) {
-        setBoardMessage(".....Just no.");
+    if (input[3]-'0' == 0) {
+        setBoardMessage("...well that did nothing.");
         dontOverwriteMessage = 1;
         return CMD_INVALID;
     }

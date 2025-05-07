@@ -130,11 +130,12 @@ int get_max_rows() {
 }
 
 void printInputBar() {
-    if (command == CMD_INVALID) {
-        printf("LAST Command: %s\n",commandName[command]);
-    } else {
+    //if (command == CMD_INVALID) {
+    //    printf("LAST Command: %s\n",commandName[command]);
+    //} else {
         printf("LAST Command: %s\n",input);
-    }
+    //}
+
     printf("Message: %s\n",boardMessage);
     printf("INPUT >");
 }
