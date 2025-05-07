@@ -6,8 +6,7 @@
 #include <string.h>
 
 // Helper functions
-int get_max_rows();
-void printInputBar();
+
 
 
 void print_current_board() {

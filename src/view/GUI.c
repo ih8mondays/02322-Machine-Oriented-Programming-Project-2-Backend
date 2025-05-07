@@ -16,15 +16,15 @@ SDL_Renderer *renderer = NULL;
 //Texture storage in VRAM until rendered
 SDL_Texture* texture = NULL;
 
-//Screen dimension constants
-const int SCALE = 2;
+//Screen dimension constants, change scale if game appears too small/big
+const float SCALE = 2;
 const int SCREEN_WIDTH = 800 * SCALE;
 const int SCREEN_HEIGHT = 600 * SCALE;
 const int CARD_WIDTH = 64 * SCALE;
 const int CARD_HEIGHT = 64 * SCALE;
 const float COL_OFFSET = 96 * (float) SCALE;
 const float STACK_OFFSET =  24 * (float) SCALE;
-const float STARTUP_OFFSET =  48 * (float) SCALE;
+const float STARTUP_OFFSET =  64 * (float) SCALE;
 const float FOUND_OFFSET = 128 * (float) SCALE;
 const float X_RESET = 32 * (float) SCALE;
 const float Y_RESET = 32 * (float) SCALE;
@@ -93,6 +93,11 @@ SDL_Texture* loadTexture( char path[] )
  * @param y topmost pixel to render from (downwards)
  */
 void render(float x,float y) {
+    if (texture == NULL) {
+        printf("Failed to load texture!\n");
+        closeSDL();
+        return;
+    }
     SDL_FRect renderSpace = { x, y, (float) CARD_WIDTH, (float) CARD_HEIGHT};
     SDL_RenderTexture(renderer, texture, NULL, &renderSpace);
     SDL_DestroyTexture(texture);
@@ -201,6 +206,7 @@ int testGUI() {
     SDL_RenderPresent(renderer);
     SDL_RenderClear(renderer);
 
+    draw_current_board();
 
     //Keeps the window up until the user presses close on it
     SDL_Event e;
@@ -218,6 +224,8 @@ int draw_empty_board() {
     if (window != NULL && renderer != NULL) {
 
         SDL_RenderClear(renderer);
+        xPos=X_RESET;
+        yPos=Y_RESET;
         strcpy(cardPath, assetEmpty);
 
         for (int i = 0; i < 7; ++i) {
@@ -245,9 +253,6 @@ int draw_empty_board() {
             yPos += FOUND_OFFSET;
         }
 
-
-        SDL_RenderPresent(renderer);
-        SDL_RenderClear(renderer);
         return 0;
     }
     return -1;
@@ -256,7 +261,7 @@ int draw_empty_board() {
 int draw_filled_board() {
     Card *current = deckHeader;
 
-    SDL_RenderClear(renderer);
+    draw_empty_board();
     xPos = X_RESET;
     yPos = Y_RESET;
     while (current != NULL) {
@@ -265,45 +270,60 @@ int draw_filled_board() {
                 strcpy(cardPath, assetSuit[current->suit]);
                 strcat(cardPath, assetRank[current->rank]);
                 texture = loadTexture(cardPath);
+                render(xPos, yPos);
                 xPos += COL_OFFSET;
             } else {
                 strcpy(cardPath,assetHidden);
                 texture = loadTexture(cardPath);
+                render(xPos, yPos);
                 xPos += COL_OFFSET;
             }
             current = current->next; // Move to next card
         }
         yPos += STARTUP_OFFSET;
+        xPos = X_RESET;
     }
-    printf("\n\n");
 
     SDL_RenderPresent(renderer);
-    SDL_RenderClear(renderer);
     printInputBar();
     return 0;
 }
 
 int draw_current_board() {
-    Card *current = deckHeader;
 
-    SDL_RenderClear(renderer);
+    draw_empty_board();
+    int maxRows = get_max_rows();
     xPos = X_RESET;
     yPos = Y_RESET;
-    while (current != NULL) {
-        for (int col = 0; col < COLUMNS && current != NULL; col++) {
-            if (current->visibility == SHOWN) {
-                strcpy(cardPath, assetSuit[current->suit]);
-                strcat(cardPath, assetRank[current->rank]);
+
+    for (int row = 0; row < maxRows; row++) {
+        for (int col = 0; col < COLUMNS; col++) {
+            Card *currentCard = columnHeader[col];
+            int depth = 0;
+
+            while (currentCard != NULL && depth < row) {
+                currentCard = currentCard->next;
+                depth++;
+            }
+
+            if (currentCard != NULL && currentCard->visibility == SHOWN) {
+                strcpy(cardPath, assetSuit[currentCard->suit]);
+                strcat(cardPath, assetRank[currentCard->rank]);
                 texture = loadTexture(cardPath);
+                render(xPos, yPos);
+                xPos += COL_OFFSET;
+            } else if (currentCard != NULL && currentCard->visibility == HIDDEN) {
+                strcpy(cardPath, assetHidden);
+                texture = loadTexture(cardPath);
+                render(xPos, yPos);
                 xPos += COL_OFFSET;
             } else {
-                strcpy(cardPath,assetHidden);
-                texture = loadTexture(cardPath);
                 xPos += COL_OFFSET;
             }
-            current = current->next; // Move to next card
+
         }
-        yPos += STARTUP_OFFSET;
+        xPos = X_RESET;
+        yPos += STACK_OFFSET;
     }
 
     //Foundations
@@ -318,11 +338,11 @@ int draw_current_board() {
             strcpy(cardPath, assetSuit[pileCard->suit]);
             strcat(cardPath, assetRank[pileCard->rank]);
             texture = loadTexture(cardPath);
+            render(xPos, yPos);
         }
     }
 
     SDL_RenderPresent(renderer);
-    SDL_RenderClear(renderer);
     printInputBar();
     return 0;
 }

@@ -14,7 +14,9 @@
 #include <string.h>
 #include <time.h>
 #include <SDL3/SDL.h>
+#include <SDL3/SDL_main.h>
 #include "src/view/GUI.h"
+
 
 
 int yukonDebugMode = 1;
@@ -64,25 +66,28 @@ int main(int argc, char *argv[]) {
 
     srand(time(NULL));
     initSDL();
-    testGUI();
-    playGame();
+//    playGame();
 
-    //deckHeader = generateCards();
-    //print_shown_board();
+    deckHeader = generateCards();
+//    print_shown_board();
     // fillBoard();
     // print_current_board();
 
 
     // ---------TESTS------------
-    // testPrintDeck(deckHeader);
-    // testPrintBoard();
-    // testShuffleDeck();
-    // testLoadSave();
-    // testFillBoard();
-    //testChainDelete();
+//    testPrintDeck(deckHeader);
+//    testPrintBoard();
+//    testShuffleDeck();
+//    testLoadSave();
+//     testFillBoard();
+//    testChainDelete();
     // testClearBoard();
     // testMoveCard();
     // testValidateInput();
+    reveal_all_cards(deckHeader);
+    randomShuffle(deckHeader);
+    fillBoard(deckHeader);
+    testGUI();
 
 
     //   TEST PRINT BOARD

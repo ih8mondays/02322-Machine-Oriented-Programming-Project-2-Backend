@@ -29,47 +29,29 @@ static GamePhase gamePhase = STARTUP_PHASE;
 Card * deckHeader = NULL;
 Card * columnHeader[7] = {NULL};
 Card * foundationHeader[4] = {NULL};
-int visual;
+
 void playGame() {
-    visual=0;
-    if (visual==1) {
-        createGUI();
-        draw_empty_board();
-    }
+
+    createGUI();
+    draw_empty_board();
+
 
     while (command != CMD_QQ) {
-        visual=0;
         // Print current board
         switch (printState) {
             case PRINT_EMPTY:
-                if (visual!=1) {
-                    print_empty_board();
-                }
-                else {
-                    draw_empty_board();
-                }
+                draw_empty_board();
                 break;
             case PRINT_HIDDEN:
-                if (visual!=1) {
-                    print_filled_board();
-                }
-                else {
-                    draw_filled_board();
-                }
+                draw_filled_board();
                 break;
             case PRINT_SHOWN:
                 reveal_all_cards(deckHeader);
-                if (visual!=1) {
-                    print_filled_board();
-                }
-                else {
-                    draw_filled_board();
-                }
+                draw_filled_board();
                 break;
             case PRINT_PLAY:
-                if (visual!=1) {
-                    print_current_board();
-                } break;
+                draw_current_board();
+                break;
             default: printf("Error in printState.");
         }
 

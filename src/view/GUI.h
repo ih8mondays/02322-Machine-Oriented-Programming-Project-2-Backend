@@ -9,5 +9,6 @@ int createGUI();
 int testGUI();
 int draw_empty_board();
 int draw_filled_board();
+int draw_current_board();
 
 #endif //YUKONBACKEND_GUI_H
