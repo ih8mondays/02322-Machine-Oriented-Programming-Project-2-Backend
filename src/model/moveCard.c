@@ -79,6 +79,12 @@ void moveCard(char * input) {
         return;
     }
 
+    if (dualStartPointer.current == NULL) {
+        setBoardMessage("Couldn't find card.");
+        dontOverwriteMessage = 1;
+        return;
+    }
+
     Card * startPoint = dualStartPointer.current;       // move card from
     Card * startPointPrev = dualStartPointer.previous;  // card above startPoint
     Card * endPoint;                                    // move card to
@@ -102,10 +108,9 @@ void moveCard(char * input) {
         return;
     }
 
-    // faulty input guard clause
+    // this should only trigger if something is wrong with the code
     if (!emptyEndPoint &&
         endPoint == NULL ||
-            startPoint == NULL ||
             startPointPrev == NULL) {
         setBoardErrorMessage(__LINE__,__FILE_NAME__);
         return;
@@ -198,7 +203,9 @@ DualPointer searchColumn(Card * searchHeader, Rank searchRank, Suit searchSuit) 
     DualPointer dualPointer = {NULL,NULL};
 
     while (current != NULL) {
-        if (current->suit == searchSuit &&  current->rank == searchRank) {
+        if (current->suit == searchSuit &&
+                current->rank == searchRank &&
+                current->visibility == SHOWN) {
             dualPointer.previous = previous;
             dualPointer.current = current;
             return dualPointer;
