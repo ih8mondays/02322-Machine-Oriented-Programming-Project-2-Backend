@@ -29,12 +29,12 @@ const char * commandName[] = {"Good luck!","LD","LD <FILENAME>","SW","SI","SI <S
                               "SR","SD","SD <FILENAME>","QQ","Q","P","MOVE","INVALID"};
 
 // Helper functions
-void toUpperCase(char * input);
-void removeEnter(char * input);
 Command validateMove(char * input);
 Command validateLoadFile(char * input);
 Command validateShuffleSplit(char * input);
 Command validateSaveDeck(char * input);
+void toUpperCase(char * input);
+void removeEnter(char * input);
 int fileNameValidation(char * input);
 int endsWithTXT(char * input);
 

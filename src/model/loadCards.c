@@ -61,8 +61,8 @@ void loadCards(char * input) {
             return;
         }
 
-        Rank curR = strToRank(currentStr[0]);
-        Suit curS = strToSuit(currentStr[1]);
+        Rank curR = charToRank(currentStr[0]);
+        Suit curS = charToSuit(currentStr[1]);
 
         // End if we find a duplicate
         if (validationMatrix[curR][curS] == 0) {
@@ -109,8 +109,8 @@ void loadCards(char * input) {
         fgets(currentStr, sizeof(currentStr), file);
 
         // Assign current card values
-        current->rank = strToRank(currentStr[0]);
-        current->suit = strToSuit(currentStr[1]);
+        current->rank = charToRank(currentStr[0]);
+        current->suit = charToSuit(currentStr[1]);
         current->visibility = HIDDEN;
 
         // Last card won't allocate more memory

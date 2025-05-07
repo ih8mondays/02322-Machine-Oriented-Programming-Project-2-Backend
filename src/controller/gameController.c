@@ -12,8 +12,8 @@
 #include "../model/fillBoard.h"
 
 
-void startUpPhaseCommands(Command command);
-void playPhaseCommands(Command command);
+void startUpCommands(Command command);
+void playCommands(Command command);
 
 // Game variables
 char input[50];
@@ -58,14 +58,14 @@ void playGame() {
 
         // execute command
         if (gamePhase == STARTUP_PHASE) {
-            startUpPhaseCommands(command);
+            startUpCommands(command);
         } else if (gamePhase == PLAY_PHASE) {
-            playPhaseCommands(command);
+            playCommands(command);
         }
     }
 }
 
-void startUpPhaseCommands(Command command) {
+void startUpCommands(Command command) {
     switch (command) {
         case CMD_LD:
         case CMD_LD_FILENAME:
@@ -102,7 +102,7 @@ void startUpPhaseCommands(Command command) {
     }
 }
 
-void playPhaseCommands(Command command) {
+void playCommands(Command command) {
     switch (command) {
         case CMD_LD:
         case CMD_LD_FILENAME:

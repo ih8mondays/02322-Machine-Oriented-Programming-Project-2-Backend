@@ -69,7 +69,7 @@ void fillBoard(){
             if (i == 0) {
                 columnHeader[j] = currentCopy;
             } else {
-                columnEnd = retColEndDual(columnHeader[j]).current;
+                columnEnd = retColEnd(columnHeader[j]);
                 if (columnEnd != NULL) {
                     columnEnd->next = currentCopy;
                 } else {

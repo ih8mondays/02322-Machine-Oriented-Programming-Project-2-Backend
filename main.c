@@ -98,7 +98,7 @@ void testPrintDeck(Card * deck) {
         }
         printf("%s",rankName[current->rank]);
         printf("%s",suitName[current->suit]);
-        printf("  %s\n",hiddenName[current->visibility]);
+        printf("  %s\n",visibilityName[current->visibility]);
         current = current->next;
     }
 }

@@ -9,6 +9,9 @@
 #include <string.h>
 
 
+DualPointer searchColumn(Card * searchHeader, Rank searchRank, Suit searchSuit);
+DualPointer retColEndDual(Card * columnHeader);
+
 // Possible valid inputs ... C1-C7 & F1-F4
 // C = Column, F = Foundation, R = Rank, S = Suit
 //-----------------------------------------------
@@ -46,8 +49,8 @@ void moveCard(char * input) {
     if (input[2] == ':') {
         endType = input[7];
         endPos = input[8]-'0'-1;
-        Rank searchRank = strToRank(input[3]);
-        Suit searchSuit = strToSuit(input[4]);
+        Rank searchRank = charToRank(input[3]);
+        Suit searchSuit = charToSuit(input[4]);
         if (searchRank == NOT_RANK ||
                 searchSuit == NOT_SUIT) {
             setBoardErrorMessage(__LINE__,__FILE_NAME__);
@@ -215,7 +218,7 @@ DualPointer searchColumn(Card * searchHeader, Rank searchRank, Suit searchSuit) 
     return dualPointer;
 }
 
-Rank strToRank(char input) {
+Rank charToRank(char input) {
     switch (input) {
         case 'A': return ACE;
         case '2': return TWO;
@@ -234,7 +237,7 @@ Rank strToRank(char input) {
     }
 }
 
-Suit strToSuit(char input) {
+Suit charToSuit(char input) {
     switch (input) {
         case 'C': return CLUBS;
         case 'D': return DIAMONDS;
