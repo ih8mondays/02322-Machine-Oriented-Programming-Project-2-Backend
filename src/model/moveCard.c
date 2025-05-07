@@ -136,13 +136,15 @@ void moveCard(char * input) {
         return;
 
     // handle other disallowed moves
-    } else if (endType == 'C' &&
+    } else if (!emptyEndPoint &&
+            endType == 'C' &&
             (startPoint->rank != endPoint->rank - 1 ||
             startPoint->suit == endPoint->suit)) {
         setBoardMessage("Move breaks rules!");
         dontOverwriteMessage = 1;
         return;
-    } else if (endType == 'F' &&
+    } else if ( !emptyEndPoint &&
+            endType == 'F' &&
             (startPoint->rank != endPoint->rank + 1 ||
             startPoint->suit != endPoint->suit)) {
         setBoardMessage("Move breaks rules!");
