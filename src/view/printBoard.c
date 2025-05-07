@@ -13,7 +13,7 @@ void printInputBar();
 void print_current_board() {
     int maxRows = get_max_rows();
 
-    printf("\n\n\n\n\n");
+    printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
     for (int col = 0; col < COLUMNS; col++) {
         printf("C%d\t", col + 1);
     }
@@ -59,7 +59,7 @@ void print_current_board() {
 
 // Function to print the board layout.
 void print_empty_board() {
-    printf("\n\n\n\n\n");
+    printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 
     for (int col = 1; col <= COLUMNS; col++) {
         printf(" C%d\t", col);
@@ -79,7 +79,7 @@ void print_empty_board() {
 }
 
 void print_filled_board() {
-    printf("\n\n\n\n\n");
+    printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 
     for (int col = 1; col <= COLUMNS; col++) {
         printf(" C%d\t", col);
