@@ -154,7 +154,7 @@ Command validateShuffleSplit(char * input) {
 
     if (input[4]-'0' == 0) {
         setBoardMessage(".....Just no.");
-        specificError = 1;
+        dontOverwriteMessage = 1;
         return CMD_INVALID;
     }
 
@@ -174,7 +174,7 @@ Command validateShuffleSplit(char * input) {
     if (inputNumber >= rankSize * suitSize ||
             inputNumber < 1) {
         setBoardMessage("Split value given isn't 0 < x < 52");
-        specificError = 1;
+        dontOverwriteMessage = 1;
         return CMD_INVALID;
     }
 
@@ -222,7 +222,7 @@ Command validateMove(char * input) {
     if (input[0] == 'F' &&
             input[4+offset] == 'F') {
         setBoardMessage("Move between foundations isn't allowed.");
-        specificError = 1;
+        dontOverwriteMessage = 1;
         return CMD_INVALID;
     }
     // validate CX
@@ -245,7 +245,7 @@ Command validateMove(char * input) {
             input[4+offset] == 'C' &&
             input[1] == input[5+offset]) {
         setBoardMessage("Can't move to and from the same column.");
-        specificError = 1;
+        dontOverwriteMessage = 1;
         return CMD_INVALID;
     }
 
@@ -341,7 +341,7 @@ int fileNameValidation(char * input) {
             case '*':
                 memset(boardMessage, '\0', sizeof(boardMessage));
                 snprintf(boardMessage,sizeof(boardMessage),"File names can't contain '%s'",input[i]);
-                specificError = 1;
+                dontOverwriteMessage = 1;
                 return 0;
             default: break;
         }
@@ -361,7 +361,7 @@ int endsWithTXT(char * input) {
             input[i-2] != 'x' ||
             input[i-1] != 't') {
         setBoardMessage("File names must end with .txt");
-        specificError = 1;
+        dontOverwriteMessage = 1;
         return 0;
     }
     return 1;

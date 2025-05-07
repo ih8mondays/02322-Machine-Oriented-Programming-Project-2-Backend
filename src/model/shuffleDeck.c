@@ -69,7 +69,7 @@ void splitShuffle(Command command, char * input) {
     // stop if deck is empty
     if (deckHeader == NULL) {
         setBoardMessage("Can't shuffle an empty deck.");
-        specificError = 1;
+        dontOverwriteMessage = 1;
         return;
     }
 

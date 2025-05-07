@@ -15,7 +15,7 @@ void fillBoard(){
 
     if (deckHeader == NULL) {
         setBoardMessage("Can't play without cards.");
-        specificError = 1;
+        dontOverwriteMessage = 1;
         return;
     }
 
@@ -48,7 +48,7 @@ void fillBoard(){
                 !yukonDebugMode? : memset(boardMessage, '\0', sizeof(boardMessage));
                 !yukonDebugMode? : snprintf(boardMessage,sizeof(boardMessage),"NullPointerError in row %d column %d in ",i+1,j+1,__FILE_NAME__);
                 clearBoard();
-                specificError = 1;
+                dontOverwriteMessage = 1;
                 return;
             }
 
