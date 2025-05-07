@@ -14,6 +14,7 @@
 #include <string.h>
 #include <time.h>
 #include <SDL3/SDL.h>
+#include <SDL3/SDL_main.h>
 #include <SDL3_image/SDL_image.h>
 #include "src/view/GUI.h"
 
@@ -52,6 +53,7 @@ void countCards();
 //      X   moveCards()
 //      X   saveCards()
 //      X   shuffleDeck()
+
 
 
 int main(int argc, char *argv[]) {
