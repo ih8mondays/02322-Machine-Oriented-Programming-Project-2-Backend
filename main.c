@@ -86,8 +86,9 @@ int main(int argc, char *argv[]) {
 
     initSDL();
     createGUI();
+    drawBaseBoard();
+
     closeSDL();
-    
     return 0;
 }
 

@@ -32,10 +32,12 @@ const char* assetEmpty = "assets/card_empty.png";
 const char* assetSuit[] = {"assets/card_clubs_","assets/card_diamonds_","assets/card_hearts_","assets/card_spades_"};
 const char* assetRank[] = {"A.png","02.png","03.png","04.png","05.png","06.png","07.png","08.png","09.png","10.png","J.png","Q.png","K.png"};
 
-
 //Rendering target pixels
 float xPos = (float) X_RESET;
 float yPos = Y_RESET;
+
+
+
 
 /** Initiates the core SDL features
  * @note must be accompanied by closeSDL() before program shutdown
@@ -80,6 +82,7 @@ SDL_Texture* loadTexture( char path[] )
     return newTexture;
 }
 
+
 /**Renders the currently loaded card texture on specified location, then clears texture off of VRAM.
  *
  * @param x leftmost pixel to render from
@@ -90,6 +93,7 @@ void render(float x,float y) {
     SDL_RenderTexture(renderer, texture, NULL, &renderSpace);
     SDL_DestroyTexture(texture);
 }
+
 
 /**Cleans up the remaining tools before closing SDL.
  *
@@ -126,76 +130,133 @@ int createGUI() {
             closeSDL();
             return -1;
         } else {
-            //Allocates string for card file loading
-            char cardPath[50];
-
-            //sets default/background color
-            SDL_SetRenderDrawColor(renderer, 0x2F, 0xBF, 0x32, 0xFF);
-            SDL_RenderClear(renderer);
-
-            for (int i = 0; i < 7; ++i) {
-                texture = loadTexture("assets/card_empty.png");
-                if (texture == NULL) {
-                    printf("Failed to load texture!\n");
-                    closeSDL();
-                    return -1;
-                }
-                render(xPos, yPos);
-                xPos += COL_OFFSET;
-            }
-
-            xPos = X_RESET;
-            //Example loop, draws each suit in their own column.
-            for (int j = 0; j < 4; ++j) {
-                for (int i = 0; i < 13; ++i) {
-                    strcpy(cardPath, assetSuit[j]);
-                    strcat(cardPath, assetRank[i]);
-                    texture = loadTexture(cardPath);
-                    if (texture == NULL) {
-                        printf("Failed to load texture!\n");
-                        closeSDL();
-                        return -1;
-                    }
-                    render(xPos, yPos);
-                    yPos += STACK_OFFSET;
-                }
-                xPos += COL_OFFSET;
-                yPos = Y_RESET;
-            }
-
-            //Draws foundation piles
-            xPos = X_FOUND;
-            yPos = Y_FOUND;
-            strcpy(cardPath, assetEmpty);
-            for (int j = 0; j < 4; ++j) {
-                texture = loadTexture(cardPath);
-                if (texture == NULL) {
-                    printf("Failed to load texture!\n");
-                    closeSDL();
-                    return -1;
-                }
-                render(xPos, yPos);
-                yPos += FOUND_OFFSET;
-            }
-
-
-            SDL_RenderPresent(renderer);
-            SDL_RenderClear(renderer);
-
-
-            //Keeps the window up until the user presses close on it
-            SDL_Event e;
-            bool quit = false;
-            while (quit == false) {
-                while (SDL_PollEvent(&e)) {
-                    if (e.type == SDL_EVENT_QUIT) quit = true;
-                }
-            }
+            return 1;
         }
-        closeSDL();
-        return 0;
-    }
-    else   {
+    } else {
+        printf("SDL not initiated!");
         return -1;
     }
 }
+
+int testGUI() {
+    //Allocates string for card file loading
+    char cardPath[50];
+
+    //sets default/background color
+    SDL_SetRenderDrawColor(renderer, 0x2F, 0xBF, 0x32, 0xFF);
+    SDL_RenderClear(renderer);
+
+    for (int i = 0; i < 7; ++i) {
+        texture = loadTexture("assets/card_empty.png");
+        if (texture == NULL) {
+            printf("Failed to load texture!\n");
+            closeSDL();
+            return -1;
+        }
+        render(xPos, yPos);
+        xPos += COL_OFFSET;
+    }
+
+    xPos = X_RESET;
+    //Example loop, draws each suit in their own column.
+    for (int j = 0; j < 4; ++j) {
+        for (int i = 0; i < 13; ++i) {
+            strcpy(cardPath, assetSuit[j]);
+            strcat(cardPath, assetRank[i]);
+            texture = loadTexture(cardPath);
+            if (texture == NULL) {
+                printf("Failed to load texture!\n");
+                closeSDL();
+                return -1;
+            }
+            render(xPos, yPos);
+            yPos += STACK_OFFSET;
+        }
+        xPos += COL_OFFSET;
+        yPos = Y_RESET;
+    }
+
+    //Draws foundation piles
+    xPos = X_FOUND;
+    yPos = Y_FOUND;
+    strcpy(cardPath, assetEmpty);
+    for (int j = 0; j < 4; ++j) {
+        texture = loadTexture(cardPath);
+        if (texture == NULL) {
+            printf("Failed to load texture!\n");
+            closeSDL();
+            return -1;
+        }
+        render(xPos, yPos);
+        yPos += FOUND_OFFSET;
+    }
+
+    SDL_RenderPresent(renderer);
+    SDL_RenderClear(renderer);
+
+
+    //Keeps the window up until the user presses close on it
+    SDL_Event e;
+    bool quit = false;
+    while (quit == false) {
+        while (SDL_PollEvent(&e)) {
+            if (e.type == SDL_EVENT_QUIT) quit = true;
+        }
+    }
+    closeSDL();
+    return 0;
+}
+
+int drawBaseBoard() {
+    if (window != NULL && renderer != NULL) {
+        //Allocates string for card file loading
+        char cardPath[50];
+
+        //sets default/background color
+        SDL_SetRenderDrawColor(renderer, 0x2F, 0xBF, 0x32, 0xFF);
+        SDL_RenderClear(renderer);
+
+        for (int i = 0; i < 7; ++i) {
+            texture = loadTexture("assets/card_empty.png");
+            if (texture == NULL) {
+                printf("Failed to load texture!\n");
+                closeSDL();
+                return -1;
+            }
+            render(xPos, yPos);
+            xPos += COL_OFFSET;
+        }
+
+        //Draws foundation piles
+        xPos = X_FOUND;
+        yPos = Y_FOUND;
+        strcpy(cardPath, assetEmpty);
+        for (int j = 0; j < 4; ++j) {
+            texture = loadTexture(cardPath);
+            if (texture == NULL) {
+                printf("Failed to load texture!\n");
+                closeSDL();
+                return -1;
+            }
+            render(xPos, yPos);
+            yPos += FOUND_OFFSET;
+        }
+
+
+        SDL_RenderPresent(renderer);
+        SDL_RenderClear(renderer);
+
+
+        //Keeps the window up until the user presses close on it
+        SDL_Event e;
+        bool quit = false;
+        while (quit == false) {
+            while (SDL_PollEvent(&e)) {
+                if (e.type == SDL_EVENT_QUIT) quit = true;
+            }
+        }
+    }
+    closeSDL();
+    return 0;
+}
+
