@@ -13,6 +13,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <SDL3/SDL.h>
+#include <SDL3_image/SDL_image.h>
+#include "src/view/GUI.h"
 
 
 int yukonDebugMode = 1;
@@ -51,9 +54,9 @@ void countCards();
 //      X   shuffleDeck()
 
 
-int main(void) {
+int main(int argc, char *argv[]) {
     srand(time(NULL));
-    playGame();
+//    playGame();
 
     //deckHeader = generateCards();
     //print_shown_board();
@@ -78,6 +81,10 @@ int main(void) {
     // print_empty_board();
 
     // srand(time(NULL));
+
+    initSDL();
+    createGUI();
+    closeSDL();
     
     return 0;
 }
