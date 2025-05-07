@@ -14,8 +14,6 @@
 #include <string.h>
 #include <time.h>
 #include <SDL3/SDL.h>
-#include <SDL3/SDL_main.h>
-#include <SDL3_image/SDL_image.h>
 #include "src/view/GUI.h"
 
 
@@ -57,8 +55,17 @@ void countCards();
 
 
 int main(int argc, char *argv[]) {
+
+    //argument option to toggle GUI version
+//    visual=1;
+//    if (argc > 0 && argv[1] == "v") {
+//        visual = 1;
+//    }
+
     srand(time(NULL));
-//    playGame();
+    initSDL();
+    testGUI();
+    playGame();
 
     //deckHeader = generateCards();
     //print_shown_board();
@@ -84,9 +91,6 @@ int main(int argc, char *argv[]) {
 
     // srand(time(NULL));
 
-    initSDL();
-    createGUI();
-    drawBaseBoard();
 
     closeSDL();
     return 0;

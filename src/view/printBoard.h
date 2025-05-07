@@ -17,5 +17,6 @@ void print_filled_board();
 void print_current_board();
 
 void reveal_all_cards(Card* deckHeader);
+void printInputBar();
 
 #endif //PRINTBOARD_H

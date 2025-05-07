@@ -3,6 +3,9 @@
 #include <SDL3/SDL.h>
 #include <SDL3_image/SDL_image.h>
 #include "GUI.h"
+#include "../model/generateCards.h"
+#include "../controller/gameController.h"
+#include "printBoard.h"
 
 //The window we'll be rendering to
 SDL_Window* window = NULL;
@@ -21,6 +24,7 @@ const int CARD_WIDTH = 64 * SCALE;
 const int CARD_HEIGHT = 64 * SCALE;
 const float COL_OFFSET = 96 * (float) SCALE;
 const float STACK_OFFSET =  24 * (float) SCALE;
+const float STARTUP_OFFSET =  48 * (float) SCALE;
 const float FOUND_OFFSET = 128 * (float) SCALE;
 const float X_RESET = 32 * (float) SCALE;
 const float Y_RESET = 32 * (float) SCALE;
@@ -36,7 +40,7 @@ const char* assetRank[] = {"A.png","02.png","03.png","04.png","05.png","06.png",
 float xPos = (float) X_RESET;
 float yPos = Y_RESET;
 
-
+char cardPath[100];
 
 
 /** Initiates the core SDL features
@@ -130,6 +134,8 @@ int createGUI() {
             closeSDL();
             return -1;
         } else {
+            //sets default/background color
+            SDL_SetRenderDrawColor(renderer, 0x2F, 0xBF, 0x32, 0xFF);
             return 1;
         }
     } else {
@@ -139,6 +145,7 @@ int createGUI() {
 }
 
 int testGUI() {
+    createGUI();
     //Allocates string for card file loading
     char cardPath[50];
 
@@ -207,17 +214,14 @@ int testGUI() {
     return 0;
 }
 
-int drawBaseBoard() {
+int draw_empty_board() {
     if (window != NULL && renderer != NULL) {
-        //Allocates string for card file loading
-        char cardPath[50];
 
-        //sets default/background color
-        SDL_SetRenderDrawColor(renderer, 0x2F, 0xBF, 0x32, 0xFF);
         SDL_RenderClear(renderer);
+        strcpy(cardPath, assetEmpty);
 
         for (int i = 0; i < 7; ++i) {
-            texture = loadTexture("assets/card_empty.png");
+            texture = loadTexture(cardPath);
             if (texture == NULL) {
                 printf("Failed to load texture!\n");
                 closeSDL();
@@ -230,7 +234,6 @@ int drawBaseBoard() {
         //Draws foundation piles
         xPos = X_FOUND;
         yPos = Y_FOUND;
-        strcpy(cardPath, assetEmpty);
         for (int j = 0; j < 4; ++j) {
             texture = loadTexture(cardPath);
             if (texture == NULL) {
@@ -245,18 +248,81 @@ int drawBaseBoard() {
 
         SDL_RenderPresent(renderer);
         SDL_RenderClear(renderer);
-
-
-        //Keeps the window up until the user presses close on it
-        SDL_Event e;
-        bool quit = false;
-        while (quit == false) {
-            while (SDL_PollEvent(&e)) {
-                if (e.type == SDL_EVENT_QUIT) quit = true;
-            }
-        }
+        return 0;
     }
-    closeSDL();
+    return -1;
+}
+
+int draw_filled_board() {
+    Card *current = deckHeader;
+
+    SDL_RenderClear(renderer);
+    xPos = X_RESET;
+    yPos = Y_RESET;
+    while (current != NULL) {
+        for (int col = 0; col < COLUMNS && current != NULL; col++) {
+            if (current->visibility == SHOWN) {
+                strcpy(cardPath, assetSuit[current->suit]);
+                strcat(cardPath, assetRank[current->rank]);
+                texture = loadTexture(cardPath);
+                xPos += COL_OFFSET;
+            } else {
+                strcpy(cardPath,assetHidden);
+                texture = loadTexture(cardPath);
+                xPos += COL_OFFSET;
+            }
+            current = current->next; // Move to next card
+        }
+        yPos += STARTUP_OFFSET;
+    }
+    printf("\n\n");
+
+    SDL_RenderPresent(renderer);
+    SDL_RenderClear(renderer);
+    printInputBar();
     return 0;
 }
 
+int draw_current_board() {
+    Card *current = deckHeader;
+
+    SDL_RenderClear(renderer);
+    xPos = X_RESET;
+    yPos = Y_RESET;
+    while (current != NULL) {
+        for (int col = 0; col < COLUMNS && current != NULL; col++) {
+            if (current->visibility == SHOWN) {
+                strcpy(cardPath, assetSuit[current->suit]);
+                strcat(cardPath, assetRank[current->rank]);
+                texture = loadTexture(cardPath);
+                xPos += COL_OFFSET;
+            } else {
+                strcpy(cardPath,assetHidden);
+                texture = loadTexture(cardPath);
+                xPos += COL_OFFSET;
+            }
+            current = current->next; // Move to next card
+        }
+        yPos += STARTUP_OFFSET;
+    }
+
+    //Foundations
+    xPos = X_FOUND;
+    yPos = Y_FOUND;
+    for (int i = 0; i < 4; ++i) {
+        Card *pileCard = foundationHeader[i];
+        while (pileCard != NULL && pileCard->next != NULL) {
+            pileCard = pileCard->next;
+        }
+        if (pileCard != NULL) {
+            strcpy(cardPath, assetSuit[pileCard->suit]);
+            strcat(cardPath, assetRank[pileCard->rank]);
+            texture = loadTexture(cardPath);
+        }
+    }
+
+    SDL_RenderPresent(renderer);
+    SDL_RenderClear(renderer);
+    printInputBar();
+    return 0;
+}

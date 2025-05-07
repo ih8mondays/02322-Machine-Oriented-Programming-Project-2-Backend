@@ -7,6 +7,7 @@ void closeSDL();
 void render(float x, float y);
 int createGUI();
 int testGUI();
-int drawBaseBoard();
+int draw_empty_board();
+int draw_filled_board();
 
 #endif //YUKONBACKEND_GUI_H
