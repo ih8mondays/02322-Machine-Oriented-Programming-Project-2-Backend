@@ -21,7 +21,7 @@ void setBoardErrorMessage(int line, char * fileName);
 
 extern char input[50];
 extern char boardMessage[100];
-extern int specificError;
+extern int dontOverwriteMessage;
 extern Command command;
 extern Card * columnHeader[];
 extern Card * foundationHeader[];

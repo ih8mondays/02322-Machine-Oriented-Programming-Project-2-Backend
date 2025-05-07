@@ -18,7 +18,7 @@ void playPhaseCommands(Command command);
 // Game variables
 char input[50];
 char boardMessage[100];
-int specificError = 0; // flag - error message already set
+int dontOverwriteMessage = 0; // flag - error message already set
 Command command = NO_CMD_YET;
 PrintState printState = PRINT_EMPTY;
 static GamePhase gamePhase = STARTUP_PHASE;
@@ -51,7 +51,7 @@ void playGame() {
         fgets(input,sizeof(input), stdin);
 
         // reset flag
-        specificError = 0;
+        dontOverwriteMessage = 0;
 
         // validate input
         command = validateInput(input);
@@ -90,13 +90,14 @@ void startUpPhaseCommands(Command command) {
         case CMD_SD_FILENAME: saveCards(command, input); break;
         case CMD_P:
             fillBoard();
+            if (deckHeader == NULL) { break;}
             gamePhase = PLAY_PHASE;
             printState = PRINT_PLAY;
             break;
         case CMD_QQ: break;     //exit(0);
         case CMD_Q:
-        case CMD_MOVE: setBoardMessage("Command not available in the PLAY phase."); break;
-        case CMD_INVALID: specificError? : setBoardMessage("Invalid input"); break;
+        case CMD_MOVE: setBoardMessage("Command not available in the STARTUP phase."); break;
+        case CMD_INVALID: dontOverwriteMessage? : setBoardMessage("Invalid input"); break;
         default: !yukonDebugMode? : setBoardMessage("Input validation failed"); break;
     }
 }
@@ -117,7 +118,7 @@ void playPhaseCommands(Command command) {
             printState = PRINT_SHOWN;
             break;
         case CMD_MOVE: moveCard(input); break;
-        case CMD_INVALID: specificError? : setBoardMessage("Invalid input"); break;
+        case CMD_INVALID: dontOverwriteMessage? : setBoardMessage("Invalid input"); break;
         default: !yukonDebugMode? : setBoardMessage("Inputvalidation failed"); break;
     }
 }
@@ -130,7 +131,7 @@ void setBoardMessage(char * newMessage) {
 void setBoardErrorMessage(int line, char * fileName) {
     !yukonDebugMode? : memset(boardMessage, '\0', sizeof(boardMessage));
     !yukonDebugMode? : snprintf(boardMessage,sizeof(boardMessage),"Error at line %d in %s",line,fileName);
-    specificError = 1;
+    dontOverwriteMessage = 1;
 }
 
 
