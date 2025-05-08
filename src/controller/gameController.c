@@ -32,25 +32,29 @@ Card * foundationHeader[4] = {NULL};
 
 void playGame() {
 
-    createGUI();
-    draw_empty_board();
+//    createGUI();
+//    draw_empty_board();
 
 
     while (command != CMD_QQ) {
         // Print current board
         switch (printState) {
             case PRINT_EMPTY:
-                draw_empty_board();
+//                draw_empty_board();
+                print_empty_board();
                 break;
             case PRINT_HIDDEN:
-                draw_filled_board();
+//                draw_filled_board();
+                print_filled_board();
                 break;
             case PRINT_SHOWN:
                 reveal_all_cards(deckHeader);
-                draw_filled_board();
+//                draw_filled_board();
+                print_filled_board();
                 break;
             case PRINT_PLAY:
-                draw_current_board();
+//                draw_current_board();
+                print_current_board();
                 break;
             default: printf("Error in printState.");
         }

@@ -68,7 +68,6 @@ int main(int argc, char *argv[]) {
     initSDL();
 //    playGame();
 
-    deckHeader = generateCards();
 //    print_shown_board();
     // fillBoard();
     // print_current_board();
@@ -84,7 +83,8 @@ int main(int argc, char *argv[]) {
     // testClearBoard();
     // testMoveCard();
     // testValidateInput();
-    reveal_all_cards(deckHeader);
+    deckHeader = generateCards();
+//    reveal_all_cards(deckHeader);
     randomShuffle(deckHeader);
     fillBoard(deckHeader);
     testGUI();
