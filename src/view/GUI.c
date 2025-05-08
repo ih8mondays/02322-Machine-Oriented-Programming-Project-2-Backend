@@ -151,60 +151,6 @@ int createGUI() {
 
 int testGUI() {
     createGUI();
-    //Allocates string for card file loading
-    char cardPath[50];
-
-    //sets default/background color
-    SDL_SetRenderDrawColor(renderer, 0x2F, 0xBF, 0x32, 0xFF);
-    SDL_RenderClear(renderer);
-
-    for (int i = 0; i < 7; ++i) {
-        texture = loadTexture("assets/card_empty.png");
-        if (texture == NULL) {
-            printf("Failed to load texture!\n");
-            closeSDL();
-            return -1;
-        }
-        render(xPos, yPos);
-        xPos += COL_OFFSET;
-    }
-
-    xPos = X_RESET;
-    //Example loop, draws each suit in their own column.
-    for (int j = 0; j < 4; ++j) {
-        for (int i = 0; i < 13; ++i) {
-            strcpy(cardPath, assetSuit[j]);
-            strcat(cardPath, assetRank[i]);
-            texture = loadTexture(cardPath);
-            if (texture == NULL) {
-                printf("Failed to load texture!\n");
-                closeSDL();
-                return -1;
-            }
-            render(xPos, yPos);
-            yPos += STACK_OFFSET;
-        }
-        xPos += COL_OFFSET;
-        yPos = Y_RESET;
-    }
-
-    //Draws foundation piles
-    xPos = X_FOUND;
-    yPos = Y_FOUND;
-    strcpy(cardPath, assetEmpty);
-    for (int j = 0; j < 4; ++j) {
-        texture = loadTexture(cardPath);
-        if (texture == NULL) {
-            printf("Failed to load texture!\n");
-            closeSDL();
-            return -1;
-        }
-        render(xPos, yPos);
-        yPos += FOUND_OFFSET;
-    }
-
-    SDL_RenderPresent(renderer);
-    SDL_RenderClear(renderer);
 
     draw_current_board();
 
